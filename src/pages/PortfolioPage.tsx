@@ -3,6 +3,8 @@ import { formatINR, formatPercent } from '@/lib/formatters';
 import { useState } from 'react';
 import { TrendingUp, TrendingDown, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import AnimateIn from '@/components/AnimateIn';
+import StaggerChildren from '@/components/StaggerChildren';
 
 const PortfolioPage = () => {
   const navigate = useNavigate();
@@ -18,46 +20,48 @@ const PortfolioPage = () => {
     <div className="pb-24">
       <div className="bg-secondary px-4 pt-12 pb-6">
         <div className="max-w-lg mx-auto">
-          <h1 className="font-display text-xl font-bold text-secondary-foreground mb-4">Portfolio</h1>
+          <AnimateIn direction="down" distance={10}>
+            <h1 className="font-display text-xl font-bold text-secondary-foreground mb-4">Portfolio</h1>
+          </AnimateIn>
 
           {/* Summary cards */}
           <div className="grid grid-cols-3 gap-3">
-            <div className="bg-secondary-foreground/10 rounded-lg p-3">
-              <div className="text-[10px] text-secondary-foreground/60 uppercase tracking-wide">Balance</div>
-              <div className="font-display font-bold text-secondary-foreground">{formatINR(USER.balance)}</div>
-            </div>
-            <div className="bg-secondary-foreground/10 rounded-lg p-3">
-              <div className="text-[10px] text-secondary-foreground/60 uppercase tracking-wide">Open P&L</div>
-              <div className={`font-display font-bold ${openPnl >= 0 ? 'text-success' : 'text-destructive'}`}>
-                {openPnl >= 0 ? '+' : ''}{formatINR(openPnl)}
-              </div>
-            </div>
-            <div className="bg-secondary-foreground/10 rounded-lg p-3">
-              <div className="text-[10px] text-secondary-foreground/60 uppercase tracking-wide">Win Rate</div>
-              <div className="font-display font-bold text-secondary-foreground">{USER.winRate}%</div>
-            </div>
+            {[
+              { label: 'Balance', value: formatINR(USER.balance), color: '' },
+              { label: 'Open P&L', value: `${openPnl >= 0 ? '+' : ''}${formatINR(openPnl)}`, color: openPnl >= 0 ? 'text-success' : 'text-destructive' },
+              { label: 'Win Rate', value: `${USER.winRate}%`, color: '' },
+            ].map((stat, i) => (
+              <AnimateIn key={stat.label} delay={0.1 + i * 0.07} scale>
+                <div className="bg-secondary-foreground/10 rounded-lg p-3">
+                  <div className="text-[10px] text-secondary-foreground/60 uppercase tracking-wide">{stat.label}</div>
+                  <div className={`font-display font-bold text-secondary-foreground ${stat.color}`}>{stat.value}</div>
+                </div>
+              </AnimateIn>
+            ))}
           </div>
         </div>
       </div>
 
       <div className="max-w-lg mx-auto px-4 mt-4 space-y-4">
         {/* Tabs */}
-        <div className="flex gap-2">
-          {(['open', 'settled'] as const).map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                tab === t ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
-              }`}
-            >
-              {t === 'open' ? `Open (${openPositions.length})` : `Settled (${settledPositions.length})`}
-            </button>
-          ))}
-        </div>
+        <AnimateIn delay={0.2} direction="left" distance={16}>
+          <div className="flex gap-2">
+            {(['open', 'settled'] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-250 ease-out active:scale-95 ${
+                  tab === t ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10' : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                }`}
+              >
+                {t === 'open' ? `Open (${openPositions.length})` : `Settled (${settledPositions.length})`}
+              </button>
+            ))}
+          </div>
+        </AnimateIn>
 
         {/* Positions */}
-        <div className="space-y-3">
+        <StaggerChildren className="space-y-3" staggerDelay={0.07} baseDelay={0.25}>
           {positions.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground py-8">No {tab} positions</p>
           ) : (
@@ -65,13 +69,13 @@ const PortfolioPage = () => {
               <button
                 key={pos.id}
                 onClick={() => navigate(`/market/${pos.marketId}`)}
-                className="w-full text-left bg-card rounded-lg border border-border p-4 hover:border-primary/30 transition-all"
+                className="group w-full text-left bg-card rounded-lg border border-border p-4 transition-all duration-300 ease-out hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 active:scale-[0.98]"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-display font-semibold text-sm leading-snug pr-4 text-foreground">
+                  <h3 className="font-display font-semibold text-sm leading-snug pr-4 text-foreground transition-colors duration-200 group-hover:text-primary">
                     {pos.marketTitle}
                   </h3>
-                  <ArrowUpRight className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <ArrowUpRight className="w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
                 <div className="flex items-center gap-3 text-xs">
                   <span className={`px-2 py-0.5 rounded-full font-medium ${
@@ -92,7 +96,7 @@ const PortfolioPage = () => {
               </button>
             ))
           )}
-        </div>
+        </StaggerChildren>
       </div>
     </div>
   );

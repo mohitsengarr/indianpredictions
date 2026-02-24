@@ -29,14 +29,14 @@ const MarketsPage = () => {
   });
 
   return (
-    <div className="pb-24">
-      <div className="bg-secondary px-4 pt-12 pb-4">
-        <div className="max-w-lg mx-auto">
+    <div className="pb-24 lg:pb-8">
+      <div className="bg-secondary px-4 lg:px-8 pt-12 lg:pt-8 pb-4">
+        <div className="max-w-5xl mx-auto">
           <AnimateIn direction="down" distance={10}>
-            <h1 className="font-display text-xl font-bold text-secondary-foreground mb-3">All Markets</h1>
+            <h1 className="font-display text-xl lg:text-2xl font-bold text-secondary-foreground mb-3">All Markets</h1>
           </AnimateIn>
           <AnimateIn delay={0.08} distance={12}>
-            <div className="relative">
+            <div className="relative max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <input
                 type="text"
@@ -50,12 +50,11 @@ const MarketsPage = () => {
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 mt-4 space-y-4">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 mt-4 space-y-4">
         <AnimateIn delay={0.12} direction="left" distance={20}>
           <CategoryTabs selected={category} onSelect={setCategory} />
         </AnimateIn>
 
-        {/* Sort */}
         <AnimateIn delay={0.16}>
           <div className="flex items-center gap-2">
             <SlidersHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
@@ -73,11 +72,11 @@ const MarketsPage = () => {
           </div>
         </AnimateIn>
 
-        <StaggerChildren className="space-y-3" baseDelay={0.2} staggerDelay={0.06}>
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.2} staggerDelay={0.06}>
           {filtered.length > 0 ? (
             filtered.map((m) => <MarketCard key={m.id} market={m} />)
           ) : (
-            <p className="text-center text-sm text-muted-foreground py-8">No markets found</p>
+            <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No markets found</p>
           )}
         </StaggerChildren>
       </div>

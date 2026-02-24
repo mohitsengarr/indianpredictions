@@ -20,17 +20,19 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="max-w-lg mx-auto min-h-screen bg-background relative">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/markets" element={<MarketsPage />} />
-            <Route path="/market/:id" element={<MarketDetailPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/wallet" element={<WalletPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+        <div className="min-h-screen bg-background relative">
           <BottomNav />
+          <div className="lg:ml-64">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/markets" element={<MarketsPage />} />
+              <Route path="/market/:id" element={<MarketDetailPage />} />
+              <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/wallet" element={<WalletPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </div>
       </BrowserRouter>
     </TooltipProvider>

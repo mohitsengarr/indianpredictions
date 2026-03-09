@@ -47,7 +47,7 @@ function setSchema(schema: object | object[]) {
 
 export function useSEO({ title, description, keywords, canonical, ogImage, schema }: SEOMeta) {
   useEffect(() => {
-    const fullTitle = `${title} | OpinionBazaar`;
+    const fullTitle = `${title} | India Predictions`;
     document.title = fullTitle;
 
     setMeta('description', description);

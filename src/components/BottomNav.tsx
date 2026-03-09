@@ -6,7 +6,7 @@ const tabs = [
   { path: '/markets', label: 'Markets', icon: BarChart3 },
   
   
-  { path: '/profile', label: 'Profile', icon: User },
+  
 ];
 
 const BottomNav = () => {

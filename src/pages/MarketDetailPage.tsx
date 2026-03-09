@@ -6,6 +6,7 @@ import MiniChart from '@/components/MiniChart';
 import AnimateIn from '@/components/AnimateIn';
 import { ArrowLeft, ExternalLink, Clock, Users, BarChart3, Info, TrendingUp, TrendingDown, Loader2 } from 'lucide-react';
 import { useMarket } from '@/hooks/useMarkets';
+import { useSEO } from '@/hooks/useSEO';
 
 const MarketDetailPage = () => {
   const { id } = useParams();

@@ -7,6 +7,7 @@ import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
 import { Search, SlidersHorizontal, RefreshCw, AlertCircle } from 'lucide-react';
 import { useMarkets } from '@/hooks/useMarkets';
+import { useSEO } from '@/hooks/useSEO';
 
 const MarketsPage = () => {
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');

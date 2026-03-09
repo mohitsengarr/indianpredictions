@@ -1,6 +1,7 @@
 import { USER, APP_CONFIG } from '@/lib/mock-data';
 import { Shield, AlertTriangle, ChevronRight, FileText, HelpCircle, LogOut } from 'lucide-react';
 import AnimateIn from '@/components/AnimateIn';
+import { useSEO } from '@/hooks/useSEO';
 
 const ProfilePage = () => {
   const kycBadge = {

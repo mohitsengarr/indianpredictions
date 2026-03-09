@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { USER, TRANSACTIONS } from '@/lib/mock-data';
+import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
 import { Plus, ArrowUpRight, ArrowDownLeft, Receipt, CreditCard, Banknote } from 'lucide-react';
 import { toast } from 'sonner';

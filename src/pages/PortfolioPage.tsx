@@ -1,6 +1,7 @@
 import { POSITIONS, USER } from '@/lib/mock-data';
 import { formatINR, formatPercent } from '@/lib/formatters';
 import { useState } from 'react';
+import { useSEO } from '@/hooks/useSEO';
 import { TrendingUp, TrendingDown, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimateIn from '@/components/AnimateIn';

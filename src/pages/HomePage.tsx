@@ -8,6 +8,7 @@ import { APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
 import { Search, Bell, Zap, Clock, TrendingUp, RefreshCw, MapPin, Flame } from 'lucide-react';
 import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
+import { useSEO } from '@/hooks/useSEO';
 
 const SkeletonCard = () => (
   <div className="bg-card rounded-lg border border-border p-4 space-y-3 animate-pulse">

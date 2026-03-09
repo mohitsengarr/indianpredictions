@@ -79,7 +79,7 @@ const MarketDetailPage = () => {
             <span className="text-xs font-bold text-secondary/80 uppercase tracking-wide">
               {cat?.emoji} {cat?.label}
             </span>
-            <h1 className="font-display font-bold text-lg lg:text-xl text-secondary-foreground mt-1 leading-snug max-w-2xl">
+            <h1 className="font-display font-extrabold text-lg lg:text-xl text-white mt-1 leading-snug max-w-2xl">
               {market.title}
             </h1>
           </AnimateIn>

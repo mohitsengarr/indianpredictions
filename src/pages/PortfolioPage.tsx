@@ -1,6 +1,7 @@
 import { POSITIONS, USER } from '@/lib/mock-data';
 import { formatINR, formatPercent } from '@/lib/formatters';
 import { useState } from 'react';
+import { useSEO } from '@/hooks/useSEO';
 import { TrendingUp, TrendingDown, ArrowUpRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimateIn from '@/components/AnimateIn';
@@ -9,6 +10,12 @@ import StaggerChildren from '@/components/StaggerChildren';
 const PortfolioPage = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<'open' | 'settled'>('open');
+
+  useSEO({
+    title: "My Portfolio – Open Positions & P&L",
+    description: "Track your open prediction market positions, P&L, and settled markets on OpinionBazaar. View your trading history and performance.",
+    canonical: "/portfolio",
+  });
 
   const openPositions = POSITIONS.filter((p) => p.status === 'open');
   const settledPositions = POSITIONS.filter((p) => p.status === 'settled');

@@ -8,6 +8,7 @@ import { APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
 import { Search, Bell, Zap, Clock, TrendingUp, RefreshCw, MapPin, Flame } from 'lucide-react';
 import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
+import { useSEO } from '@/hooks/useSEO';
 
 const SkeletonCard = () => (
   <div className="bg-card rounded-lg border border-border p-4 space-y-3 animate-pulse">
@@ -22,6 +23,12 @@ const SkeletonCard = () => (
 );
 
 const HomePage = () => {
+  useSEO({
+    title: "Trending India Prediction Markets – Cricket, IPL, Economy, Crypto",
+    description: "OpinionBazaar: India's #1 opinion trading platform. Live prediction markets for IPL, cricket, RBI rates, Nifty, Bollywood box office & Bitcoin. Real-time prices in INR.",
+    keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
+    canonical: "/",
+  });
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
 

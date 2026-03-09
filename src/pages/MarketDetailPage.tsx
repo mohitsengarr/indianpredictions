@@ -6,11 +6,39 @@ import MiniChart from '@/components/MiniChart';
 import AnimateIn from '@/components/AnimateIn';
 import { ArrowLeft, ExternalLink, Clock, Users, BarChart3, Info, TrendingUp, TrendingDown, Loader2 } from 'lucide-react';
 import { useMarket } from '@/hooks/useMarkets';
+import { useSEO } from '@/hooks/useSEO';
 
 const MarketDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { market, loading, error } = useMarket(id);
+
+  // Dynamic SEO for each market — updates document.title & meta per market
+  useSEO({
+    title: market
+      ? `${market.title} – Yes ${Math.round(market.yesPrice * 100)}% | No ${Math.round(market.noPrice * 100)}%`
+      : 'Market Detail',
+    description: market
+      ? `Trade on: "${market.title}". Yes price: ${Math.round(market.yesPrice * 100)}%, No price: ${Math.round(market.noPrice * 100)}%. ${market.resolutionCriteria}`
+      : 'View live prediction market prices on OpinionBazaar.',
+    keywords: market
+      ? `${market.title}, prediction market, opinion trading, ${market.category} prediction India`
+      : undefined,
+    canonical: id ? `/market/${id}` : undefined,
+    schema: market
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Event',
+          name: market.title,
+          description: market.resolutionCriteria,
+          startDate: market.createdAt,
+          endDate: market.closesAt,
+          eventStatus: 'https://schema.org/EventScheduled',
+          location: { '@type': 'VirtualLocation', url: `https://indianpredictions.lovable.app/market/${market.id}` },
+          organizer: { '@type': 'Organization', name: 'OpinionBazaar', url: 'https://indianpredictions.lovable.app' },
+        }
+      : undefined,
+  });
 
   if (loading && !market) {
     return (

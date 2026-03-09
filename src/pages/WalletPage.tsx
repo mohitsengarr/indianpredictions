@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { USER, TRANSACTIONS } from '@/lib/mock-data';
+import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
 import { Plus, ArrowUpRight, ArrowDownLeft, Receipt, CreditCard, Banknote } from 'lucide-react';
 import { toast } from 'sonner';
@@ -9,6 +10,12 @@ import StaggerChildren from '@/components/StaggerChildren';
 const WalletPage = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [depositAmount, setDepositAmount] = useState('');
+
+  useSEO({
+    title: "Wallet – Add Funds via UPI",
+    description: "Manage your OpinionBazaar wallet. Deposit funds via UPI, view transaction history, and track your balance in INR.",
+    canonical: "/wallet",
+  });
 
   const handleDeposit = () => {
     const amt = parseFloat(depositAmount);

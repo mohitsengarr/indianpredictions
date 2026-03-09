@@ -13,7 +13,7 @@ const PortfolioPage = () => {
 
   useSEO({
     title: "My Portfolio – Open Positions & P&L",
-    description: "Track your open prediction market positions, P&L, and settled markets on OpinionBazaar. View your trading history and performance.",
+    description: "Track your open prediction market positions, P&L, and settled markets on India Predictions. View your trading history and performance.",
     canonical: "/portfolio",
   });
 

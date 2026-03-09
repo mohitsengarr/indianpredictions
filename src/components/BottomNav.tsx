@@ -28,11 +28,11 @@ const BottomNav = () => {
         <div className="px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-white font-display font-extrabold text-sm">
-              OB
+              IP
             </div>
             <div>
               <h1 className="font-display text-lg font-extrabold text-white tracking-tight leading-none">
-                Opinion<span className="text-secondary">Bazaar</span>
+                India<span className="text-secondary">Predictions</span>
               </h1>
               <p className="text-[10px] text-white/50 mt-0.5 font-medium">India's Opinion Trading</p>
             </div>

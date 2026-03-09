@@ -25,7 +25,7 @@ const SkeletonCard = () => (
 const HomePage = () => {
   useSEO({
     title: "Trending India Prediction Markets – Cricket, IPL, Economy, Crypto",
-    description: "OpinionBazaar: India's #1 opinion trading platform. Live prediction markets for IPL, cricket, RBI rates, Nifty, Bollywood box office & Bitcoin. Real-time prices in INR.",
+    description: "India Predictions: India's #1 opinion trading platform. Live prediction markets for IPL, cricket, RBI rates, Nifty, Bollywood box office & Bitcoin. Real-time prices in INR.",
     keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
     canonical: "/",
   });
@@ -75,7 +75,7 @@ const HomePage = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="font-display text-xl lg:text-2xl font-extrabold text-white lg:hidden tracking-tight">
-                  Opinion<span className="text-secondary">Bazaar</span>
+                  India<span className="text-secondary">Predictions</span>
                 </h1>
                 <h1 className="font-display text-2xl font-extrabold text-white hidden lg:block tracking-tight">
                   Welcome back 👋

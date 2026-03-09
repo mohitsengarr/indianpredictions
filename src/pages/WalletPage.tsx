@@ -13,7 +13,7 @@ const WalletPage = () => {
 
   useSEO({
     title: "Wallet – Add Funds via UPI",
-    description: "Manage your OpinionBazaar wallet. Deposit funds via UPI, view transaction history, and track your balance in INR.",
+    description: "Manage your India Predictions wallet. Deposit funds via UPI, view transaction history, and track your balance in INR.",
     canonical: "/wallet",
   });
 

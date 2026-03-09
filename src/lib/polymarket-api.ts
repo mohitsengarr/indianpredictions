@@ -109,8 +109,8 @@ export async function fetchPolymarkets(params: {
   searchParams.set('ascending', String(params.ascending ?? false));
   if (params.tag) searchParams.set('tag', params.tag);
 
-  const url = `${GAMMA_BASE}/markets?${searchParams.toString()}`;
-  const res = await fetch(url, {
+  const rawUrl = `${GAMMA_BASE}/markets?${searchParams.toString()}`;
+  const res = await fetch(proxyUrl(rawUrl), {
     headers: { 'Accept': 'application/json' },
   });
 

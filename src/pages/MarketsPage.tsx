@@ -40,22 +40,22 @@ const MarketsPage = () => {
 
   return (
     <div className="pb-24 lg:pb-8">
-      <div className="bg-secondary px-4 lg:px-8 pt-12 lg:pt-8 pb-4">
+      <div className="paytm-header px-4 lg:px-8 pt-12 lg:pt-6 pb-5">
         <div className="max-w-5xl mx-auto">
           <AnimateIn direction="down" distance={10}>
             <div className="flex items-center justify-between mb-3">
-              <h1 className="font-display text-xl lg:text-2xl font-bold text-secondary-foreground">All Markets</h1>
+              <h1 className="font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight">All Markets</h1>
               <div className="flex items-center gap-2">
                 {error && (
-                  <span className="text-xs text-warning flex items-center gap-1">
+                  <span className="text-xs text-white/60 flex items-center gap-1">
                     <AlertCircle className="w-3 h-3" />
-                    Using cached data
+                    Cached
                   </span>
                 )}
                 <button
                   onClick={refetch}
                   disabled={loading}
-                  className="flex items-center gap-1.5 text-xs text-secondary-foreground/60 hover:text-secondary-foreground transition-colors disabled:opacity-40"
+                  className="flex items-center gap-1.5 text-xs text-white/60 hover:text-white transition-colors disabled:opacity-40"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
                   {loading ? 'Loading…' : 'Refresh'}
@@ -65,13 +65,13 @@ const MarketsPage = () => {
           </AnimateIn>
           <AnimateIn delay={0.08} distance={12}>
             <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search markets..."
-                className="w-full bg-secondary-foreground/10 rounded-xl pl-10 pr-4 py-3 text-sm text-secondary-foreground placeholder:text-secondary-foreground/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/50 focus:bg-secondary-foreground/15"
+                className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-white/30"
               />
             </div>
           </AnimateIn>

@@ -6,7 +6,7 @@ import { useSEO } from '@/hooks/useSEO';
 const ProfilePage = () => {
   useSEO({
     title: "Profile – KYC & Account Settings",
-    description: "Manage your OpinionBazaar profile, KYC verification status, trading limits, and account settings.",
+    description: "Manage your India Predictions profile, KYC verification status, trading limits, and account settings.",
     canonical: "/profile",
   });
 

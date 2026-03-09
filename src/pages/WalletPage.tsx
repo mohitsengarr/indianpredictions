@@ -11,6 +11,12 @@ const WalletPage = () => {
   const [showDeposit, setShowDeposit] = useState(false);
   const [depositAmount, setDepositAmount] = useState('');
 
+  useSEO({
+    title: "Wallet – Add Funds via UPI",
+    description: "Manage your OpinionBazaar wallet. Deposit funds via UPI, view transaction history, and track your balance in INR.",
+    canonical: "/wallet",
+  });
+
   const handleDeposit = () => {
     const amt = parseFloat(depositAmount);
     if (!amt || amt < 50) {

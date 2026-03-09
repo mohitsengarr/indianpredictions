@@ -11,6 +11,12 @@ const PortfolioPage = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<'open' | 'settled'>('open');
 
+  useSEO({
+    title: "My Portfolio – Open Positions & P&L",
+    description: "Track your open prediction market positions, P&L, and settled markets on OpinionBazaar. View your trading history and performance.",
+    canonical: "/portfolio",
+  });
+
   const openPositions = POSITIONS.filter((p) => p.status === 'open');
   const settledPositions = POSITIONS.filter((p) => p.status === 'settled');
   const positions = tab === 'open' ? openPositions : settledPositions;

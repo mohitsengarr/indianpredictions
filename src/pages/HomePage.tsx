@@ -23,6 +23,12 @@ const SkeletonCard = () => (
 );
 
 const HomePage = () => {
+  useSEO({
+    title: "Trending India Prediction Markets – Cricket, IPL, Economy, Crypto",
+    description: "OpinionBazaar: India's #1 opinion trading platform. Live prediction markets for IPL, cricket, RBI rates, Nifty, Bollywood box office & Bitcoin. Real-time prices in INR.",
+    keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
+    canonical: "/",
+  });
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
 

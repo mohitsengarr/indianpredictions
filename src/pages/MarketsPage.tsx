@@ -15,6 +15,13 @@ const MarketsPage = () => {
   const [sort, setSort] = useState<'volume' | 'change' | 'closing'>('volume');
   const { markets, loading, error, refetch } = useMarkets();
 
+  useSEO({
+    title: "All Prediction Markets – Cricket, Economy, Crypto, Bollywood",
+    description: "Browse all live prediction markets on OpinionBazaar. Filter by cricket, economy, crypto or Bollywood. Sort by volume, activity or closing time. Trade in INR.",
+    keywords: "all prediction markets India, live event contracts, opinion trading markets, cricket market, economy prediction, crypto prediction India",
+    canonical: "/markets",
+  });
+
   const enabledMarkets = markets.filter((m) =>
     APP_CONFIG.enabledCategories.includes(m.category)
   );

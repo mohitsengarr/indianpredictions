@@ -4,6 +4,12 @@ import AnimateIn from '@/components/AnimateIn';
 import { useSEO } from '@/hooks/useSEO';
 
 const ProfilePage = () => {
+  useSEO({
+    title: "Profile – KYC & Account Settings",
+    description: "Manage your OpinionBazaar profile, KYC verification status, trading limits, and account settings.",
+    canonical: "/profile",
+  });
+
   const kycBadge = {
     not_started: { label: 'KYC Pending', className: 'bg-warning/10 text-warning' },
     pending: { label: 'KYC In Review', className: 'bg-warning/10 text-warning' },

@@ -66,17 +66,17 @@ const MarketDetailPage = () => {
 
   return (
     <div className="pb-24 lg:pb-8">
-      {/* Header */}
-      <div className="bg-secondary px-4 lg:px-8 pt-12 lg:pt-8 pb-4">
+      {/* Paytm-style navy header */}
+      <div className="paytm-header px-4 lg:px-8 pt-12 lg:pt-6 pb-5">
         <div className="max-w-5xl mx-auto">
           <AnimateIn direction="down" distance={8} duration={0.4}>
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-secondary-foreground/70 mb-3 transition-colors duration-200 hover:text-secondary-foreground">
+            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-white/70 mb-3 transition-colors duration-200 hover:text-white">
               <ArrowLeft className="w-5 h-5" />
-              <span className="text-sm">Back</span>
+              <span className="text-sm font-medium">Back</span>
             </button>
           </AnimateIn>
           <AnimateIn delay={0.05} distance={12}>
-            <span className="text-xs font-medium text-secondary-foreground/60">
+            <span className="text-xs font-bold text-secondary/80 uppercase tracking-wide">
               {cat?.emoji} {cat?.label}
             </span>
             <h1 className="font-display font-bold text-lg lg:text-xl text-secondary-foreground mt-1 leading-snug max-w-2xl">

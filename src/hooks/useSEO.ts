@@ -72,9 +72,9 @@ export function useSEO({ title, description, keywords, canonical, ogImage, schem
     // Structured data
     if (schema) setSchema(schema);
 
-    return () => {
+  return () => {
       // Restore default title on unmount
-      document.title = "OpinionBazaar – India's Opinion Trading Platform";
+      document.title = "India Predictions – India's Prediction Trading Platform";
     };
   }, [title, description, keywords, canonical, ogImage, schema]);
 }

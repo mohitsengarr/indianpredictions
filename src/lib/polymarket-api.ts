@@ -2,11 +2,18 @@
  * Polymarket Gamma API integration
  * Base: https://gamma-api.polymarket.com (public, no auth required)
  *
- * We proxy through a CORS-friendly approach — the Gamma API supports
- * browser requests directly (no auth header needed).
+ * Browser requests are routed through corsproxy.io to bypass CORS restrictions.
  */
 
 const GAMMA_BASE = 'https://gamma-api.polymarket.com';
+const CLOB_BASE = 'https://clob.polymarket.com';
+
+// Public CORS proxy — prepend to any cross-origin URL
+const CORS_PROXY = 'https://corsproxy.io/?url=';
+
+function proxyUrl(url: string): string {
+  return `${CORS_PROXY}${encodeURIComponent(url)}`;
+}
 
 export interface PolymarketToken {
   token_id: string;

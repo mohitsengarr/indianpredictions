@@ -13,24 +13,25 @@ const CategoryTabs = ({ selected, onSelect }: CategoryTabsProps) => {
     <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
       <button
         onClick={() => onSelect('all')}
-        className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+        className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 ${
           selected === 'all'
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-muted text-muted-foreground hover:text-foreground'
+            ? 'bg-primary text-white border-primary shadow-sm'
+            : 'bg-white text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
         }`}
       >
         🔥 All
       </button>
       {categories.map((cat) => {
         const info = CATEGORY_LABELS[cat];
+        const active = selected === cat;
         return (
           <button
             key={cat}
             onClick={() => onSelect(cat)}
-            className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-              selected === cat
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground hover:text-foreground'
+            className={`shrink-0 px-4 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 ${
+              active
+                ? 'bg-primary text-white border-primary shadow-sm'
+                : 'bg-white text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
             }`}
           >
             {info.emoji} {info.label}

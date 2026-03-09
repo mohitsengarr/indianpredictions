@@ -1,19 +1,20 @@
 import { APP_CONFIG } from '@/lib/mock-data';
-import { Shield } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 const RiskBanner = () => {
+  const isPlay = APP_CONFIG.mode === 'play_money';
   return (
-    <div className="bg-warning/10 border border-warning/20 rounded-lg p-3 flex items-start gap-2.5">
-      <Shield className="w-4 h-4 text-warning mt-0.5 shrink-0" />
-      <div className="text-xs text-muted-foreground leading-relaxed">
-        <span className="font-semibold text-foreground">
-          {APP_CONFIG.mode === 'play_money' ? '🎮 Play Money Mode' : 'Risk Disclosure'}
-        </span>
-        {' · '}
-        {APP_CONFIG.mode === 'play_money'
-          ? 'You are using virtual points. No real money is at risk.'
-          : 'Opinion trading involves risk. You can lose money. Do not risk more than you can afford to lose. This is not investment advice and is not regulated by SEBI.'}
-      </div>
+    <div className={`rounded-xl px-4 py-3 flex items-center gap-3 border ${
+      isPlay
+        ? 'bg-blue-50 border-blue-100 text-blue-800'
+        : 'bg-amber-50 border-amber-100 text-amber-800'
+    }`}>
+      <ShieldCheck className="w-4 h-4 shrink-0" />
+      <p className="text-xs font-medium leading-relaxed">
+        {isPlay
+          ? '🎮 Play Money Mode – Virtual points only. No real money at risk.'
+          : 'Risk Disclosure: Opinion trading involves financial risk. Not regulated by SEBI. This is not investment advice. Trade responsibly.'}
+      </p>
     </div>
   );
 };

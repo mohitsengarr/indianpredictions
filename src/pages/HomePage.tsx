@@ -68,20 +68,20 @@ const HomePage = () => {
 
   return (
     <div className="pb-24 lg:pb-8">
-      {/* Header */}
-      <div className="bg-secondary px-4 lg:px-8 pt-12 lg:pt-8 pb-6">
+      {/* ── Paytm-style navy gradient header ── */}
+      <div className="paytm-header px-4 lg:px-8 pt-12 lg:pt-6 pb-6">
         <div className="max-w-5xl mx-auto">
           <AnimateIn direction="down" distance={12} duration={0.6}>
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h1 className="font-display text-xl lg:text-2xl font-bold text-secondary-foreground lg:hidden">
-                  Opinion<span className="text-primary">Bazaar</span>
+                <h1 className="font-display text-xl lg:text-2xl font-extrabold text-white lg:hidden tracking-tight">
+                  Opinion<span className="text-secondary">Bazaar</span>
                 </h1>
-                <h1 className="font-display text-2xl font-bold text-secondary-foreground hidden lg:block">
+                <h1 className="font-display text-2xl font-extrabold text-white hidden lg:block tracking-tight">
                   Welcome back 👋
                 </h1>
-                <p className="text-xs lg:text-sm text-secondary-foreground/60 mt-0.5 flex items-center gap-1">
-                  <MapPin className="w-3 h-3 text-primary" />
+                <p className="text-xs lg:text-sm text-white/60 mt-0.5 flex items-center gap-1">
+                  <MapPin className="w-3 h-3 text-secondary" />
                   <span>Live prediction markets · India-first</span>
                 </p>
               </div>
@@ -89,13 +89,13 @@ const HomePage = () => {
                 <button
                   onClick={refetch}
                   disabled={loading}
-                  className="w-9 h-9 rounded-full bg-secondary-foreground/10 flex items-center justify-center transition-all duration-200 hover:bg-secondary-foreground/20 hover:scale-105 active:scale-95 disabled:opacity-40"
+                  className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center transition-all duration-200 hover:bg-white/20 hover:scale-105 active:scale-95 disabled:opacity-40"
                   title="Refresh markets"
                 >
-                  <RefreshCw className={`w-4 h-4 text-secondary-foreground ${loading ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-4 h-4 text-white ${loading ? 'animate-spin' : ''}`} />
                 </button>
-                <button className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center transition-all duration-200 hover:bg-secondary-foreground/20 hover:scale-105 active:scale-95">
-                  <Bell className="w-5 h-5 text-secondary-foreground" />
+                <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-200 hover:bg-white/20 hover:scale-105 active:scale-95">
+                  <Bell className="w-5 h-5 text-white" />
                 </button>
               </div>
             </div>
@@ -103,20 +103,20 @@ const HomePage = () => {
 
           <AnimateIn delay={0.1} distance={12}>
             <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search markets..."
-                className="w-full bg-secondary-foreground/10 rounded-xl pl-10 pr-4 py-3 text-sm text-secondary-foreground placeholder:text-secondary-foreground/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/50 focus:bg-secondary-foreground/15"
+                className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-white/30 focus:bg-white/15"
               />
             </div>
           </AnimateIn>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-8 mt-4">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-6 mt-4">
         <AnimateIn delay={0.15} scale>
           <RiskBanner />
         </AnimateIn>

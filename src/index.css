@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,104 +6,101 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 30% 10%;
+    /* ── Paytm-inspired palette ───────────────────────────────────────
+       Primary:   Paytm Navy Blue      #002970  hsl(222 100% 22%)
+       Brand:     Paytm Sky Blue       #00B9F5  hsl(196 100% 48%)
+       Accent:    Paytm UPI Green      #00B67A  hsl(158 100% 35%)
+       Surface:   Light grey           #F5F7FA  hsl(220 25% 97%)
+       Card:      Pure white           #FFFFFF
+    ─────────────────────────────────────────────────────────────────── */
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 30% 10%;
+    --background: 220 20% 96%;       /* #F2F4F8 – Paytm page bg */
+    --foreground: 222 80% 12%;       /* near-black navy */
+
+    --card: 0 0% 100%;               /* white cards */
+    --card-foreground: 222 80% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 30% 10%;
+    --popover-foreground: 222 80% 12%;
 
-    --primary: 24 95% 53%;
+    /* Primary = Paytm navy */
+    --primary: 222 100% 22%;         /* #002970 */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 25% 14%;
-    --secondary-foreground: 0 0% 98%;
+    /* Secondary = Paytm sky blue – used for headers / highlights */
+    --secondary: 196 100% 42%;       /* #00B0EB */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 218 20% 93%;
+    --muted-foreground: 218 15% 48%;
 
-    --accent: 160 60% 45%;
+    /* Accent = UPI green */
+    --accent: 158 100% 35%;          /* #00B267 */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 2 80% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 24 95% 53%;
+    --border: 218 20% 88%;
+    --input: 218 20% 88%;
+    --ring: 196 100% 42%;
 
-    --radius: 0.75rem;
+    --radius: 0.625rem;              /* Paytm uses slightly smaller radius */
 
     /* Custom tokens */
-    --success: 160 60% 45%;
+    --success: 158 100% 35%;         /* UPI green */
     --success-foreground: 0 0% 100%;
-    --warning: 45 93% 47%;
+    --warning: 36 96% 50%;
     --warning-foreground: 0 0% 10%;
-    --yes-green: 160 60% 45%;
-    --no-red: 0 72% 51%;
-    --chart-line: 24 95% 53%;
+    --yes-green: 158 100% 35%;
+    --no-red: 2 80% 50%;
+    --chart-line: 196 100% 42%;
     --surface-elevated: 0 0% 100%;
-    --surface-sunken: 220 20% 95%;
+    --surface-sunken: 220 20% 94%;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar – dark navy like Paytm sidebar */
+    --sidebar-background: 222 100% 22%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 196 100% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 80% 30%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 222 60% 28%;
+    --sidebar-ring: 196 100% 55%;
   }
 
   .dark {
-    --background: 220 25% 6%;
-    --foreground: 220 15% 92%;
-
-    --card: 220 25% 10%;
-    --card-foreground: 220 15% 92%;
-
-    --popover: 220 25% 10%;
-    --popover-foreground: 220 15% 92%;
-
-    --primary: 24 95% 53%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 220 20% 18%;
-    --secondary-foreground: 220 15% 92%;
-
-    --muted: 220 20% 16%;
-    --muted-foreground: 220 10% 55%;
-
-    --accent: 160 60% 45%;
+    --background: 222 40% 8%;
+    --foreground: 210 40% 95%;
+    --card: 222 40% 12%;
+    --card-foreground: 210 40% 95%;
+    --popover: 222 40% 12%;
+    --popover-foreground: 210 40% 95%;
+    --primary: 196 100% 48%;
+    --primary-foreground: 222 100% 10%;
+    --secondary: 222 60% 20%;
+    --secondary-foreground: 210 40% 95%;
+    --muted: 222 30% 18%;
+    --muted-foreground: 218 15% 60%;
+    --accent: 158 80% 40%;
     --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 2 75% 55%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 220 20% 18%;
-    --input: 220 20% 18%;
-    --ring: 24 95% 53%;
-
-    --success: 160 60% 45%;
+    --border: 222 30% 22%;
+    --input: 222 30% 22%;
+    --ring: 196 100% 48%;
+    --success: 158 80% 40%;
     --success-foreground: 0 0% 100%;
-    --warning: 45 93% 47%;
+    --warning: 36 96% 50%;
     --warning-foreground: 0 0% 10%;
-    --yes-green: 160 60% 45%;
-    --no-red: 0 72% 51%;
-    --chart-line: 24 95% 53%;
-    --surface-elevated: 220 25% 12%;
-    --surface-sunken: 220 25% 8%;
-
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 222 50% 10%;
+    --sidebar-foreground: 210 40% 90%;
+    --sidebar-primary: 196 100% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 222 40% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 222 40% 18%;
+    --sidebar-ring: 196 100% 55%;
   }
 }
 
@@ -118,7 +115,8 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Nunito Sans', 'Inter', system-ui, sans-serif;
+    font-weight: 700;
   }
 }
 
@@ -148,20 +146,34 @@
     color: hsl(var(--warning));
   }
   .font-display {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Nunito Sans', 'Inter', system-ui, sans-serif;
+    font-weight: 700;
   }
 
-  /* Hide scrollbar */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  /* Paytm-style blue gradient header */
+  .paytm-header {
+    background: linear-gradient(135deg, hsl(222 100% 22%) 0%, hsl(214 100% 30%) 60%, hsl(196 100% 38%) 100%);
   }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+
+  /* Paytm-style sky blue accent */
+  .paytm-sky {
+    background: linear-gradient(135deg, hsl(196 100% 42%) 0%, hsl(196 100% 55%) 100%);
   }
+
+  /* Card hover effect – Paytm style */
+  .paytm-card {
+    @apply bg-card rounded-xl border border-border shadow-sm transition-all duration-200;
+  }
+  .paytm-card:hover {
+    @apply shadow-md border-primary/20 -translate-y-0.5;
+  }
+
+  /* Scrollbar */
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 }
 
-/* Animation keyframes for inline style references */
+/* Animation keyframes */
 @keyframes fade-in {
   0% { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -202,18 +214,10 @@
   100% { color: hsl(var(--destructive)); transform: translateY(0); }
 }
 
-.price-flash-up {
-  animation: price-flash-up 0.8s ease-out forwards;
-}
-.price-flash-down {
-  animation: price-flash-down 0.8s ease-out forwards;
-}
-.price-num-up {
-  animation: price-number-up 0.5s ease-out forwards;
-}
-.price-num-down {
-  animation: price-number-down 0.5s ease-out forwards;
-}
+.price-flash-up   { animation: price-flash-up 0.8s ease-out forwards; }
+.price-flash-down { animation: price-flash-down 0.8s ease-out forwards; }
+.price-num-up     { animation: price-number-up 0.5s ease-out forwards; }
+.price-num-down   { animation: price-number-down 0.5s ease-out forwards; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {

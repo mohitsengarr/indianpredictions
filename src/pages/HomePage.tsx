@@ -4,15 +4,17 @@ import CategoryTabs from '@/components/CategoryTabs';
 import RiskBanner from '@/components/RiskBanner';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
-import { MARKETS, APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
+import { APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
-import { Search, Bell, Zap, Clock, TrendingUp } from 'lucide-react';
+import { Search, Bell, Zap, Clock, TrendingUp, RefreshCw } from 'lucide-react';
+import { useMarkets } from '@/hooks/useMarkets';
 
 const HomePage = () => {
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
+  const { markets, loading, refetch } = useMarkets();
 
-  const enabledMarkets = MARKETS.filter((m) =>
+  const enabledMarkets = markets.filter((m) =>
     APP_CONFIG.enabledCategories.includes(m.category)
   );
 
@@ -26,6 +28,18 @@ const HomePage = () => {
   const closingSoon = [...enabledMarkets]
     .filter((m) => new Date(m.closesAt).getTime() - Date.now() < 7 * 24 * 60 * 60 * 1000 && new Date(m.closesAt).getTime() > Date.now())
     .slice(0, 3);
+
+  const SkeletonCard = () => (
+    <div className="bg-card rounded-lg border border-border p-4 space-y-3 animate-pulse">
+      <div className="h-3 bg-muted rounded w-1/3" />
+      <div className="h-4 bg-muted rounded w-full" />
+      <div className="h-4 bg-muted rounded w-3/4" />
+      <div className="flex gap-2 mt-2">
+        <div className="flex-1 h-12 bg-muted rounded-md" />
+        <div className="flex-1 h-12 bg-muted rounded-md" />
+      </div>
+    </div>
+  );
 
   return (
     <div className="pb-24 lg:pb-8">
@@ -43,12 +57,22 @@ const HomePage = () => {
                 </h1>
                 <p className="text-xs lg:text-sm text-secondary-foreground/60 mt-0.5">
                   <span className="lg:hidden">India's Opinion Trading Platform</span>
-                  <span className="hidden lg:inline">Discover trending markets and take positions on future events</span>
+                  <span className="hidden lg:inline">Live data from Polymarket · Discover markets and take positions</span>
                 </p>
               </div>
-              <button className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center transition-all duration-200 hover:bg-secondary-foreground/20 hover:scale-105 active:scale-95">
-                <Bell className="w-5 h-5 text-secondary-foreground" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={refetch}
+                  disabled={loading}
+                  className="w-9 h-9 rounded-full bg-secondary-foreground/10 flex items-center justify-center transition-all duration-200 hover:bg-secondary-foreground/20 hover:scale-105 active:scale-95 disabled:opacity-40"
+                  title="Refresh markets"
+                >
+                  <RefreshCw className={`w-4 h-4 text-secondary-foreground ${loading ? 'animate-spin' : ''}`} />
+                </button>
+                <button className="w-10 h-10 rounded-full bg-secondary-foreground/10 flex items-center justify-center transition-all duration-200 hover:bg-secondary-foreground/20 hover:scale-105 active:scale-95">
+                  <Bell className="w-5 h-5 text-secondary-foreground" />
+                </button>
+              </div>
             </div>
           </AnimateIn>
 
@@ -82,17 +106,24 @@ const HomePage = () => {
               <AnimateIn delay={0.25}>
                 <div className="flex items-center gap-2 mb-3">
                   <TrendingUp className="w-4 h-4 text-primary" />
-                  <h2 className="font-display font-semibold text-sm lg:text-base">Trending in India</h2>
+                  <h2 className="font-display font-semibold text-sm lg:text-base">Trending Now</h2>
+                  <span className="text-xs text-muted-foreground font-normal">Live from Polymarket</span>
                 </div>
               </AnimateIn>
-              <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.3} staggerDelay={0.08}>
-                {trending.map((m) => (
-                  <MarketCard key={m.id} market={m} />
-                ))}
-              </StaggerChildren>
+              {loading && trending.length === 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                  {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
+                </div>
+              ) : (
+                <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.3} staggerDelay={0.08}>
+                  {trending.map((m) => (
+                    <MarketCard key={m.id} market={m} />
+                  ))}
+                </StaggerChildren>
+              )}
             </section>
 
-            {closingSoon.length > 0 && (
+            {(closingSoon.length > 0 || loading) && (
               <section>
                 <AnimateIn delay={0.1}>
                   <div className="flex items-center gap-2 mb-3">
@@ -100,11 +131,17 @@ const HomePage = () => {
                     <h2 className="font-display font-semibold text-sm lg:text-base">Closing Soon</h2>
                   </div>
                 </AnimateIn>
-                <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.08}>
-                  {closingSoon.map((m) => (
-                    <MarketCard key={m.id} market={m} compact />
-                  ))}
-                </StaggerChildren>
+                {loading && closingSoon.length === 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                    {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
+                  </div>
+                ) : (
+                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.08}>
+                    {closingSoon.map((m) => (
+                      <MarketCard key={m.id} market={m} compact />
+                    ))}
+                  </StaggerChildren>
+                )}
               </section>
             )}
           </>

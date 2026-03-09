@@ -3,16 +3,18 @@ import MarketCard from '@/components/MarketCard';
 import CategoryTabs from '@/components/CategoryTabs';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
-import { MARKETS, APP_CONFIG } from '@/lib/mock-data';
+import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { Search, SlidersHorizontal, RefreshCw, AlertCircle } from 'lucide-react';
+import { useMarkets } from '@/hooks/useMarkets';
 
 const MarketsPage = () => {
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState<'volume' | 'change' | 'closing'>('volume');
+  const { markets, loading, error, refetch } = useMarkets();
 
-  const enabledMarkets = MARKETS.filter((m) =>
+  const enabledMarkets = markets.filter((m) =>
     APP_CONFIG.enabledCategories.includes(m.category)
   );
 
@@ -33,7 +35,25 @@ const MarketsPage = () => {
       <div className="bg-secondary px-4 lg:px-8 pt-12 lg:pt-8 pb-4">
         <div className="max-w-5xl mx-auto">
           <AnimateIn direction="down" distance={10}>
-            <h1 className="font-display text-xl lg:text-2xl font-bold text-secondary-foreground mb-3">All Markets</h1>
+            <div className="flex items-center justify-between mb-3">
+              <h1 className="font-display text-xl lg:text-2xl font-bold text-secondary-foreground">All Markets</h1>
+              <div className="flex items-center gap-2">
+                {error && (
+                  <span className="text-xs text-warning flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    Using cached data
+                  </span>
+                )}
+                <button
+                  onClick={refetch}
+                  disabled={loading}
+                  className="flex items-center gap-1.5 text-xs text-secondary-foreground/60 hover:text-secondary-foreground transition-colors disabled:opacity-40"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                  {loading ? 'Loading…' : 'Refresh'}
+                </button>
+              </div>
+            </div>
           </AnimateIn>
           <AnimateIn delay={0.08} distance={12}>
             <div className="relative max-w-md">
@@ -72,13 +92,39 @@ const MarketsPage = () => {
           </div>
         </AnimateIn>
 
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.2} staggerDelay={0.06}>
-          {filtered.length > 0 ? (
-            filtered.map((m) => <MarketCard key={m.id} market={m} />)
-          ) : (
-            <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No markets found</p>
-          )}
-        </StaggerChildren>
+        {loading && markets.length === 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-card rounded-lg border border-border p-4 space-y-3 animate-pulse">
+                <div className="h-3 bg-muted rounded w-1/3" />
+                <div className="h-4 bg-muted rounded w-full" />
+                <div className="h-4 bg-muted rounded w-4/5" />
+                <div className="flex gap-2 mt-2">
+                  <div className="flex-1 h-12 bg-muted rounded-md" />
+                  <div className="flex-1 h-12 bg-muted rounded-md" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.2} staggerDelay={0.06}>
+            {filtered.length > 0 ? (
+              filtered.map((m) => <MarketCard key={m.id} market={m} />)
+            ) : (
+              <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No markets found</p>
+            )}
+          </StaggerChildren>
+        )}
+
+        {!loading && filtered.length > 0 && (
+          <p className="text-center text-xs text-muted-foreground pb-4">
+            Live data from{' '}
+            <a href="https://polymarket.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              Polymarket
+            </a>{' '}
+            · {filtered.length} markets
+          </p>
+        )}
       </div>
     </div>
   );

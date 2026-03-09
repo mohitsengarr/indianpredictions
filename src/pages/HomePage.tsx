@@ -75,7 +75,7 @@ const HomePage = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="font-display text-xl lg:text-2xl font-extrabold text-white lg:hidden tracking-tight">
-                  Opinion<span className="text-secondary">Bazaar</span>
+                  India<span className="text-secondary">Predictions</span>
                 </h1>
                 <h1 className="font-display text-2xl font-extrabold text-white hidden lg:block tracking-tight">
                   Welcome back 👋

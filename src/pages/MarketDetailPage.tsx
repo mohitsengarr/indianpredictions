@@ -1,20 +1,34 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { MARKETS, CATEGORY_LABELS } from '@/lib/mock-data';
+import { CATEGORY_LABELS } from '@/lib/mock-data';
 import { formatINR, formatPercent, formatProbability, timeUntil } from '@/lib/formatters';
 import TradeTicket from '@/components/TradeTicket';
 import MiniChart from '@/components/MiniChart';
 import AnimateIn from '@/components/AnimateIn';
-import { ArrowLeft, ExternalLink, Clock, Users, BarChart3, Info, TrendingUp, TrendingDown } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Clock, Users, BarChart3, Info, TrendingUp, TrendingDown, Loader2 } from 'lucide-react';
+import { useMarket } from '@/hooks/useMarkets';
 
 const MarketDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const market = MARKETS.find((m) => m.id === id);
+  const { market, loading, error } = useMarket(id);
+
+  if (loading && !market) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center space-y-3">
+          <Loader2 className="w-8 h-8 animate-spin text-primary mx-auto" />
+          <p className="text-sm text-muted-foreground">Loading market data…</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!market) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen gap-3">
         <p className="text-muted-foreground">Market not found</p>
+        {error && <p className="text-xs text-destructive">{error}</p>}
+        <button onClick={() => navigate(-1)} className="text-sm text-primary hover:underline">Go back</button>
       </div>
     );
   }

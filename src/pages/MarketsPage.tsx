@@ -90,8 +90,10 @@ const MarketsPage = () => {
               <button
                 key={s}
                 onClick={() => setSort(s)}
-                className={`text-xs px-3 py-1.5 rounded-full transition-all duration-200 active:scale-90 ${
-                  sort === s ? 'bg-primary/10 text-primary font-medium shadow-sm' : 'text-muted-foreground hover:text-foreground'
+                className={`text-xs px-3 py-1.5 rounded-full border font-semibold transition-all duration-200 active:scale-90 ${
+                  sort === s
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-white text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
                 }`}
               >
                 {s === 'volume' ? 'Top Volume' : s === 'change' ? 'Most Active' : 'Closing Soon'}

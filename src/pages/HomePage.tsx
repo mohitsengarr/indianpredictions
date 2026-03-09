@@ -109,14 +109,14 @@ const HomePage = () => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search markets..."
-                className="w-full bg-secondary-foreground/10 rounded-xl pl-10 pr-4 py-3 text-sm text-secondary-foreground placeholder:text-secondary-foreground/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/50 focus:bg-secondary-foreground/15"
+                className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-white/30 focus:bg-white/15"
               />
             </div>
           </AnimateIn>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-8 mt-4">
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-6 mt-4">
         <AnimateIn delay={0.15} scale>
           <RiskBanner />
         </AnimateIn>

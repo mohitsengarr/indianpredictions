@@ -8,14 +8,12 @@ export default {
     container: {
       center: true,
       padding: "1rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: { "2xl": "1400px" },
     },
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        display: ['Nunito Sans', 'Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -69,11 +67,25 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        /* Paytm brand colours directly usable */
+        paytm: {
+          navy: "#002970",
+          sky: "#00B9F5",
+          green: "#00B67A",
+          lightblue: "#E8F4FD",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "calc(var(--radius) + 4px)",
+        "2xl": "calc(var(--radius) + 8px)",
+      },
+      boxShadow: {
+        card: "0 1px 4px 0 rgba(0,0,0,0.08)",
+        "card-hover": "0 4px 16px 0 rgba(0,41,112,0.12)",
+        "paytm-blue": "0 4px 12px 0 rgba(0,185,245,0.25)",
       },
       keyframes: {
         "accordion-down": {

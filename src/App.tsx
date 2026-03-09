@@ -11,6 +11,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import WalletPage from "./pages/WalletPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
+import { LivePricesProvider } from "./contexts/LivePricesContext";
 
 const queryClient = new QueryClient();
 
@@ -20,20 +21,22 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <div className="min-h-screen bg-background relative">
-          <BottomNav />
-          <div className="lg:ml-64">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/markets" element={<MarketsPage />} />
-              <Route path="/market/:id" element={<MarketDetailPage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/wallet" element={<WalletPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+        <LivePricesProvider>
+          <div className="min-h-screen bg-background relative">
+            <BottomNav />
+            <div className="lg:ml-64">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/markets" element={<MarketsPage />} />
+                <Route path="/market/:id" element={<MarketDetailPage />} />
+                <Route path="/portfolio" element={<PortfolioPage />} />
+                <Route path="/wallet" element={<WalletPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
           </div>
-        </div>
+        </LivePricesProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

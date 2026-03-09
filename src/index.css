@@ -177,6 +177,44 @@
   100% { opacity: 0; transform: translateY(10px); }
 }
 
+/* Live price flash animations */
+@keyframes price-flash-up {
+  0%   { background-color: transparent; }
+  25%  { background-color: hsl(var(--success) / 0.18); }
+  100% { background-color: transparent; }
+}
+
+@keyframes price-flash-down {
+  0%   { background-color: transparent; }
+  25%  { background-color: hsl(var(--destructive) / 0.13); }
+  100% { background-color: transparent; }
+}
+
+@keyframes price-number-up {
+  0%   { color: hsl(var(--success)); transform: translateY(0); }
+  40%  { transform: translateY(-3px); }
+  100% { color: hsl(var(--success)); transform: translateY(0); }
+}
+
+@keyframes price-number-down {
+  0%   { color: hsl(var(--destructive)); transform: translateY(0); }
+  40%  { transform: translateY(3px); }
+  100% { color: hsl(var(--destructive)); transform: translateY(0); }
+}
+
+.price-flash-up {
+  animation: price-flash-up 0.8s ease-out forwards;
+}
+.price-flash-down {
+  animation: price-flash-down 0.8s ease-out forwards;
+}
+.price-num-up {
+  animation: price-number-up 0.5s ease-out forwards;
+}
+.price-num-down {
+  animation: price-number-down 0.5s ease-out forwards;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

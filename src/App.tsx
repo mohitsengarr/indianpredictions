@@ -54,7 +54,6 @@ const AnimatedRoutes = () => {
           <Route path="/events/:slug" element={<EventDetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
-          <Route path="/crypto" element={<CryptoPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>

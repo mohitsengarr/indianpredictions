@@ -7,7 +7,6 @@ const tabs = [
   { path: '/crypto', label: 'Crypto', icon: Bitcoin },
   { path: '/analytics', label: 'Analytics', icon: LineChart },
   { path: '/insights', label: 'Insights', icon: PieChart },
-  { path: '/crypto', label: 'Crypto', icon: Bitcoin },
 ];
 
 const BottomNav = () => {

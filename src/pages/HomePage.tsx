@@ -324,7 +324,7 @@ const HomePage = () => {
                     {indiaCricket.map(m => <MarketCard key={m.id} market={m} />)}
                   </StaggerChildren>
                 ) : (
-                  <div className="bg-blue-50 border border-blue-100 rounded-xl p-4 text-sm text-blue-700 text-center">
+                  <div className="bg-secondary/10 border border-secondary/20 rounded-xl p-4 text-sm text-secondary-foreground text-center">
                     No active cricket markets · Check back during match season
                   </div>
                 )}

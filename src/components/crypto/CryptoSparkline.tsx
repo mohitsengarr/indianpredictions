@@ -2,23 +2,22 @@ import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 interface CryptoSparklineProps {
   data: number[];
+  color?: string;
   positive: boolean;
-  width?: number;
-  height?: number;
 }
 
-const CryptoSparkline = ({ data, positive, width = 120, height = 40 }: CryptoSparklineProps) => {
-  const chartData = data.map((value, i) => ({ i, value }));
-  const color = positive ? '#16C784' : '#EA3943';
+const CryptoSparkline = ({ data, positive }: CryptoSparklineProps) => {
+  const chartData = data.map((v, i) => ({ i, v }));
+  const strokeColor = positive ? '#16C784' : '#EA3943';
 
   return (
-    <div style={{ width, height }}>
+    <div className="w-[120px] h-[40px]">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData}>
           <Line
             type="monotone"
-            dataKey="value"
-            stroke={color}
+            dataKey="v"
+            stroke={strokeColor}
             strokeWidth={1.5}
             dot={false}
             isAnimationActive={false}

@@ -7,15 +7,15 @@ import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
 import TrendingEvents from '@/components/TrendingEvents';
 import EventCard from '@/components/EventCard';
-import { APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
+import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
 import { TRENDING_EVENTS, type EventCategory } from '@/data/trending-events';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import {
-  Search, Bell, Zap, Clock, TrendingUp, RefreshCw, Flame,
-  ChevronRight, Star, ArrowRight, BookOpen, Mail, Newspaper, BarChart3,
+  Search, Bell, Zap, Clock, TrendingUp, RefreshCw,
+  ChevronRight, ArrowRight, BookOpen, Mail, Newspaper, BarChart3,
 } from 'lucide-react';
-import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
+import { useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
 import FAQSection from '@/components/FAQSection';
@@ -167,12 +167,11 @@ const HomePage = () => {
   const [search, setSearch] = useState('');
   const [email, setEmail] = useState('');
 
-  const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated } = useMarkets();
-  const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia } = useIndiaMarkets();
+  const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
 
-  const loading = allLoading || indiaLoading;
-  const refetch = () => { refetchAll(); refetchIndia(); };
+  const loading = indiaLoading;
+  const refetch = () => { refetchIndia(); };
 
   // Market sections
   const indiaTrending = indiaMarkets.slice(0, 6);
@@ -182,9 +181,7 @@ const HomePage = () => {
   const indiaCricket = indiaMarkets.filter(m => m.category === 'cricket').slice(0, 3);
   const indiaPolitics = indiaMarkets.filter(m => m.category === 'politics').slice(0, 3);
   const indiaEconomy = indiaMarkets.filter(m => m.category === 'economy').slice(0, 3);
-  const globalTrending = [...allMarkets].sort((a, b) => b.volume - a.volume).slice(0, 3);
-
-  const enabledMarkets = allMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
+  const enabledMarkets = indiaMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
   const filtered = enabledMarkets.filter((m) => {
     const marketCats = category === 'all' ? null : (PILL_TO_MARKET_CATEGORIES[category] ?? []);
     const matchCat = !marketCats || marketCats.includes(m.category);
@@ -596,14 +593,9 @@ const HomePage = () => {
                   {indiaTrending.map(m => <MarketCard key={m.id} market={m} />)}
                 </StaggerChildren>
               ) : (
-                <div>
-                  <p className="text-xs text-muted-foreground mb-3 flex items-center gap-1.5">
-                    <Flame className="w-3 h-3 text-warning" />
-                    No India-specific markets found right now — showing global top markets
-                  </p>
-                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.07}>
-                    {globalTrending.map(m => <MarketCard key={m.id} market={m} />)}
-                  </StaggerChildren>
+                <div className="bg-muted/50 border border-border rounded-xl p-6 text-center">
+                  <p className="text-sm text-muted-foreground">No India markets available right now</p>
+                  <p className="text-xs text-muted-foreground mt-1">Check back soon — new markets are added regularly</p>
                 </div>
               )}
             </section>

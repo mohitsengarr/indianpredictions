@@ -100,7 +100,7 @@ export function useIndiaMarkets(): {
   refetch: () => void;
   lastUpdated: Date | null;
 } {
-  const [markets, setMarkets] = useState<Market[]>(cachedIndia ?? FALLBACK_MARKETS);
+  const [markets, setMarkets] = useState<Market[]>(cachedIndia ?? []);
   const [loading, setLoading] = useState(!cachedIndia);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
@@ -121,9 +121,9 @@ export function useIndiaMarkets(): {
       .then(({ all, india }) => {
         if (cancelled) return;
         cachedAll = all.length > 0 ? all : FALLBACK_MARKETS;
-        cachedIndia = india.length > 0 ? india : all.slice(0, 20);
+        cachedIndia = india;
         cacheTimestamp = Date.now();
-        const result = cachedIndia ?? FALLBACK_MARKETS;
+        const result = cachedIndia;
         setMarkets(result);
         setLastUpdated(new Date());
         setError(null);
@@ -132,7 +132,7 @@ export function useIndiaMarkets(): {
         if (cancelled) return;
         console.error('[useIndiaMarkets] Failed:', err);
         setError(err.message ?? 'Failed to fetch India markets');
-        setMarkets(cachedIndia ?? FALLBACK_MARKETS);
+        setMarkets(cachedIndia ?? []);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);

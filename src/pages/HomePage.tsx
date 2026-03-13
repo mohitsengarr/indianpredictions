@@ -175,7 +175,6 @@ const HomePage = () => {
   const refetch = () => { refetchAll(); refetchIndia(); };
 
   // Market sections
-  const indiaHot = [...indiaMarkets].sort((a, b) => b.volume - a.volume).slice(0, 3);
   const indiaTrending = indiaMarkets.slice(0, 6);
   const indiaClosingSoon = indiaMarkets
     .filter((m) => { const ms = new Date(m.closesAt).getTime() - Date.now(); return ms > 0 && ms < 7 * 24 * 60 * 60 * 1000; })
@@ -389,48 +388,6 @@ const HomePage = () => {
         {/* ── Default Home View ── */}
         {category === 'all' && !search && (
           <>
-            {/* Hot in India */}
-            <section>
-              <AnimateIn delay={0.2}>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
-                      <Flame className="w-4 h-4 text-warning" />
-                    </div>
-                    <div>
-                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Hot in India</h2>
-                      <p className="text-[11px] text-muted-foreground">Highest volume India markets right now</p>
-                    </div>
-                  </div>
-                  <button onClick={() => navigate('/markets')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
-                    See all <ChevronRight className="w-3 h-3" />
-                  </button>
-                </div>
-              </AnimateIn>
-
-              {indiaLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
-                </div>
-              ) : indiaHot.length > 0 ? (
-                <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-3" baseDelay={0.25} staggerDelay={0.07}>
-                  {indiaHot.map((m, i) => (
-                    <div key={m.id} className="relative">
-                      {i === 0 && (
-                        <div className="absolute -top-2 -left-1 z-10 flex items-center gap-1 bg-warning text-warning-foreground text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
-                          <Star className="w-2.5 h-2.5" /> #1
-                        </div>
-                      )}
-                      <MarketCard market={m} />
-                    </div>
-                  ))}
-                </StaggerChildren>
-              ) : (
-                <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-3" baseDelay={0.25} staggerDelay={0.07}>
-                  {globalTrending.map(m => <MarketCard key={m.id} market={m} />)}
-                </StaggerChildren>
-              )}
-            </section>
 
             {/* ── Trending Events Section ── */}
             <section>

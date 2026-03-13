@@ -250,7 +250,12 @@ const HomePage = () => {
                   >
                     Polymarket
                   </a>{' '}
-                  · Updates every 5 minutes
+                  · Auto-refreshes every 5 min
+                  {lastUpdated && (
+                    <span className="ml-1 opacity-60">
+                      · Last updated {lastUpdated.toLocaleTimeString()}
+                    </span>
+                  )}
                 </p>
               </AnimateIn>
             )}

@@ -32,7 +32,7 @@ const HomePage = () => {
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
 
-  const { markets: allMarkets, loading: allLoading, refetch: refetchAll } = useMarkets();
+  const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated } = useMarkets();
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia } = useIndiaMarkets();
 
   const loading = allLoading || indiaLoading;
@@ -250,7 +250,12 @@ const HomePage = () => {
                   >
                     Polymarket
                   </a>{' '}
-                  · Updates every 5 minutes
+                  · Auto-refreshes every 5 min
+                  {lastUpdated && (
+                    <span className="ml-1 opacity-60">
+                      · Last updated {lastUpdated.toLocaleTimeString()}
+                    </span>
+                  )}
                 </p>
               </AnimateIn>
             )}

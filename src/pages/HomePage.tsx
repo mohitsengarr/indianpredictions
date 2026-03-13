@@ -243,13 +243,13 @@ const HomePage = () => {
         {/* ── Default home view (all + no search) ── */}
         {category === 'all' && !search && (
           <>
-            {/* 🔥 India Spotlight — Featured Hot 3 */}
+        {/* 🔥 India Spotlight — Featured Hot 3 */}
             <section>
               <AnimateIn delay={0.2}>
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-orange-100 flex items-center justify-center">
-                      <Flame className="w-4 h-4 text-orange-500" />
+                    <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
+                      <Flame className="w-4 h-4 text-warning" />
                     </div>
                     <div>
                       <h2 className="font-display font-bold text-base lg:text-lg leading-tight">

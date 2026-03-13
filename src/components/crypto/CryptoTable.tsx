@@ -2,6 +2,9 @@ import { useState, useMemo } from 'react';
 import { Star, ChevronUp, ChevronDown, Info } from 'lucide-react';
 import { CryptoAsset, USD_TO_INR } from '@/data/crypto-data';
 import CryptoSparkline from './CryptoSparkline';
+import LivePriceCell from './LivePriceCell';
+import ConnectionStatus from './ConnectionStatus';
+import { LiveCryptoPrice } from '@/hooks/useBinanceWebSocket';
 
 type SortKey = 'rank' | 'name' | 'price' | 'change1h' | 'change24h' | 'change7d' | 'marketCap' | 'volume24h' | 'circulatingSupply';
 type SortDir = 'asc' | 'desc';
@@ -10,22 +13,47 @@ type Tab = 'top' | 'trending' | 'gainers' | 'losers';
 interface CryptoTableProps {
   data: CryptoAsset[];
   showINR: boolean;
+  livePrices?: Map<string, LiveCryptoPrice>;
+  isConnected?: boolean;
+  lastUpdate?: Date | null;
 }
 
 const fmtPrice = (price: number, showINR: boolean) => {
   const v = showINR ? price * USD_TO_INR : price;
   const symbol = showINR ? '₹' : '$';
+  if (showINR && v >= 1) {
+    return `${symbol}${formatINR(v)}`;
+  }
   if (v >= 1) return `${symbol}${v.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   if (v >= 0.01) return `${symbol}${v.toFixed(4)}`;
-  // small prices - show more decimals
   const s = v.toFixed(10);
   const match = s.match(/^0\.(0*[1-9]\d{0,3})/);
   return `${symbol}${match ? `0.${match[1]}` : v.toFixed(8)}`;
 };
 
+/** Format number in Indian numbering system (lakhs, crores) */
+const formatINR = (n: number): string => {
+  const fixed = n.toFixed(2);
+  const [intPart, decPart] = fixed.split('.');
+  // Indian grouping: last 3 digits, then groups of 2
+  const lastThree = intPart.slice(-3);
+  const rest = intPart.slice(0, -3);
+  const formatted = rest.length > 0
+    ? rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + lastThree
+    : lastThree;
+  return `${formatted}.${decPart}`;
+};
+
 const fmtCap = (n: number, showINR: boolean) => {
   const v = showINR ? n * USD_TO_INR : n;
   const symbol = showINR ? '₹' : '$';
+  if (showINR) {
+    // Indian abbreviations for large numbers
+    if (v >= 1e12) return `${symbol}${(v / 1e12).toFixed(2)}T`;
+    if (v >= 1e7) return `${symbol}${formatINR(Math.round(v / 1e7))} Cr`;
+    if (v >= 1e5) return `${symbol}${formatINR(Math.round(v / 1e5))} L`;
+    return `${symbol}${formatINR(v)}`;
+  }
   if (v >= 1e12) return `${symbol}${(v / 1e12).toFixed(2)}T`;
   if (v >= 1e9) return `${symbol}${(v / 1e9).toFixed(2)}B`;
   if (v >= 1e6) return `${symbol}${(v / 1e6).toFixed(2)}M`;
@@ -48,13 +76,31 @@ const ChangeCell = ({ value }: { value: number }) => {
   );
 };
 
-const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
+const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdate = null }: CryptoTableProps) => {
   const [sortKey, setSortKey] = useState<SortKey>('rank');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
   const [watchlist, setWatchlist] = useState<Set<string>>(new Set());
   const [tab, setTab] = useState<Tab>('top');
   const [page, setPage] = useState(1);
   const perPage = 15;
+
+  const hasLiveData = livePrices && livePrices.size > 0;
+
+  // Merge static data with live prices
+  const mergedData = useMemo(() => {
+    if (!hasLiveData) return data;
+    return data.map((c) => {
+      const live = livePrices.get(c.symbol);
+      if (!live) return c;
+      return {
+        ...c,
+        price: live.price,
+        change24h: live.changePercent24h,
+        volume24h: live.quoteVolume,
+        marketCap: live.price * c.circulatingSupply,
+      };
+    });
+  }, [data, livePrices, hasLiveData]);
 
   const toggleWatchlist = (ticker: string) => {
     setWatchlist((prev) => {
@@ -72,12 +118,12 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
 
   const tabData = useMemo(() => {
     switch (tab) {
-      case 'trending': return [...data].sort((a, b) => b.volume24h - a.volume24h);
-      case 'gainers': return [...data].sort((a, b) => b.change24h - a.change24h);
-      case 'losers': return [...data].sort((a, b) => a.change24h - b.change24h);
-      default: return data;
+      case 'trending': return [...mergedData].sort((a, b) => b.volume24h - a.volume24h);
+      case 'gainers': return [...mergedData].sort((a, b) => b.change24h - a.change24h);
+      case 'losers': return [...mergedData].sort((a, b) => a.change24h - b.change24h);
+      default: return mergedData;
     }
-  }, [data, tab]);
+  }, [mergedData, tab]);
 
   const sorted = useMemo(() => {
     const arr = [...tabData];
@@ -102,13 +148,18 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
     { key: 'losers', label: 'Losers' },
   ];
 
-  const SortHeader = ({ label, sKey, tooltip }: { label: string; sKey: SortKey; tooltip?: string }) => (
+  const SortHeader = ({ label, sKey, tooltip, badge }: { label: string; sKey: SortKey; tooltip?: string; badge?: string }) => (
     <th
       className="px-3 py-3 text-left text-xs font-semibold text-gray-500 cursor-pointer select-none hover:text-gray-800 transition-colors whitespace-nowrap"
       onClick={() => handleSort(sKey)}
     >
       <div className="flex items-center gap-1">
         {label}
+        {badge && (
+          <span className="px-1.5 py-0.5 text-[10px] font-bold bg-[#16C784] text-white rounded-sm leading-none">
+            {badge}
+          </span>
+        )}
         {tooltip && <Info className="w-3 h-3 text-gray-400" />}
         {sortKey === sKey && (sortDir === 'asc' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />)}
       </div>
@@ -117,22 +168,25 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
 
   return (
     <div>
-      {/* Tabs */}
-      <div className="flex gap-1 mb-4 border-b border-gray-200">
-        {tabs.map((t) => (
-          <button
-            key={t.key}
-            onClick={() => { setTab(t.key); setPage(1); }}
-            className={`px-4 py-2.5 text-sm font-semibold transition-colors relative ${
-              tab === t.key
-                ? 'text-blue-600'
-                : 'text-gray-500 hover:text-gray-800'
-            }`}
-          >
-            {t.label}
-            {tab === t.key && <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-t" />}
-          </button>
-        ))}
+      {/* Connection Status + Tabs row */}
+      <div className="flex items-center justify-between mb-4 border-b border-gray-200">
+        <div className="flex gap-1">
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => { setTab(t.key); setPage(1); }}
+              className={`px-4 py-2.5 text-sm font-semibold transition-colors relative ${
+                tab === t.key
+                  ? 'text-blue-600'
+                  : 'text-gray-500 hover:text-gray-800'
+              }`}
+            >
+              {t.label}
+              {tab === t.key && <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 rounded-t" />}
+            </button>
+          ))}
+        </div>
+        <ConnectionStatus isConnected={isConnected} lastUpdate={lastUpdate} />
       </div>
 
       {/* Table */}
@@ -143,7 +197,7 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
               <SortHeader label="#" sKey="rank" />
               <th className="px-1 py-3 w-8" />
               <SortHeader label="Name" sKey="name" />
-              <SortHeader label="Price" sKey="price" />
+              <SortHeader label="Price" sKey="price" badge={hasLiveData ? 'LIVE' : undefined} />
               <SortHeader label="1h %" sKey="change1h" />
               <SortHeader label="24h %" sKey="change24h" />
               <SortHeader label="7d %" sKey="change7d" />
@@ -154,12 +208,15 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {paged.map((c) => {
+            {paged.map((c, idx) => {
               const supplyPercent = c.maxSupply ? (c.circulatingSupply / c.maxSupply) * 100 : null;
+              const isLive = hasLiveData && livePrices.has(c.symbol);
               return (
                 <tr
                   key={c.symbol}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer group"
+                  className={`border-b border-gray-100 hover:bg-gray-50 transition-colors cursor-pointer group ${
+                    idx % 2 === 1 ? 'bg-gray-50/50' : ''
+                  }`}
                 >
                   <td className="px-3 py-4 text-sm text-gray-500 font-medium">{c.rank}</td>
                   <td className="px-1 py-4">
@@ -184,7 +241,11 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
                     </div>
                   </td>
                   <td className="px-3 py-4 text-sm font-semibold text-gray-900 text-right">
-                    {fmtPrice(c.price, showINR)}
+                    <LivePriceCell
+                      formattedPrice={fmtPrice(c.price, showINR)}
+                      rawPrice={c.price}
+                      isLive={isLive}
+                    />
                   </td>
                   <td className="px-3 py-4 text-sm text-right"><ChangeCell value={c.change1h} /></td>
                   <td className="px-3 py-4 text-sm text-right"><ChangeCell value={c.change24h} /></td>
@@ -235,6 +296,11 @@ const CryptoTable = ({ data, showINR }: CryptoTableProps) => {
             Next
           </button>
         </div>
+      </div>
+
+      {/* Footer note */}
+      <div className="text-center text-xs text-gray-400 mt-4 pb-2">
+        Prices update in real-time via Binance
       </div>
     </div>
   );

@@ -4,9 +4,11 @@ import { CRYPTO_DATA } from '@/data/crypto-data';
 import CryptoStatsBar from '@/components/crypto/CryptoStatsBar';
 import CryptoTable from '@/components/crypto/CryptoTable';
 import { useSEO } from '@/hooks/useSEO';
+import { useBinanceWebSocket } from '@/hooks/useBinanceWebSocket';
 
 const CryptoPage = () => {
   const [showINR, setShowINR] = useState(true);
+  const { prices, isConnected, lastUpdate } = useBinanceWebSocket();
 
   useSEO({
     title: 'Cryptocurrency Prices, Charts & Market Cap | India Predictions',
@@ -18,7 +20,7 @@ const CryptoPage = () => {
   return (
     <div className="pb-24 lg:pb-8 bg-white min-h-screen">
       {/* Global Stats Bar */}
-      <CryptoStatsBar showINR={showINR} />
+      <CryptoStatsBar showINR={showINR} livePrices={prices} isConnected={isConnected} />
 
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6">
         {/* Page Header */}
@@ -63,7 +65,13 @@ const CryptoPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
         >
-          <CryptoTable data={CRYPTO_DATA} showINR={showINR} />
+          <CryptoTable
+            data={CRYPTO_DATA}
+            showINR={showINR}
+            livePrices={prices}
+            isConnected={isConnected}
+            lastUpdate={lastUpdate}
+          />
         </motion.div>
       </div>
     </div>

@@ -153,7 +153,7 @@ const HomePage = () => {
             <AnimateIn delay={0.15}>
               <div className="flex items-center gap-4 flex-wrap">
                 <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                  <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
                   <span className="text-xs font-semibold text-white">
                     {indiaMarkets.length} Live India Markets
                   </span>

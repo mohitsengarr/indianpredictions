@@ -69,13 +69,15 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     category: 'economy',
     status: 'active',
     summary:
-      'RBI maintained repo rate at 5.25% in Feb 2026 meeting. Neutral stance maintained. 80% of economists expect rates steady through 2026.',
+      'RBI maintained repo rate at 5.25% (Feb 2026 MPC) and flagged geopolitical tensions, volatile energy prices and adverse weather as key upside risks. New RBI projections put FY26 inflation at 2.1% (Q4: 3.2%) and FY27 inflation at 4.0% (Q1) / 4.2% (Q2); FY26 GDP growth is seen at 7.4%, with FY27 Q1/Q2 at 6.9%/7.0%.',
     keyDataPoints: [
       { label: 'GDP Growth FY26', value: '7.4%' },
-      { label: 'GDP Growth FY27 Forecast', value: '6.8-7.2%' },
-      { label: 'Inflation FY26', value: '2.1%' },
-      { label: 'Projected Inflation 2026', value: '3.9%' },
-      { label: 'Goldman Sachs 2026 Forecast', value: '6.9% growth' },
+      { label: 'GDP Growth FY27 Q1', value: '6.9%' },
+      { label: 'GDP Growth FY27 Q2', value: '7.0%' },
+      { label: 'Inflation FY26 (avg)', value: '2.1%' },
+      { label: 'Inflation FY26 Q4', value: '3.2%' },
+      { label: 'Inflation FY27 Q1', value: '4.0%' },
+      { label: 'Inflation FY27 Q2', value: '4.2%' },
     ],
     mckinseyAnalysis: [
       'India remains fastest-growing major economy for 4th consecutive year',

@@ -32,7 +32,7 @@ const HomePage = () => {
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
 
-  const { markets: allMarkets, loading: allLoading, refetch: refetchAll } = useMarkets();
+  const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated } = useMarkets();
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia } = useIndiaMarkets();
 
   const loading = allLoading || indiaLoading;

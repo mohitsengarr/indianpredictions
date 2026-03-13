@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 interface SEOMeta {
   title: string;
@@ -12,15 +12,18 @@ interface SEOMeta {
 
 const BASE_URL = 'https://indianpredictions.lovable.app';
 const DEFAULT_IMAGE = 'https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/07c14fad-e803-4809-8654-86579cab78d8/id-preview-a8d4ee2e--5fc81140-cec5-43a7-b277-b2d8ba92190f.lovable.app-1771895603345.png';
+const SEO_ATTR = 'data-seo-managed';
 
 function setMeta(name: string, content: string, attr: 'name' | 'property' = 'name') {
   let el = document.querySelector(`meta[${attr}="${name}"]`) as HTMLMetaElement | null;
   if (!el) {
     el = document.createElement('meta');
     el.setAttribute(attr, name);
+    el.setAttribute(SEO_ATTR, 'true');
     document.head.appendChild(el);
   }
   el.setAttribute('content', content);
+  el.setAttribute(SEO_ATTR, 'true');
 }
 
 function setLink(rel: string, href: string) {
@@ -28,9 +31,11 @@ function setLink(rel: string, href: string) {
   if (!el) {
     el = document.createElement('link');
     el.rel = rel;
+    el.setAttribute(SEO_ATTR, 'true');
     document.head.appendChild(el);
   }
   el.href = href;
+  el.setAttribute(SEO_ATTR, 'true');
 }
 
 function setSchema(schema: object | object[]) {
@@ -40,12 +45,25 @@ function setSchema(schema: object | object[]) {
     el = document.createElement('script');
     el.type = 'application/ld+json';
     el.id = id;
+    el.setAttribute(SEO_ATTR, 'true');
     document.head.appendChild(el);
   }
   el.textContent = JSON.stringify(Array.isArray(schema) ? schema : [schema]);
 }
 
+function cleanupSEOMeta() {
+  document.querySelectorAll(`[${SEO_ATTR}]`).forEach((el) => {
+    if (el.id !== 'dynamic-schema-ld') {
+      el.removeAttribute(SEO_ATTR);
+    }
+  });
+  const schemaEl = document.getElementById('dynamic-schema-ld');
+  if (schemaEl) schemaEl.remove();
+}
+
 export function useSEO({ title, description, keywords, canonical, ogImage, schema }: SEOMeta) {
+  const schemaStr = useMemo(() => (schema ? JSON.stringify(schema) : ''), [schema]);
+
   useEffect(() => {
     const fullTitle = `${title} | India Predictions`;
     document.title = fullTitle;
@@ -70,11 +88,11 @@ export function useSEO({ title, description, keywords, canonical, ogImage, schem
     setMeta('twitter:image', image);
 
     // Structured data
-    if (schema) setSchema(schema);
+    if (schemaStr) setSchema(JSON.parse(schemaStr));
 
-  return () => {
-      // Restore default title on unmount
+    return () => {
       document.title = "India Predictions – India's Prediction Trading Platform";
+      cleanupSEOMeta();
     };
-  }, [title, description, keywords, canonical, ogImage, schema]);
+  }, [title, description, keywords, canonical, ogImage, schemaStr]);
 }

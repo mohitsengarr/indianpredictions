@@ -298,12 +298,12 @@ export default function AnalyticsPage() {
                   <span className="font-display font-bold text-sm">India</span>
                 </div>
                 <p className="text-2xl font-display font-extrabold">{formatINR(stats.indiaVol)}</p>
-                <p className="text-xs text-muted-foreground mt-1">{stats.indiaMarketsCount} markets · {Math.round((stats.indiaVol / (stats.indiaVol + stats.globalVol)) * 100)}% of total volume</p>
+                <p className="text-xs text-muted-foreground mt-1">{stats.indiaMarketsCount} markets · {(stats.indiaVol + stats.globalVol) > 0 ? Math.round((stats.indiaVol / (stats.indiaVol + stats.globalVol)) * 100) : 0}% of total volume</p>
                 <div className="mt-3 h-2 rounded-full bg-muted overflow-hidden">
                   <div
                     className="h-full rounded-full"
                     style={{
-                      width: `${Math.round((stats.indiaVol / (stats.indiaVol + stats.globalVol)) * 100)}%`,
+                      width: `${(stats.indiaVol + stats.globalVol) > 0 ? Math.round((stats.indiaVol / (stats.indiaVol + stats.globalVol)) * 100) : 0}%`,
                       background: 'linear-gradient(90deg, hsl(222 100% 22%), hsl(196 100% 42%))',
                     }}
                   />
@@ -316,11 +316,11 @@ export default function AnalyticsPage() {
                   <span className="font-display font-bold text-sm">Global</span>
                 </div>
                 <p className="text-2xl font-display font-extrabold">{formatINR(stats.globalVol)}</p>
-                <p className="text-xs text-muted-foreground mt-1">{stats.globalMarketsCount} markets · {Math.round((stats.globalVol / (stats.indiaVol + stats.globalVol)) * 100)}% of total volume</p>
+                <p className="text-xs text-muted-foreground mt-1">{stats.globalMarketsCount} markets · {(stats.indiaVol + stats.globalVol) > 0 ? Math.round((stats.globalVol / (stats.indiaVol + stats.globalVol)) * 100) : 0}% of total volume</p>
                 <div className="mt-3 h-2 rounded-full bg-muted overflow-hidden">
                   <div
                     className="h-full rounded-full bg-muted-foreground/40 rounded-full"
-                    style={{ width: `${Math.round((stats.globalVol / (stats.indiaVol + stats.globalVol)) * 100)}%` }}
+                    style={{ width: `${(stats.indiaVol + stats.globalVol) > 0 ? Math.round((stats.globalVol / (stats.indiaVol + stats.globalVol)) * 100) : 0}%` }}
                   />
                 </div>
               </div>

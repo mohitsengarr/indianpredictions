@@ -1,4 +1,4 @@
-# OpinionBazaar – robots.txt
+# India Predictions – robots.txt
 # https://indianpredictions.lovable.app/
 
 # ── Standard search engine crawlers ──────────────────────────────────
@@ -62,10 +62,6 @@ Allow: /
 
 # Google Bard / Gemini
 User-agent: Google-Extended
-Allow: /
-
-# Microsoft Copilot / Bing AI
-User-agent: Bingbot
 Allow: /
 
 # Cohere AI

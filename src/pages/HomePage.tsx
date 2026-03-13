@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 import MarketCard from '@/components/MarketCard';
-import CategoryTabs from '@/components/CategoryTabs';
 import RiskBanner from '@/components/RiskBanner';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
+import TrendingEvents from '@/components/TrendingEvents';
 import { APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
-import { Search, Bell, Zap, Clock, TrendingUp, RefreshCw, Flame, ChevronRight, Star } from 'lucide-react';
+import { TRENDING_EVENTS } from '@/data/trending-events';
+import { BLOG_POSTS } from '@/data/blog-posts';
+import {
+  Search, Bell, Zap, Clock, TrendingUp, RefreshCw, Flame,
+  ChevronRight, Star, ArrowRight, BookOpen, Mail, Newspaper,
+} from 'lucide-react';
 import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
-import { useNavigate } from 'react-router-dom';
 
+/* ── Skeleton ── */
 const SkeletonCard = () => (
   <div className="bg-card rounded-lg border border-border p-4 space-y-3 animate-pulse">
     <div className="h-3 bg-muted rounded w-1/3" />
@@ -24,6 +31,53 @@ const SkeletonCard = () => (
   </div>
 );
 
+/* ── Animated Number Counter ── */
+const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: number; duration?: number; prefix?: string; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const step = end / (duration * 60);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 1000 / 60);
+    return () => clearInterval(timer);
+  }, [isInView, end, duration]);
+
+  return <span ref={ref}>{prefix}{count.toLocaleString('en-IN')}{suffix}</span>;
+};
+
+/* ── Live Events Ticker ── */
+const LiveTicker = () => {
+  const critical = TRENDING_EVENTS.filter((e) => e.status === 'critical' || e.status === 'active');
+  return (
+    <div className="overflow-hidden bg-muted/50 border-y border-border py-2">
+      <motion.div
+        className="flex gap-8 whitespace-nowrap"
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+      >
+        {[...critical, ...critical].map((e, i) => (
+          <Link key={`${e.id}-${i}`} to={`/events/${e.slug}`} className="inline-flex items-center gap-2 text-xs font-medium hover:text-primary transition-colors">
+            <span className={`w-1.5 h-1.5 rounded-full ${e.status === 'critical' ? 'bg-destructive animate-pulse' : 'bg-success'}`} />
+            <span>{e.categoryEmoji} {e.title}</span>
+          </Link>
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+/* ── Category pills ── */
 const INDIA_CATEGORY_PILLS = [
   { key: 'cricket', emoji: '🏏', label: 'Cricket & IPL' },
   { key: 'politics', emoji: '🗳️', label: 'Politics' },
@@ -38,61 +92,52 @@ const HomePage = () => {
     description: "India's #1 opinion trading platform. Live prediction markets for IPL, cricket, RBI rates, Nifty, Bollywood box office & Bitcoin. Real-time prices in INR.",
     keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
     canonical: "/",
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'India Predictions',
+      url: 'https://indianpredictions.lovable.app',
+      description: "India's #1 opinion trading platform",
+    },
   });
 
   const navigate = useNavigate();
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
+  const [email, setEmail] = useState('');
 
   const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated } = useMarkets();
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia } = useIndiaMarkets();
 
   const loading = allLoading || indiaLoading;
+  const refetch = () => { refetchAll(); refetchIndia(); };
 
-  const refetch = () => {
-    refetchAll();
-    refetchIndia();
-  };
-
-  // India sections
+  // Market sections
   const indiaHot = [...indiaMarkets].sort((a, b) => b.volume - a.volume).slice(0, 3);
   const indiaTrending = indiaMarkets.slice(0, 6);
   const indiaClosingSoon = indiaMarkets
-    .filter((m) => {
-      const ms = new Date(m.closesAt).getTime() - Date.now();
-      return ms > 0 && ms < 7 * 24 * 60 * 60 * 1000;
-    })
+    .filter((m) => { const ms = new Date(m.closesAt).getTime() - Date.now(); return ms > 0 && ms < 7 * 24 * 60 * 60 * 1000; })
     .slice(0, 3);
-
-  // By category for India
   const indiaCricket = indiaMarkets.filter(m => m.category === 'cricket').slice(0, 3);
   const indiaPolitics = indiaMarkets.filter(m => m.category === 'politics').slice(0, 3);
   const indiaEconomy = indiaMarkets.filter(m => m.category === 'economy').slice(0, 3);
+  const globalTrending = [...allMarkets].sort((a, b) => b.volume - a.volume).slice(0, 3);
 
-  // Global trending
-  const globalTrending = [...allMarkets]
-    .sort((a, b) => b.volume - a.volume)
-    .slice(0, 3);
-
-  // Filtered view
-  const enabledMarkets = allMarkets.filter((m) =>
-    APP_CONFIG.enabledCategories.includes(m.category)
-  );
+  const enabledMarkets = allMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
   const filtered = enabledMarkets.filter((m) => {
     const matchCat = category === 'all' || m.category === category;
     const matchSearch = m.title.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
 
-  // India total volume
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
 
   return (
     <div className="pb-24 lg:pb-8">
 
-      {/* ── India-first Hero Header ── */}
+      {/* ── Hero Header ── */}
       <div className="relative overflow-hidden">
-        {/* Tricolour stripe accent at very top */}
+        {/* Tricolour stripe */}
         <div className="h-1 w-full flex">
           <div className="flex-1" style={{ background: '#FF9933' }} />
           <div className="flex-1 bg-white" />
@@ -100,13 +145,13 @@ const HomePage = () => {
         </div>
 
         <div className="paytm-header px-4 lg:px-8 pt-10 lg:pt-8 pb-8 relative">
-          {/* Decorative Ashoka chakra watermark */}
+          {/* Decorative watermark */}
           <div className="absolute right-4 top-4 text-white/5 text-[120px] leading-none select-none pointer-events-none font-bold">
             ☸
           </div>
 
           <div className="max-w-5xl mx-auto">
-            <AnimateIn direction="down" distance={12} duration={0.6}>
+            <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
               <div className="flex items-center justify-between mb-5">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
@@ -120,23 +165,29 @@ const HomePage = () => {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
                     onClick={refetch}
                     disabled={loading}
-                    className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center transition-all hover:bg-white/20 hover:scale-105 active:scale-95 disabled:opacity-40"
+                    className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center transition-all hover:bg-white/20 disabled:opacity-40"
                     title="Refresh markets"
                   >
                     <RefreshCw className={`w-4 h-4 text-white ${loading ? 'animate-spin' : ''}`} />
-                  </button>
-                  <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all hover:bg-white/20 hover:scale-105 active:scale-95">
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all hover:bg-white/20"
+                  >
                     <Bell className="w-5 h-5 text-white" />
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </AnimateIn>
+            </motion.div>
 
-            {/* Search bar */}
-            <AnimateIn delay={0.1} distance={12}>
+            {/* Search */}
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}>
               <div className="relative max-w-md mb-5">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
                 <input
@@ -147,42 +198,54 @@ const HomePage = () => {
                   className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-white/30 focus:bg-white/15 transition-all"
                 />
               </div>
-            </AnimateIn>
+            </motion.div>
 
-            {/* India Stats Bar */}
-            <AnimateIn delay={0.15}>
-              <div className="flex items-center gap-4 flex-wrap">
+            {/* Stats Bar with animated counters */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              className="flex items-center gap-4 flex-wrap"
+            >
+              <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+                <span className="text-xs font-semibold text-white">
+                  <CountUp end={indiaMarkets.length} duration={1} /> Live India Markets
+                </span>
+              </div>
+              {indiaTotalVol > 0 && (
                 <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                  <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+                  <TrendingUp className="w-3 h-3 text-secondary" />
                   <span className="text-xs font-semibold text-white">
-                    {indiaMarkets.length} Live India Markets
+                    {formatINR(indiaTotalVol)} Total Volume
                   </span>
                 </div>
-                {indiaTotalVol > 0 && (
-                  <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                    <TrendingUp className="w-3 h-3 text-secondary" />
-                    <span className="text-xs font-semibold text-white">
-                      {formatINR(indiaTotalVol)} Total Volume
-                    </span>
-                  </div>
-                )}
-                {lastUpdated && (
-                  <span className="text-[11px] text-white/45">
-                    Updated {lastUpdated.toLocaleTimeString()}
-                  </span>
-                )}
+              )}
+              <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                <Newspaper className="w-3 h-3 text-warning" />
+                <span className="text-xs font-semibold text-white">
+                  <CountUp end={TRENDING_EVENTS.length} duration={0.8} /> Trending Events
+                </span>
               </div>
-            </AnimateIn>
+              {lastUpdated && (
+                <span className="text-[11px] text-white/45">
+                  Updated {lastUpdated.toLocaleTimeString()}
+                </span>
+              )}
+            </motion.div>
           </div>
         </div>
       </div>
+
+      {/* ── Live Events Ticker ── */}
+      <LiveTicker />
 
       <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-7 mt-5">
         <AnimateIn delay={0.05} scale>
           <RiskBanner />
         </AnimateIn>
 
-        {/* ── India Category Quick-Pills ── */}
+        {/* ── Category Pills ── */}
         {!search && (
           <AnimateIn delay={0.1}>
             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
@@ -213,7 +276,7 @@ const HomePage = () => {
           </AnimateIn>
         )}
 
-        {/* ── Category / Search filtered view ── */}
+        {/* ── Filtered / Search view ── */}
         {(category !== 'all' || search) && (
           <section>
             <AnimateIn>
@@ -225,25 +288,20 @@ const HomePage = () => {
                 <span className="text-xs text-muted-foreground font-normal">({filtered.length})</span>
               </h2>
             </AnimateIn>
-            <StaggerChildren
-              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"
-              staggerDelay={0.06}
-            >
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.06}>
               {filtered.length > 0 ? (
                 filtered.map((m) => <MarketCard key={m.id} market={m} />)
               ) : (
-                <p className="text-center text-sm text-muted-foreground py-8 col-span-full">
-                  No markets found
-                </p>
+                <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No markets found</p>
               )}
             </StaggerChildren>
           </section>
         )}
 
-        {/* ── Default home view (all + no search) ── */}
+        {/* ── Default Home View ── */}
         {category === 'all' && !search && (
           <>
-        {/* 🔥 India Spotlight — Featured Hot 3 */}
+            {/* Hot in India */}
             <section>
               <AnimateIn delay={0.2}>
                 <div className="flex items-center justify-between mb-3">
@@ -252,16 +310,11 @@ const HomePage = () => {
                       <Flame className="w-4 h-4 text-warning" />
                     </div>
                     <div>
-                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">
-                        🔥 Hot in India
-                      </h2>
+                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Hot in India</h2>
                       <p className="text-[11px] text-muted-foreground">Highest volume India markets right now</p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => navigate('/markets')}
-                    className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
-                  >
+                  <button onClick={() => navigate('/markets')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
                     See all <ChevronRight className="w-3 h-3" />
                   </button>
                 </div>
@@ -272,11 +325,7 @@ const HomePage = () => {
                   {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
                 </div>
               ) : indiaHot.length > 0 ? (
-                <StaggerChildren
-                  className="grid grid-cols-1 md:grid-cols-3 gap-3"
-                  baseDelay={0.25}
-                  staggerDelay={0.07}
-                >
+                <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-3" baseDelay={0.25} staggerDelay={0.07}>
                   {indiaHot.map((m, i) => (
                     <div key={m.id} className="relative">
                       {i === 0 && (
@@ -295,7 +344,28 @@ const HomePage = () => {
               )}
             </section>
 
-            {/* 🏏 Cricket & IPL */}
+            {/* ── Trending Events Section ── */}
+            <section>
+              <AnimateIn delay={0.1}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-destructive/15 flex items-center justify-center">
+                      <Zap className="w-4 h-4 text-destructive" />
+                    </div>
+                    <div>
+                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Trending Events</h2>
+                      <p className="text-[11px] text-muted-foreground">Major developments shaping Indian markets</p>
+                    </div>
+                  </div>
+                  <Link to="/events/stock-market-crash-fearful-friday" className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
+                    All Events <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </AnimateIn>
+              <TrendingEvents limit={6} showFilter={false} />
+            </section>
+
+            {/* Cricket & IPL */}
             {(indiaCricket.length > 0 || indiaLoading) && (
               <section>
                 <AnimateIn delay={0.1}>
@@ -307,10 +377,7 @@ const HomePage = () => {
                         <p className="text-[11px] text-muted-foreground">Predict match outcomes & series results</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => setCategory('cricket')}
-                      className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
-                    >
+                    <button onClick={() => setCategory('cricket')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
                       More <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
@@ -331,7 +398,7 @@ const HomePage = () => {
               </section>
             )}
 
-            {/* 🗳️ Politics */}
+            {/* Politics */}
             {(indiaPolitics.length > 0 || indiaLoading) && (
               <section>
                 <AnimateIn delay={0.1}>
@@ -343,10 +410,7 @@ const HomePage = () => {
                         <p className="text-[11px] text-muted-foreground">Elections, policy & government decisions</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => setCategory('politics')}
-                      className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
-                    >
+                    <button onClick={() => setCategory('politics')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
                       More <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
@@ -367,7 +431,7 @@ const HomePage = () => {
               </section>
             )}
 
-            {/* 📈 Economy & Markets */}
+            {/* Economy */}
             {(indiaEconomy.length > 0 || indiaLoading) && (
               <section>
                 <AnimateIn delay={0.1}>
@@ -379,10 +443,7 @@ const HomePage = () => {
                         <p className="text-[11px] text-muted-foreground">RBI, Nifty, inflation & macro India</p>
                       </div>
                     </div>
-                    <button
-                      onClick={() => setCategory('economy')}
-                      className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
-                    >
+                    <button onClick={() => setCategory('economy')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
                       More <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
@@ -403,7 +464,7 @@ const HomePage = () => {
               </section>
             )}
 
-            {/* ⚡ Closing Soon */}
+            {/* Closing Soon */}
             {indiaClosingSoon.length > 0 && (
               <section>
                 <AnimateIn delay={0.1}>
@@ -419,7 +480,50 @@ const HomePage = () => {
               </section>
             )}
 
-            {/* 🌐 All India Markets (Full Grid) */}
+            {/* ── Blog Preview ── */}
+            <section>
+              <AnimateIn delay={0.1}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center">
+                      <BookOpen className="w-4 h-4 text-primary" />
+                    </div>
+                    <div>
+                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Latest Analysis</h2>
+                      <p className="text-[11px] text-muted-foreground">Prediction market insights & education</p>
+                    </div>
+                  </div>
+                  <Link to="/blog" className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
+                    All Posts <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </AnimateIn>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                {BLOG_POSTS.slice(0, 3).map((post, i) => (
+                  <motion.div
+                    key={post.id}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    whileHover={{ y: -3 }}
+                  >
+                    <Link to={`/blog/${post.slug}`} className="paytm-card p-4 block group h-full">
+                      <p className="text-[10px] font-semibold text-primary mb-1">{post.category}</p>
+                      <h3 className="font-display font-bold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">{post.excerpt}</p>
+                      <div className="flex items-center gap-1 text-xs text-primary font-semibold mt-3">
+                        Read More <ArrowRight className="w-3 h-3" />
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* ── All India Markets Grid ── */}
             <section>
               <AnimateIn delay={0.1}>
                 <div className="flex items-center justify-between mb-3">
@@ -443,11 +547,7 @@ const HomePage = () => {
                   {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
                 </div>
               ) : indiaTrending.length > 0 ? (
-                <StaggerChildren
-                  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"
-                  baseDelay={0.1}
-                  staggerDelay={0.06}
-                >
+                <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.1} staggerDelay={0.06}>
                   {indiaTrending.map(m => <MarketCard key={m.id} market={m} />)}
                 </StaggerChildren>
               ) : (
@@ -462,6 +562,43 @@ const HomePage = () => {
                 </div>
               )}
             </section>
+
+            {/* ── Newsletter Signup ── */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="font-display font-bold text-base">Stay Ahead of the Market</h2>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Get weekly prediction market insights, trending events, and analysis delivered to your inbox.
+                  </p>
+                  <div className="flex gap-2 mt-3 max-w-sm">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="flex-1 bg-background border border-border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                    />
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-semibold hover:bg-primary/90 transition-colors"
+                    >
+                      Subscribe
+                    </motion.button>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
 
             {/* Attribution */}
             {!loading && (

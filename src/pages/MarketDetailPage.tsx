@@ -20,7 +20,7 @@ const MarketDetailPage = () => {
       : 'Market Detail',
     description: market
       ? `Trade on: "${market.title}". Yes price: ${Math.round(market.yesPrice * 100)}%, No price: ${Math.round(market.noPrice * 100)}%. ${market.resolutionCriteria}`
-      : 'View live prediction market prices on OpinionBazaar.',
+      : 'View live prediction market prices on India Predictions.',
     keywords: market
       ? `${market.title}, prediction market, opinion trading, ${market.category} prediction India`
       : undefined,
@@ -35,7 +35,7 @@ const MarketDetailPage = () => {
           endDate: market.closesAt,
           eventStatus: 'https://schema.org/EventScheduled',
           location: { '@type': 'VirtualLocation', url: `https://indianpredictions.lovable.app/market/${market.id}` },
-          organizer: { '@type': 'Organization', name: 'OpinionBazaar', url: 'https://indianpredictions.lovable.app' },
+          organizer: { '@type': 'Organization', name: 'India Predictions', url: 'https://indianpredictions.lovable.app' },
         }
       : undefined,
   });
@@ -56,7 +56,7 @@ const MarketDetailPage = () => {
       <div className="flex flex-col items-center justify-center min-h-screen gap-3">
         <p className="text-muted-foreground">Market not found</p>
         {error && <p className="text-xs text-destructive">{error}</p>}
-        <button onClick={() => navigate(-1)} className="text-sm text-primary hover:underline">Go back</button>
+        <button onClick={() => window.history.length > 1 ? navigate(-1) : navigate('/')} className="text-sm text-primary hover:underline">Go back</button>
       </div>
     );
   }
@@ -70,7 +70,7 @@ const MarketDetailPage = () => {
       <div className="paytm-header px-4 lg:px-8 pt-12 lg:pt-6 pb-5">
         <div className="max-w-5xl mx-auto">
           <AnimateIn direction="down" distance={8} duration={0.4}>
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-white/70 mb-3 transition-colors duration-200 hover:text-white">
+            <button onClick={() => window.history.length > 1 ? navigate(-1) : navigate('/')} className="flex items-center gap-2 text-white/70 mb-3 transition-colors duration-200 hover:text-white">
               <ArrowLeft className="w-5 h-5" />
               <span className="text-sm font-medium">Back</span>
             </button>

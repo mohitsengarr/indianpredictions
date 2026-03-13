@@ -42,7 +42,7 @@ const AnimateIn = ({
   };
 
   return (
-    <div
+    <Tag
       ref={ref}
       className={className}
       style={{
@@ -54,7 +54,7 @@ const AnimateIn = ({
       }}
     >
       {children}
-    </div>
+    </Tag>
   );
 };
 

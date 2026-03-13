@@ -46,6 +46,11 @@ const TradeTicket = ({ market }: TradeTicketProps) => {
   return (
     <AnimateIn delay={0.2} distance={16}>
       <div className="bg-card rounded-lg border border-border p-4">
+        {APP_CONFIG.mode === 'play_money' && (
+          <div className="mb-3 rounded-md bg-warning/10 border border-warning/30 px-3 py-2 text-xs font-medium text-warning-foreground flex items-center gap-1.5">
+            <span>🎮</span> Demo Mode — No real trades are executed
+          </div>
+        )}
         <div className="text-sm font-medium text-muted-foreground mb-3">Take a position</div>
 
         {/* Yes/No toggle */}

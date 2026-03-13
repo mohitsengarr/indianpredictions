@@ -6,27 +6,51 @@
   <!-- Home -->
   <url>
     <loc>https://indianpredictions.lovable.app/</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/07c14fad-e803-4809-8654-86579cab78d8/id-preview-a8d4ee2e--5fc81140-cec5-43a7-b277-b2d8ba92190f.lovable.app-1771895603345.png</image:loc>
-      <image:title>OpinionBazaar – India Opinion Trading Home</image:title>
+      <image:title>India Predictions – India Prediction Trading Home</image:title>
     </image:image>
   </url>
 
   <!-- Markets -->
   <url>
     <loc>https://indianpredictions.lovable.app/markets</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- Analytics -->
+  <url>
+    <loc>https://indianpredictions.lovable.app/analytics</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Events -->
+  <url>
+    <loc>https://indianpredictions.lovable.app/events</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog -->
+  <url>
+    <loc>https://indianpredictions.lovable.app/blog</loc>
+    <lastmod>2026-03-13</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Portfolio -->
   <url>
     <loc>https://indianpredictions.lovable.app/portfolio</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
@@ -34,7 +58,7 @@
   <!-- Wallet -->
   <url>
     <loc>https://indianpredictions.lovable.app/wallet</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -42,7 +66,7 @@
   <!-- Profile -->
   <url>
     <loc>https://indianpredictions.lovable.app/profile</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

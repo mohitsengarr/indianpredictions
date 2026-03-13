@@ -17,7 +17,7 @@ const MarketsPage = () => {
 
   useSEO({
     title: "All Prediction Markets – Cricket, Economy, Crypto, Bollywood",
-    description: "Browse all live prediction markets on OpinionBazaar. Filter by cricket, economy, crypto or Bollywood. Sort by volume, activity or closing time. Trade in INR.",
+    description: "Browse all live prediction markets on India Predictions. Filter by cricket, economy, crypto or Bollywood. Sort by volume, activity or closing time. Trade in INR.",
     keywords: "all prediction markets India, live event contracts, opinion trading markets, cricket market, economy prediction, crypto prediction India",
     canonical: "/markets",
   });

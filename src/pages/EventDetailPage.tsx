@@ -3,12 +3,19 @@ import { motion } from 'framer-motion';
 import {
   ArrowLeft, Calendar, Share2, ExternalLink, TrendingUp, TrendingDown,
   AlertTriangle, Shield, Globe, Zap, BarChart3, Users, Building2, Gauge,
-  Clock, Target, Lightbulb, History,
+  Clock, Target, Lightbulb, History, ArrowUpRight, ArrowDownRight, Minus,
+  GitBranch,
 } from 'lucide-react';
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  ReferenceLine,
+} from 'recharts';
 import { TRENDING_EVENTS } from '@/data/trending-events';
+import { getEventHistory } from '@/data/event-history-data';
 import EventDetailSection from '@/components/EventDetailSection';
 import EventTimeline from '@/components/EventTimeline';
 import EventComparisonWidget from '@/components/EventComparisonWidget';
+import SocialShare from '@/components/SocialShare';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { useSEO } from '@/hooks/useSEO';
 
@@ -176,12 +183,9 @@ const EventDetailPage = () => {
                 <Calendar className="w-3 h-3" />
                 Updated {new Date(event.updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
               </span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(window.location.href)}
-                className="inline-flex items-center gap-1 hover:text-white transition-colors"
-              >
-                <Share2 className="w-3 h-3" /> Share
-              </button>
+            </div>
+            <div className="mt-3">
+              <SocialShare title={event.title} text={`${event.title} — India Predictions`} />
             </div>
           </motion.div>
         </div>
@@ -311,6 +315,166 @@ const EventDetailPage = () => {
             })}
           </div>
         </motion.div>
+
+        {/* Probability History Chart */}
+        {(() => {
+          const history = getEventHistory(event.id);
+          if (!history) return null;
+          return (
+            <>
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="space-y-3"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-secondary/15 flex items-center justify-center">
+                    <BarChart3 className="w-4 h-4 text-secondary" />
+                  </div>
+                  <div>
+                    <h2 className="font-display font-bold text-base">Probability History</h2>
+                    <p className="text-[11px] text-muted-foreground">How market probability has evolved over time</p>
+                  </div>
+                </div>
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <ResponsiveContainer width="100%" height={260}>
+                    <AreaChart data={history.probabilityHistory}>
+                      <defs>
+                        <linearGradient id="probGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
+                          <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis dataKey="date" tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }} />
+                      <YAxis domain={[0, 100]} tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 10 }} tickFormatter={(v) => `${v}%`} />
+                      <Tooltip
+                        contentStyle={{ background: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px', fontSize: '12px' }}
+                        formatter={(val: number) => [`${val}%`, 'Probability']}
+                      />
+                      {history.probabilityHistory
+                        .filter((p) => p.annotation)
+                        .map((p, i) => (
+                          <ReferenceLine key={i} x={p.date} stroke="hsl(var(--muted-foreground))" strokeDasharray="3 3" label={{ value: p.annotation, position: 'top', fill: 'hsl(var(--muted-foreground))', fontSize: 9 }} />
+                        ))}
+                      <Area type="monotone" dataKey="probability" stroke="hsl(var(--primary))" fill="url(#probGrad)" strokeWidth={2.5} dot={{ fill: 'hsl(var(--primary))', r: 3 }} activeDot={{ r: 5 }} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </motion.div>
+
+              {/* Market Drivers Timeline */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="space-y-3"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
+                    <Clock className="w-4 h-4 text-warning" />
+                  </div>
+                  <div>
+                    <h2 className="font-display font-bold text-base">Market Drivers Timeline</h2>
+                    <p className="text-[11px] text-muted-foreground">Key events that moved the probability</p>
+                  </div>
+                </div>
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <div className="relative">
+                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border" />
+                    <div className="space-y-4">
+                      {history.keyDrivers.map((d, i) => {
+                        const ImpactIcon = d.impact === 'positive' ? ArrowUpRight : d.impact === 'negative' ? ArrowDownRight : Minus;
+                        const impactColor = d.impact === 'positive' ? 'text-success bg-success/15' : d.impact === 'negative' ? 'text-destructive bg-destructive/15' : 'text-muted-foreground bg-muted';
+                        const barColor = d.impact === 'positive' ? 'bg-success/60' : d.impact === 'negative' ? 'bg-destructive/60' : 'bg-muted-foreground/30';
+                        return (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -16 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.08 }}
+                            className="flex items-start gap-4 pl-1"
+                          >
+                            <div className={`w-7 h-7 rounded-full ${impactColor} flex items-center justify-center flex-shrink-0 relative z-10`}>
+                              <ImpactIcon className="w-3.5 h-3.5" />
+                            </div>
+                            <div className="flex-1 bg-muted/30 rounded-lg p-3 border border-border/50">
+                              <div className="flex items-center justify-between mb-1">
+                                <p className="text-xs font-semibold text-foreground">{d.driver}</p>
+                                <span className="text-[10px] text-muted-foreground">{d.date}</span>
+                              </div>
+                              <p className="text-xs text-muted-foreground">{d.description}</p>
+                              <div className="mt-2 h-1.5 bg-muted rounded-full overflow-hidden">
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  whileInView={{ width: `${d.magnitude * 10}%` }}
+                                  viewport={{ once: true }}
+                                  transition={{ duration: 0.6 }}
+                                  className={`h-full rounded-full ${barColor}`}
+                                />
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Cause-Effect Diagram */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="space-y-3"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center">
+                    <GitBranch className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="font-display font-bold text-base">Cause & Effect</h2>
+                    <p className="text-[11px] text-muted-foreground">How key drivers connect to market outcomes</p>
+                  </div>
+                </div>
+                <div className="bg-card rounded-xl border border-border p-5">
+                  <div className="flex flex-col items-center gap-3">
+                    {/* Drivers */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full">
+                      {history.keyDrivers.slice(0, 4).map((d, i) => {
+                        const borderColor = d.impact === 'positive' ? 'border-success/40' : d.impact === 'negative' ? 'border-destructive/40' : 'border-border';
+                        return (
+                          <div key={i} className={`bg-muted/30 rounded-lg p-3 border ${borderColor} text-center`}>
+                            <p className="text-xs font-semibold">{d.driver}</p>
+                            <p className={`text-[10px] mt-0.5 ${d.impact === 'positive' ? 'text-success' : d.impact === 'negative' ? 'text-destructive' : 'text-muted-foreground'}`}>
+                              {d.impact === 'positive' ? '↑ Bullish' : d.impact === 'negative' ? '↓ Bearish' : '→ Neutral'} · Magnitude {d.magnitude}/10
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    {/* Arrow */}
+                    <div className="flex flex-col items-center gap-0.5 text-muted-foreground">
+                      <div className="w-0.5 h-4 bg-border" />
+                      <span className="text-xs font-semibold">Combined Effect</span>
+                      <div className="w-0.5 h-4 bg-border" />
+                    </div>
+                    {/* Outcome */}
+                    <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 text-center w-full max-w-sm">
+                      <p className="text-sm font-bold text-primary">{event.title}</p>
+                      {event.impactProbability && (
+                        <p className="text-xs text-muted-foreground mt-1">Current probability: <strong className="text-foreground">{event.impactProbability}</strong></p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          );
+        })()}
 
         {/* Detail Sections */}
         <EventDetailSection event={event} />

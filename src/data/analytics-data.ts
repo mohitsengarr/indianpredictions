@@ -158,7 +158,7 @@ export const TIMELINE_EVENTS: TimelineItem[] = [
   { date: '2026-03-14', event: 'RBI MPC Minutes Release', importance: 'medium', category: 'Economy' },
   { date: '2026-03-16', event: 'Rajya Sabha Elections (37 seats)', importance: 'high', category: 'Politics' },
   { date: '2026-03-19', event: 'Bollywood 4-Way Clash', importance: 'low', category: 'Entertainment' },
-  { date: '2026-03-21', event: 'US Fed Rate Decision', importance: 'high', category: 'Economy' },
+  { date: '2026-03-21', event: 'India CPI Data Release (Feb)', importance: 'high', category: 'Economy' },
   { date: '2026-03-28', event: 'IPL 2026 Season Opens', importance: 'high', category: 'Sports' },
   { date: '2026-04-01', event: 'FY27 Begins / New Tax Rules', importance: 'medium', category: 'Economy' },
   { date: '2026-04-08', event: 'RBI MPC April Decision', importance: 'high', category: 'Economy' },

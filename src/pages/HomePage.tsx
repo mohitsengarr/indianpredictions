@@ -19,6 +19,8 @@ import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
 import FAQSection from '@/components/FAQSection';
 import { MARKET_PULSE_DATA } from '@/data/analytics-data';
+import LastUpdated from '@/components/LastUpdated';
+import { useDataRefresh } from '@/hooks/useDataRefresh';
 
 /* ── Skeleton ── */
 const SkeletonCard = () => (
@@ -136,6 +138,7 @@ const HomePage = () => {
 
   const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated } = useMarkets();
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia } = useIndiaMarkets();
+  const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
 
   const loading = allLoading || indiaLoading;
   const refetch = () => { refetchAll(); refetchIndia(); };
@@ -255,11 +258,7 @@ const HomePage = () => {
                   <CountUp end={TRENDING_EVENTS.length} duration={0.8} /> Trending Events
                 </span>
               </div>
-              {lastUpdated && (
-                <span className="text-[11px] text-white/45">
-                  Updated {lastUpdated.toLocaleTimeString()}
-                </span>
-              )}
+              <LastUpdated date={lastUpdated ?? liveUpdated} loading={loading || liveLoading} />
             </motion.div>
           </div>
         </div>
@@ -685,9 +684,9 @@ const HomePage = () => {
                     Polymarket
                   </a>
                   {' '}· Auto-refreshes every 5 min
-                  {lastUpdated && (
+                  {(lastUpdated || liveUpdated) && (
                     <span className="ml-1 opacity-60">
-                      · Last updated {lastUpdated.toLocaleTimeString()}
+                      · Last updated {(lastUpdated ?? liveUpdated)?.toLocaleTimeString('en-IN')}
                     </span>
                   )}
                 </p>

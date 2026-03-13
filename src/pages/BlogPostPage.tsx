@@ -4,6 +4,7 @@ import { ArrowLeft, Calendar, Clock, Tag, User } from 'lucide-react';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import { useSEO } from '@/hooks/useSEO';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import SocialShare from '@/components/SocialShare';
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -194,6 +195,9 @@ const BlogPostPage = () => {
                   year: 'numeric',
                 })}
               </span>
+            </div>
+            <div className="mt-3">
+              <SocialShare title={post.title} text={`${post.title} — India Predictions Blog`} />
             </div>
           </motion.div>
         </div>

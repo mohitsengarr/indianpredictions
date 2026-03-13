@@ -16,6 +16,7 @@ import {
   CORRELATION_LINKS, CORRELATION_NODES, TIMELINE_EVENTS, ECONOMIC_METRICS,
   TOP_MOVERS, WATERFALL_DATA, VOLATILITY_DATA,
 } from '@/data/analytics-data';
+import ChartErrorBoundary from '@/components/ChartErrorBoundary';
 
 /* ── animation variants ── */
 const cardVariants = {
@@ -40,7 +41,9 @@ const ChartSection = ({ title, subtitle, children, index = 0 }: { title: string;
       <h3 className="font-display font-bold text-base lg:text-lg">{title}</h3>
       <p className="text-xs text-muted-foreground mt-0.5">{subtitle}</p>
     </div>
-    {children}
+    <ChartErrorBoundary fallbackTitle={`${title} failed to load`}>
+      {children}
+    </ChartErrorBoundary>
   </motion.div>
 );
 

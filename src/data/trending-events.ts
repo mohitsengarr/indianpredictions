@@ -95,8 +95,8 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     summary:
       'New US-India trade deal expected to lower trade uncertainty. Goldman Sachs estimates 0.2pp GDP growth boost.',
     mckinseyAnalysis: [
-      'India had highest US tariffs in APAC region in 2025',
-      'Deal expected to unlock private investment cycle',
+      'India\'s exporters faced the steepest tariff barriers among APAC nations in 2025',
+      'Deal expected to unlock India\'s private investment cycle and boost manufacturing',
       'Combined with easier financial conditions = structural tailwind',
     ],
     predictionMarketAngle: 'Will the US-India trade deal boost Indian exports by 10%+ in FY27?',
@@ -111,7 +111,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     category: 'markets',
     status: 'active',
     summary:
-      'Gold approaching $5,250-5,300 (₹1,63,500-1,65,000). Silver targeting $95 (₹2,85,000). Central bank buying (China added gold for 16th month straight).',
+      'Gold approaching ₹1,63,500-1,65,000 ($5,250-5,300). Silver targeting ₹2,85,000 ($95). Central bank buying (China added gold for 16th month straight).',
     mckinseyAnalysis: [
       'Safe-haven demand vs USD strength creating push-pull',
       'Structural central bank buying providing floor',

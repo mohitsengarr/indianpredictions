@@ -15,9 +15,16 @@ const statusConfig: Record<string, { icon: typeof Radio; color: string; label: s
   completed: { icon: CheckCircle2, color: 'text-muted-foreground', label: 'Completed' },
 };
 
+const badgeConfig: Record<string, { label: string; className: string } | undefined> = {
+  critical: { label: 'Breaking', className: 'bg-destructive text-white animate-pulse' },
+  active: { label: 'Hot', className: 'bg-warning text-warning-foreground' },
+  upcoming: { label: 'Trending', className: 'bg-secondary text-white' },
+};
+
 const EventCard = ({ event, index = 0 }: EventCardProps) => {
   const st = statusConfig[event.status] ?? statusConfig.active;
   const StatusIcon = st.icon;
+  const badge = badgeConfig[event.status];
 
   return (
     <motion.div
@@ -25,8 +32,15 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ y: -4, boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}
-      className="paytm-card p-5 flex flex-col gap-3"
+      className="paytm-card p-5 flex flex-col gap-3 relative"
     >
+      {/* Trending/Hot/Breaking Badge */}
+      {badge && (
+        <div className={`absolute -top-2 -right-1 z-10 text-[10px] font-bold px-2 py-0.5 rounded-full shadow ${badge.className}`}>
+          {badge.label}
+        </div>
+      )}
+
       {/* Header row */}
       <div className="flex items-center justify-between">
         <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">

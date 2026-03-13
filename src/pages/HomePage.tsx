@@ -12,11 +12,13 @@ import { TRENDING_EVENTS } from '@/data/trending-events';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import {
   Search, Bell, Zap, Clock, TrendingUp, RefreshCw, Flame,
-  ChevronRight, Star, ArrowRight, BookOpen, Mail, Newspaper,
+  ChevronRight, Star, ArrowRight, BookOpen, Mail, Newspaper, BarChart3,
 } from 'lucide-react';
 import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
+import FAQSection from '@/components/FAQSection';
+import { MARKET_PULSE_DATA } from '@/data/analytics-data';
 
 /* ── Skeleton ── */
 const SkeletonCard = () => (
@@ -56,22 +58,48 @@ const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: numbe
   return <span ref={ref}>{prefix}{count.toLocaleString('en-IN')}{suffix}</span>;
 };
 
-/* ── Live Events Ticker ── */
+/* ── Live Events Ticker with Market Data ── */
 const LiveTicker = () => {
   const critical = TRENDING_EVENTS.filter((e) => e.status === 'critical' || e.status === 'active');
+  const tickerItems = [
+    ...MARKET_PULSE_DATA.map((d) => ({
+      type: 'market' as const,
+      label: d.label,
+      value: d.value,
+      change: d.change,
+    })),
+    ...critical.map((e) => ({
+      type: 'event' as const,
+      id: e.id,
+      slug: e.slug,
+      status: e.status,
+      emoji: e.categoryEmoji,
+      title: e.title,
+    })),
+  ];
   return (
     <div className="overflow-hidden bg-muted/50 border-y border-border py-2">
       <motion.div
         className="flex gap-8 whitespace-nowrap"
         animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
       >
-        {[...critical, ...critical].map((e, i) => (
-          <Link key={`${e.id}-${i}`} to={`/events/${e.slug}`} className="inline-flex items-center gap-2 text-xs font-medium hover:text-primary transition-colors">
-            <span className={`w-1.5 h-1.5 rounded-full ${e.status === 'critical' ? 'bg-destructive animate-pulse' : 'bg-success'}`} />
-            <span>{e.categoryEmoji} {e.title}</span>
-          </Link>
-        ))}
+        {[...tickerItems, ...tickerItems].map((item, i) =>
+          item.type === 'market' ? (
+            <span key={`m-${i}`} className="inline-flex items-center gap-2 text-xs font-medium">
+              <span className="text-muted-foreground">{item.label}</span>
+              <span className="font-semibold">{item.value}</span>
+              <span className={`font-bold ${item.change >= 0 ? 'text-success' : 'text-destructive'}`}>
+                {item.change >= 0 ? '+' : ''}{item.change}%
+              </span>
+            </span>
+          ) : (
+            <Link key={`e-${i}`} to={`/events/${item.slug}`} className="inline-flex items-center gap-2 text-xs font-medium hover:text-primary transition-colors">
+              <span className={`w-1.5 h-1.5 rounded-full ${item.status === 'critical' ? 'bg-destructive animate-pulse' : 'bg-success'}`} />
+              <span>{item.emoji} {item.title}</span>
+            </Link>
+          )
+        )}
       </motion.div>
     </div>
   );
@@ -562,6 +590,54 @@ const HomePage = () => {
                 </div>
               )}
             </section>
+
+            {/* ── FAQ Section ── */}
+            <AnimateIn delay={0.1}>
+              <FAQSection
+                faqs={[
+                  {
+                    question: 'What are prediction markets?',
+                    answer: 'Prediction markets are exchange-traded platforms where you buy and sell contracts based on the probability of real-world events. Contract prices between ₹0-₹100 reflect the crowd\'s estimated probability of an outcome occurring.',
+                  },
+                  {
+                    question: 'How do I trade on India Predictions?',
+                    answer: 'Browse our markets across cricket, politics, economy, and more. Buy YES if you think an event is likely, or NO if you disagree. Prices update in real-time as new information emerges. Currently operating in play money mode.',
+                  },
+                  {
+                    question: 'Are prediction markets legal in India?',
+                    answer: 'India\'s regulatory framework is evolving. Currently, prediction markets operate under opinion trading guidelines. India Predictions uses play money to provide a risk-free educational platform while regulations develop.',
+                  },
+                  {
+                    question: 'How accurate are prediction markets?',
+                    answer: 'Research shows prediction markets outperform polls and expert forecasts. They correctly predicted major events globally with 2-4% error margins. Our analytics dashboard tracks accuracy across all markets.',
+                  },
+                  {
+                    question: 'What markets can I trade on?',
+                    answer: 'We offer markets on IPL cricket, Indian politics (state and national elections), economy (RBI rates, Nifty, inflation), Bollywood, technology, and geopolitics — all with an India focus.',
+                  },
+                ]}
+                title="Frequently Asked Questions"
+                subtitle="Everything you need to know about prediction markets in India"
+              />
+            </AnimateIn>
+
+            {/* ── Insights CTA ── */}
+            <AnimateIn delay={0.1}>
+              <Link to="/insights" className="block">
+                <div className="bg-card rounded-xl border border-border p-5 hover:border-primary/30 transition-colors group">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-secondary/15 flex items-center justify-center">
+                      <BarChart3 className="w-5 h-5 text-secondary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-display font-bold text-sm group-hover:text-primary transition-colors">Analytics Dashboard</h3>
+                      <p className="text-xs text-muted-foreground">McKinsey-style market analytics, sector scores, correlations & more</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                </div>
+              </Link>
+            </AnimateIn>
 
             {/* ── Newsletter Signup ── */}
             <motion.section

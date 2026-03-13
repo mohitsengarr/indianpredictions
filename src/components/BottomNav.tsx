@@ -1,10 +1,11 @@
-import { Home, BarChart3, LineChart } from 'lucide-react';
+import { Home, BarChart3, LineChart, PieChart } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const tabs = [
   { path: '/', label: 'Home', icon: Home },
   { path: '/markets', label: 'Markets', icon: BarChart3 },
   { path: '/analytics', label: 'Analytics', icon: LineChart },
+  { path: '/insights', label: 'Insights', icon: PieChart },
 ];
 
 const BottomNav = () => {

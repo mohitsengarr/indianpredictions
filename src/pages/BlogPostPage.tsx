@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Clock, Tag, User } from 'lucide-react';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import { useSEO } from '@/hooks/useSEO';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const BlogPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -149,6 +150,16 @@ const BlogPostPage = () => {
       <div className="paytm-header px-4 lg:px-8 pt-10 lg:pt-6 pb-6">
         <div className="max-w-3xl mx-auto">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
+            <div className="mb-3">
+              <Breadcrumbs
+                dark
+                items={[
+                  { label: 'Home', href: '/' },
+                  { label: 'Blog', href: '/blog' },
+                  { label: post.title },
+                ]}
+              />
+            </div>
             <button
               onClick={goBack}
               className="inline-flex items-center gap-1.5 text-sm text-white/70 hover:text-white transition-colors mb-4"

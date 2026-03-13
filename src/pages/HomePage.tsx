@@ -119,6 +119,7 @@ const INDIA_CATEGORY_PILLS = [
   { key: 'regulation', emoji: '⚖️', label: 'Regulation' },
   { key: 'technology', emoji: '💻', label: 'Technology' },
   { key: 'sports', emoji: '⚽', label: 'Sports' },
+  { key: 'energy', emoji: '⛽', label: 'Energy & Oil' },
 ];
 
 /* Map pill keys → event categories they match */
@@ -132,6 +133,7 @@ const PILL_TO_EVENT_CATEGORIES: Record<string, EventCategory[]> = {
   regulation: ['regulation'],
   technology: ['technology'],
   sports: ['sports'],
+  energy: ['energy'],
 };
 
 /* Map pill keys → market categories they match */
@@ -145,6 +147,7 @@ const PILL_TO_MARKET_CATEGORIES: Record<string, MarketCategory[]> = {
   regulation: ['economy'],
   technology: ['crypto'],
   sports: ['cricket'],
+  energy: ['economy'],
 };
 
 const HomePage = () => {
@@ -386,26 +389,55 @@ const HomePage = () => {
         {category === 'all' && !search && (
           <>
 
-            {/* ── Trending Events Section ── */}
-            <section>
-              <AnimateIn delay={0.1}>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-destructive/15 flex items-center justify-center">
-                      <Zap className="w-4 h-4 text-destructive" />
+            {/* ── Category-Wise Trending Events ── */}
+            {(() => {
+              const categoryConfig: { key: EventCategory; emoji: string; label: string; sub: string; limit: number }[] = [
+                { key: 'markets', emoji: '📉', label: 'Markets & Economy', sub: 'Stock market, currency & financial developments', limit: 2 },
+                { key: 'politics', emoji: '🗳️', label: 'Politics & Elections', sub: 'Elections, governance & policy decisions', limit: 2 },
+                { key: 'sports', emoji: '🏏', label: 'Sports', sub: 'Cricket, IPL & sporting events', limit: 2 },
+                { key: 'energy', emoji: '⛽', label: 'Energy & Oil', sub: 'Oil prices, LPG crisis & energy security', limit: 2 },
+                { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics', sub: 'Global events impacting India', limit: 2 },
+                { key: 'technology', emoji: '💻', label: 'Technology & Startups', sub: 'Tech policy, startups & innovation', limit: 2 },
+                { key: 'entertainment', emoji: '🎬', label: 'Entertainment', sub: 'Bollywood, OTT & box office', limit: 2 },
+              ];
+
+              /* For Markets & Economy, also pull economy-category events */
+              const getCategoryEvents = (key: EventCategory) => {
+                if (key === 'markets') return TRENDING_EVENTS.filter(e => e.category === 'markets' || e.category === 'economy');
+                return TRENDING_EVENTS.filter(e => e.category === key);
+              };
+
+              return categoryConfig.map(cat => {
+                const events = getCategoryEvents(cat.key).slice(0, cat.limit);
+                if (events.length === 0) return null;
+                return (
+                  <section key={cat.key}>
+                    <AnimateIn delay={0.1}>
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xl">{cat.emoji}</span>
+                          <div>
+                            <h2 className="font-display font-bold text-base leading-tight">{cat.label}</h2>
+                            <p className="text-[11px] text-muted-foreground">{cat.sub}</p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => setCategory(cat.key === 'markets' ? 'economy' : cat.key === 'energy' ? 'energy' : cat.key === 'sports' ? 'cricket' : cat.key)}
+                          className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
+                        >
+                          More <ChevronRight className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </AnimateIn>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {events.map((event, i) => (
+                        <EventCard key={event.id} event={event} index={i} />
+                      ))}
                     </div>
-                    <div>
-                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Trending Events</h2>
-                      <p className="text-[11px] text-muted-foreground">Major developments shaping Indian markets</p>
-                    </div>
-                  </div>
-                  <Link to="/events/stock-market-crash-fearful-friday" className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
-                    All Events <ChevronRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              </AnimateIn>
-              <TrendingEvents limit={6} showFilter={false} />
-            </section>
+                  </section>
+                );
+              });
+            })()}
 
             {/* Cricket & IPL */}
             {(indiaCricket.length > 0 || indiaLoading) && (

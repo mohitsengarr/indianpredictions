@@ -444,6 +444,187 @@ Over time, this calibration process is what separates amateur speculators from p
     keywords: ['prediction market analytics', 'data driven trading', 'trading strategy prediction markets', 'market probability analysis'],
   },
   {
+    id: 'blog-9',
+    slug: 'india-perfect-storm-iran-war-reshaping-economy',
+    title: "India's Perfect Storm: How the Iran War Is Reshaping the Economy",
+    excerpt:
+      'From oil above $100 to LPG shortages, rupee crash to stock market bloodbath — the Iran war has triggered a cascading crisis across the Indian economy. A McKinsey-style analysis of interconnected risks.',
+    content: `## India's Perfect Storm
+
+The Iran war that began on February 28 has triggered what economists are calling India's most severe external shock since COVID-19. Unlike a single-vector crisis, this is a cascading, interconnected chain of disruptions hitting every corner of the economy simultaneously.
+
+### The Chain Reaction
+
+1. **Oil Shock**: Brent crude crossed $100/barrel as Iran blocks the Strait of Hormuz — through which 20% of the world's oil passes and half of India's crude transits
+2. **LPG Crisis**: 62% of India's cooking gas is imported via Hormuz. The blockade has triggered the first national LPG Control Order since the 1970s oil crisis
+3. **Currency Crash**: The rupee hit a record low of ₹92.43/dollar as FIIs pulled ₹52,000 crore in March alone
+4. **Market Bloodbath**: Sensex lost ₹25 lakh crore since the war began; Nifty down 5% in one week — worst since 2020
+5. **Inflation Risk**: CPI already rising to 3.21%; every $10/barrel oil increase adds 25-30 bps
+
+### Impact on the Common Indian
+
+- **Kitchen**: LPG cylinders unavailable in many cities; restaurants shutting; induction cooktops sold out
+- **Travel**: IndiGo imposing fuel surcharge from March 14; flight prices to rise 15-20%
+- **Investments**: Average retail investor lost ₹1.5 lakh in portfolio value this week
+- **Food prices**: Transport cost inflation flowing through to vegetables, fruits, and essentials
+
+### McKinsey Framework: Interconnected Risk Map
+
+| Risk Factor | Direct Impact | Secondary Impact | Severity |
+|-------------|--------------|-----------------|----------|
+| Oil > $100 | Import bill +$15B | Fiscal deficit widens 0.3% GDP | Critical |
+| LPG shortage | 300M households affected | Restaurant industry shutdowns | Critical |
+| Rupee at 92.43 | Import costs surge | Corporate dollar debt burden | High |
+| FII outflows | Market crash | Consumer confidence decline | High |
+| Inflation risk | Cost of living increase | RBI policy dilemma | Medium-High |
+
+### What Happens Next?
+
+The prediction markets are pricing a 60% chance of further 5-10% market decline if the war continues, and only a 22% probability of ceasefire before April. For India, the path forward depends entirely on geopolitical developments in the Strait of Hormuz.
+
+The government's response so far — LPG Control Order, RBI FX intervention, increasing non-Hormuz oil sourcing from 60% to 70% — addresses symptoms but cannot solve the fundamental vulnerability: India imports 85% of its oil and 62% of its cooking gas.
+
+This crisis will reshape India's energy policy for a generation. The question is how much pain comes first.`,
+    author: 'India Predictions Team',
+    publishedAt: '2026-03-13T12:00:00Z',
+    readTime: 8,
+    category: 'Economy',
+    tags: ['Iran war', 'oil crisis', 'LPG shortage', 'rupee', 'stock market', 'inflation', 'india economy'],
+    coverImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
+    metaDescription: "How the Iran war is reshaping India's economy — oil crisis, LPG shortage, rupee crash, and stock market bloodbath analyzed through a McKinsey interconnected-risks framework.",
+    keywords: ['iran war india impact', 'india oil crisis 2026', 'LPG shortage india', 'indian economy crisis'],
+  },
+  {
+    id: 'blog-10',
+    slug: 'ipl-2026-preview-schedule-picks-predictions',
+    title: 'IPL 2026 Preview: Schedule, Top Picks, and Prediction Market Angles',
+    excerpt:
+      'With IPL 2026 kicking off March 28, here\'s the complete schedule breakdown, key auction picks, team analysis, and the biggest prediction market opportunities of the season.',
+    content: `## IPL 2026: The Complete Preview
+
+BCCI has announced the first phase schedule — 20 matches across 10 venues from March 28 to April 12. Here's everything you need to know.
+
+### Opening Week Schedule
+
+- **March 28**: RCB vs SRH at M. Chinnaswamy Stadium, Bengaluru (7:30 PM)
+- **March 29**: MI vs KKR at Wankhede Stadium, Mumbai
+- **March 30**: CSK vs PBKS at Chepauk, Chennai
+- **April 4**: First double-header — DC vs MI (Delhi) + GT vs RR (Ahmedabad)
+
+### Key Auction Highlights
+
+| Player | Team | Price | Impact Rating |
+|--------|------|-------|--------------|
+| Cameron Green | KKR | ₹25.2 Cr | All-rounder depth |
+| Matheesha Pathirana | KKR | ₹18 Cr | Death bowling upgrade |
+
+KKR's aggressive spending signals title ambitions after their 2024 triumph.
+
+### Team Power Rankings
+
+1. **Mumbai Indians** — Deepest squad; consistent performers; 71% playoff probability
+2. **RCB** — Defending champions; strong home record; title defense at 32%
+3. **KKR** — Auction winners; Green + Pathirana transformative additions
+4. **CSK** — Rebuild phase but never count out Dhoni's legacy impact
+
+### The LPG Crisis Factor
+
+An unprecedented external factor this IPL: the national LPG shortage could affect:
+- Stadium food operations and catering
+- Fan travel (fuel surcharges on flights)
+- Overall mood — hard to celebrate cricket when kitchens are struggling
+
+### Prediction Market Opportunities
+
+The richest prediction angles for IPL 2026:
+- **Season winner**: MI leads at 22%, followed by KKR at 18%
+- **Orange Cap**: Virat Kohli at 15%, Suryakumar Yadav at 12%
+- **Purple Cap**: Jasprit Bumrah leads at 18%
+- **Most sixes**: Tim David at 11%
+
+### Security Concerns
+
+The Bengaluru venue needs government safety committee clearance (inspection on March 13) following last year's tragic stampede that killed 11 people. This adds uncertainty to the opener location.
+
+### Full Season: March 28 to May 31
+
+The split-phase format accommodates state elections. Phase 2 dates depend on Election Commission coordination. This creates unique scheduling uncertainty that prediction markets are actively pricing.`,
+    author: 'India Predictions Team',
+    publishedAt: '2026-03-13T10:00:00Z',
+    readTime: 7,
+    category: 'Sports',
+    tags: ['IPL 2026', 'cricket', 'schedule', 'prediction markets', 'RCB', 'MI', 'KKR'],
+    coverImage: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800',
+    metaDescription: 'IPL 2026 complete preview with schedule, top auction picks, team power rankings, and prediction market angles. Everything you need for the season starting March 28.',
+    keywords: ['IPL 2026 schedule', 'IPL 2026 predictions', 'IPL auction 2026', 'cricket prediction market'],
+  },
+  {
+    id: 'blog-11',
+    slug: 'west-bengal-2026-most-consequential-election',
+    title: 'West Bengal 2026: The Most Consequential State Election This Year',
+    excerpt:
+      'BJP vs TMC in the biggest state election battle of 2026. From candidate lists to EC controversy, voter roll disputes to religious polarization — a deep analysis of what\'s at stake.',
+    content: `## West Bengal 2026: The Battle for Eastern India
+
+West Bengal's assembly elections are shaping up to be the most consequential state election of 2026 — with national implications that extend far beyond the state's borders.
+
+### The Key Players
+
+**TMC (Mamata Banerjee)**: The incumbent. Grassroots machinery unmatched in Bengal. Going solo — unconcerned with opposition unity. Has governed since 2011.
+
+**BJP**: Finalized 140-160 candidates; first list expected March 14. Riding national momentum but failed to convert 2019 Lok Sabha gains into 2021 state victory.
+
+### The EC Controversy
+
+The election is already mired in institutional crisis:
+
+- **193 Opposition MPs** signed notices seeking removal of CEC Gyanesh Kumar — unprecedented in Indian democracy
+- **Mamata alleges** 63.66 lakh voter names deleted during Special Intensive Revision
+- **EVM manipulation** accusations by TMC; black flags shown to CEC in Kolkata
+- **Muslim-majority districts** Murshidabad (11L) and Malda (8.28L) have highest pending voter scrutiny
+
+### Why BJP Wants Fewer Phases
+
+In a strategic shift, BJP is demanding single-phase or 2-phase elections. The lesson from 2021: the 8-phase election in Bengal allowed TMC to concentrate resources sequentially and build momentum. Fewer phases favor the party with deeper pockets and national organizational capacity — BJP.
+
+### The Religious Polarization Factor
+
+Bengal has always been a communal tinderbox during elections. This year:
+- PM Modi's Kolkata rally featured a Dakshineswar Temple replica backdrop — deliberate Hindu signaling
+- Muslim voters (27% of Bengal's population) are a monolithic TMC vote bank
+- BJP's Hindutva pitch vs Mamata's secular Bengali identity — the fundamental axis
+
+### New Governor: A Wildcard
+
+RN Ravi — known for his assertive stance as Manipur governor — just took oath as Bengal's governor. His appointment signals the Centre's intent to maintain pressure on the TMC government.
+
+### Prediction Market View
+
+- **TMC retains power**: 65% probability
+- **BJP crosses 100 seats**: 28% probability
+- **Hung assembly**: 7% probability
+
+The market strongly favors TMC, but the EC controversy and voter roll disputes add unusual uncertainty that could shift probabilities rapidly.
+
+### National Implications
+
+Bengal's outcome directly impacts:
+1. **Rajya Sabha composition** — reshapes upper house dynamics
+2. **2029 Lok Sabha strategy** — BJP needs Bengal for a comprehensive national sweep
+3. **Opposition unity** — TMC's solo strategy tests the INDIA alliance framework
+4. **Institutional credibility** — EC's legitimacy is on trial
+
+This is not just a state election. It's a referendum on India's institutional framework.`,
+    author: 'India Predictions Team',
+    publishedAt: '2026-03-13T08:00:00Z',
+    readTime: 9,
+    category: 'Politics',
+    tags: ['West Bengal', 'elections', 'BJP', 'TMC', 'Mamata Banerjee', 'prediction markets', '2026 elections'],
+    coverImage: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800',
+    metaDescription: 'West Bengal 2026 election analysis — BJP vs TMC battle, EC controversy, voter roll disputes, and what prediction markets say about the most consequential state election of 2026.',
+    keywords: ['West Bengal election 2026', 'BJP TMC Bengal', 'Mamata Banerjee', 'Bengal election prediction'],
+  },
+  {
     id: 'blog-8',
     slug: 'ipl-2026-vs-state-elections-sports-politics-prediction-markets',
     title: 'IPL 2026 vs State Elections: When Sports and Politics Collide in Prediction Markets',

@@ -6,7 +6,8 @@ export type EventCategory =
   | 'geopolitics'
   | 'technology'
   | 'entertainment'
-  | 'regulation';
+  | 'regulation'
+  | 'energy';
 
 export type EventStatus = 'active' | 'critical' | 'upcoming' | 'completed';
 
@@ -17,6 +18,7 @@ export interface TrendingEvent {
   category: EventCategory;
   status: EventStatus;
   summary: string;
+  imageUrl?: string;
   keyDrivers?: string[];
   keyDataPoints?: { label: string; value: string }[];
   keyDetails?: string[];
@@ -41,6 +43,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     status: 'critical',
     summary:
       'Nifty plunges 5% for the week (biggest weekly fall in 4 years). Sensex and Nifty tumble nearly 2% as crude oil surges past $101. Frontline indices 11-13% below record highs. Rupee hits fresh all-time low.',
+    imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
     keyDrivers: [
       'West Asia / Middle East tensions (US & Israel airstrikes on Iran)',
       'Surging crude oil prices past $101/barrel',
@@ -578,6 +581,304 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     categoryEmoji: '🛡️',
     updatedAt: '2026-03-13T00:00:00Z',
   },
+  {
+    id: 'evt-26',
+    slug: 'india-lpg-crisis-cooking-gas-shortage',
+    title: "India LPG Crisis – National Cooking Gas Shortage",
+    category: 'energy',
+    status: 'critical',
+    summary:
+      'India consumes 31.3M tonnes LPG annually; 62% imported. Strait of Hormuz closure cut off 85-90% of LPG imports from Saudi Arabia & Qatar. LPG Control Order issued. Commercial supply restricted. Induction cooktops sold out nationwide.',
+    imageUrl: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800',
+    keyDrivers: [
+      'Strait of Hormuz blockade cut 85-90% LPG import route',
+      'LPG Control Order issued March 8 – refineries ordered to maximize production',
+      'Commercial LPG supply restricted – restaurants and hotels hardest hit',
+      'Induction cooktops sold out on Amazon, Flipkart, Blinkit',
+    ],
+    mckinseyAnalysis: [
+      "India's over-dependence on imported LPG exposes critical vulnerability – 62% imported via single maritime chokepoint",
+      'Restaurant industry (Rs 5L Cr sector) facing shutdowns, 300M+ households affected',
+      'PNG (piped gas) households unaffected – highlighting infrastructure gap',
+      'Government rationing possible if Hormuz stays blocked beyond 2-4 weeks',
+    ],
+    impactProbability: '70% crisis continues 2-4 weeks; rationing possible',
+    predictionMarketAngle: 'Will India impose LPG rationing for households by April 2026?',
+    categoryLabel: 'Energy',
+    categoryEmoji: '🔥',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-27',
+    slug: 'indian-rupee-record-low-march-2026',
+    title: 'Indian Rupee Hits Record Low – 92.43/Dollar',
+    category: 'economy',
+    status: 'active',
+    summary:
+      'Rupee hit lifetime low of 92.4325/dollar on March 13. Currency lost 1.5% since Iran war began. RBI actively selling dollars to slow depreciation. Analysts warn rupee could breach 95/dollar if conflict continues.',
+    imageUrl: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=800',
+    keyDataPoints: [
+      { label: 'Record Low', value: '₹92.43/$' },
+      { label: 'Loss Since War', value: '1.5%' },
+      { label: 'CPI Inflation', value: '3.21% (Feb)' },
+    ],
+    mckinseyAnalysis: [
+      'Oil imports (85% dependency) → trade deficit widening → FII outflows → dollar demand → RBI reserves pressure',
+      'RBI dilemma: Rate hike to defend rupee vs. growth support needed',
+      '$10/barrel oil increase could add 25-30 bps to inflation',
+    ],
+    predictionMarketAngle: 'Will the Indian Rupee breach 95/USD by May 2026?',
+    categoryLabel: 'Economy',
+    categoryEmoji: '💱',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-28',
+    slug: 'indigo-fuel-surcharge-flights-expensive',
+    title: 'IndiGo Fuel Surcharge – Flight Prices to Rise',
+    category: 'economy',
+    status: 'active',
+    summary:
+      'IndiGo imposing fuel surcharge on ALL domestic and international routes from March 14. Triggered by rising crude oil amid Iran war. Other airlines expected to follow.',
+    mckinseyAnalysis: [
+      'Brent above $100 → ATF prices surge → airline operating costs spike → consumer price pass-through',
+      'Tourism, business travel affected; airline margins under pressure even with surcharge',
+    ],
+    predictionMarketAngle: 'Will domestic flight prices increase by more than 20% in Q2 2026?',
+    categoryLabel: 'Economy',
+    categoryEmoji: '✈️',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-29',
+    slug: 'ipl-2026-schedule-announced',
+    title: 'IPL 2026 Schedule Announced – Season Starts March 28',
+    category: 'sports',
+    status: 'upcoming',
+    summary:
+      'BCCI announced first phase: 20 matches across 10 venues (March 28 – April 12). Opener: RCB vs SRH at M. Chinnaswamy Stadium. Top auction buys: Cam Green (₹25.2 Cr to KKR), Pathirana (₹18 Cr). Full season: March 28 to May 31.',
+    imageUrl: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=800',
+    keyDetails: [
+      'Opener: RCB vs SRH at M. Chinnaswamy Stadium, Bengaluru (March 28, 7:30 PM)',
+      '4 double-headers planned; afternoon matches at 3:30 PM, evening at 7:30 PM',
+      'First double-header: April 4 (DC vs MI in Delhi + GT vs RR in Ahmedabad)',
+      'Bengaluru venue needs safety committee clearance after 2025 stampede',
+      'Top buys: Cam Green (₹25.2 Cr, KKR), Pathirana (₹18 Cr, KKR)',
+    ],
+    mckinseyAnalysis: [
+      "IPL is world's richest cricket league; massive viewership (700M+); ₹50,000+ Cr ecosystem",
+      'Ad spending surge, tourism boost in host cities, streaming wars, fantasy gaming spike',
+      'Security concerns after 2025 Bengaluru stampede; LPG crisis may dampen mood',
+    ],
+    impactProbability: 'High – massive public interest, ₹50,000+ Cr ecosystem',
+    predictionMarketAngle: 'Which team will win IPL 2026? Will RCB defend their title?',
+    categoryLabel: 'Sports',
+    categoryEmoji: '🏏',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-30',
+    slug: 'west-bengal-assembly-elections-2026',
+    title: 'West Bengal Assembly Elections 2026 – BJP vs TMC',
+    category: 'politics',
+    status: 'active',
+    summary:
+      'BJP finalized ~140-160 candidates. TMC (Mamata) vs BJP major battle. 193 Opposition INDIA MPs signed notices seeking removal of CEC Gyanesh Kumar. Mamata alleges 63.66 lakh voter names deleted. New Governor RN Ravi just took oath.',
+    imageUrl: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800',
+    keyDrivers: [
+      'BJP national momentum vs TMC grassroots strength',
+      'Religious polarization and economic discontent',
+      'EC controversy – Mamata alleges EVM manipulation and voter roll deletion',
+    ],
+    mckinseyAnalysis: [
+      'Could reshape eastern India politics; national implications for 2029 Lok Sabha strategy',
+      '70M+ voters, national parties, minority communities at stake',
+      'Muslim-majority Murshidabad (11L) and Malda (8.28L) have highest pending voter scrutiny',
+    ],
+    impactProbability: 'High – most consequential state election of 2026',
+    predictionMarketAngle: 'Will BJP win West Bengal 2026? Will TMC retain power?',
+    categoryLabel: 'Politics',
+    categoryEmoji: '🗳️',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-31',
+    slug: 'indians-killed-gulf-iran-war',
+    title: 'Indians Killed in Gulf – Iran War Casualties',
+    category: 'geopolitics',
+    status: 'critical',
+    summary:
+      '2 Indians killed in drone strike in Oman. Mumbai marine engineer killed in ship attack near Iraq. ~10 million Indians in Gulf at risk. India arranging special repatriation flights. PM Modi contacted Arab leaders and Netanyahu.',
+    keyDrivers: [
+      'US-Israel war on Iran → Gulf instability → Indian diaspora at risk',
+      '$90B+ annual remittances at risk; 10M Indians in danger zone',
+      "India's diplomatic balancing act between Iran, Israel, and Arab allies",
+    ],
+    mckinseyAnalysis: [
+      '$90B+ annual remittances at risk from Gulf instability',
+      '10 million Indians in Gulf region face security threats',
+      'India\'s unique position: deep cultural ties with Iran, strategic ties with Israel, strong Arab relationships',
+    ],
+    predictionMarketAngle: 'Will India evacuate citizens from Gulf countries in a large-scale operation?',
+    categoryLabel: 'Geopolitics',
+    categoryEmoji: '🌍',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-32',
+    slug: 'oil-crisis-brent-crude-above-100',
+    title: 'India Oil Crisis – Brent Crude Above $100/Barrel',
+    category: 'energy',
+    status: 'critical',
+    summary:
+      'Brent crude crossed $100/barrel; WTI at $97. Iran blocking Strait of Hormuz (1/5 of global oil supply). India imports 85%+ of oil. Half of India\'s crude transits through Hormuz. Morgan Stanley warns Brent could hit $120-130.',
+    imageUrl: 'https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?w=800',
+    keyDrivers: [
+      'Iran war → Hormuz blockade → supply shock → demand-supply imbalance → price surge',
+      'India imports 85%+ of oil; half transits through Hormuz',
+      'Goldman Sachs: 20% rise in Brent could cut Asian earnings by 2%',
+    ],
+    mckinseyAnalysis: [
+      'Current account deficit widening, fiscal deficit pressure, inflation spiral risk, growth downgrade likely',
+      'India vulnerability: 85% import dependency, limited SPR, refining sector hit',
+      'Societe Generale: India most at risk among major economies due to energy import dependency',
+    ],
+    impactProbability: 'Critical – could trigger inflation spiral and fiscal crisis',
+    predictionMarketAngle: 'Will Brent crude reach $120/barrel by April 2026?',
+    categoryLabel: 'Energy',
+    categoryEmoji: '⛽',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-33',
+    slug: 'bharat-taxi-government-cab-app',
+    title: 'Bharat Taxi Launch – Government Cab App',
+    category: 'technology',
+    status: 'active',
+    summary:
+      'Launched by Home Minister Amit Shah on Feb 5. World\'s largest driver-owned mobility platform. Zero-commission, surge-free, 30% cheaper than Ola/Uber. 3 lakh+ registered drivers. ₹5 lakh insurance for drivers.',
+    imageUrl: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800',
+    mckinseyAnalysis: [
+      'Disruption potential for Ola/Uber duopoly – zero-commission cooperative model',
+      'Government-backed = regulatory advantage and public trust',
+      'Based on "Sahkar se Samriddhi" (prosperity through cooperation) model',
+    ],
+    predictionMarketAngle: 'Will Bharat Taxi capture 10% ride-hailing market share by 2027?',
+    categoryLabel: 'Technology',
+    categoryEmoji: '🚕',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-34',
+    slug: 'india-deep-tech-startup-policy',
+    title: 'India Deep Tech Startup Policy Overhaul',
+    category: 'technology',
+    status: 'active',
+    summary:
+      'Government doubled startup status period for deep tech to 20 years. Revenue threshold raised to ₹3B. ₹1 trillion RDI Fund announced. India Deep Tech Alliance launched ($1B+ coalition including Accel, Nvidia, Qualcomm).',
+    imageUrl: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800',
+    mckinseyAnalysis: [
+      'Strategic move to build semiconductor, space, defense, biotech ecosystem',
+      'Addresses "graduation cliff" cutting startups from support during scaling phase',
+      'Indian deep tech raised $1.65B in 2025 (rebound from $1.1B in 2023-24); total to date: $8.54B',
+    ],
+    predictionMarketAngle: "Will India's deep tech funding cross $3 billion in 2026?",
+    categoryLabel: 'Technology',
+    categoryEmoji: '🔬',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-35',
+    slug: 'bollywood-blockbuster-week-march-19',
+    title: 'Bollywood Blockbuster Week – Dhurandhar & Toxic (March 19)',
+    category: 'entertainment',
+    status: 'upcoming',
+    summary:
+      'March 19 has FOUR major releases: Dhurandhar: The Revenge (Ranveer Singh), Toxic: A Fairy Tale for Grown-Ups (Yash), Aadu 3 (Malayalam), Youth. Rs 500+ Cr box office potential. Also: Ustaad Bhagat Singh (Pawan Kalyan) on March 26.',
+    imageUrl: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800',
+    keyReleases: [
+      'March 19: Dhurandhar: The Revenge (Ranveer Singh) – action thriller sequel',
+      'March 19: Toxic: A Fairy Tale for Grown-Ups (Yash) – period gangster film',
+      'March 19: Aadu 3 (Malayalam) & Youth (drama)',
+      'March 26: Ustaad Bhagat Singh (Pawan Kalyan)',
+    ],
+    mckinseyAnalysis: [
+      'Rs 500+ Cr box office potential; multiplied by OTT rights',
+      'March 19 clash could determine 2026 box office trajectory',
+      'Pan-India appeal driving larger opening weekends',
+    ],
+    predictionMarketAngle: 'Will Dhurandhar 2 cross Rs 500 Cr worldwide?',
+    categoryLabel: 'Entertainment',
+    categoryEmoji: '🎬',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-36',
+    slug: 'cec-removal-motion-193-mps',
+    title: '193 MPs Seek CEC Removal – Election Commission Crisis',
+    category: 'politics',
+    status: 'active',
+    summary:
+      '193 INDIA alliance MPs signed notices seeking removal of CEC Gyanesh Kumar. Mamata accuses EC of EVM manipulation; black flags shown to CEC in Kolkata. EC conducted SIR – Mamata alleges 63.66 lakh voter names deleted.',
+    imageUrl: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800',
+    mckinseyAnalysis: [
+      'Unprecedented scale of opposition unity on institutional challenge',
+      'Directly impacts credibility perception of upcoming state elections',
+      'Constitutional mechanism for CEC removal rarely invoked – signals deep institutional distrust',
+    ],
+    predictionMarketAngle: 'Will the Chief Election Commissioner be replaced before state elections?',
+    categoryLabel: 'Politics',
+    categoryEmoji: '⚖️',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-37',
+    slug: 'pm-modi-assam-19680-crore-projects',
+    title: 'PM Modi Assam Visit – Rs 19,680 Crore Projects',
+    category: 'politics',
+    status: 'completed',
+    summary:
+      'PM Modi unveiled Rs 19,680 crore worth of projects in Assam. Focus on infrastructure and energy. Handed land pattas to Assam tea workers. #AssamWithModi trending nationally.',
+    mckinseyAnalysis: [
+      'Pre-election infrastructure push in Northeast – signals BJP confidence',
+      'Tea worker land patta distribution targets large vote bank',
+      'Rs 19,680 Cr investment aligns with BJP\'s Northeast development narrative',
+    ],
+    predictionMarketAngle: 'Will BJP sweep Northeast in next elections?',
+    categoryLabel: 'Politics',
+    categoryEmoji: '🏗️',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
+  {
+    id: 'evt-38',
+    slug: 'iran-war-impact-india-economy',
+    title: 'Iran War Impact on India – Multi-Sector Crisis',
+    category: 'geopolitics',
+    status: 'critical',
+    summary:
+      'The Iran-US/Israel war is causing cascading impacts on India: oil above $100, LPG crisis, rupee at record low, stock market crash, FII outflows of Rs 52,000 Cr, and 10M Indians in Gulf at risk. India\'s biggest external shock since COVID.',
+    keyDrivers: [
+      'Strait of Hormuz blockade disrupting oil/LPG supplies',
+      'FII outflows of Rs 52,000 crore this month',
+      '10 million Indians in Gulf at risk',
+    ],
+    impactOnIndia: [
+      'Oil above $100 → import bill surge → fiscal deficit risk',
+      'LPG shortage → restaurant shutdowns → household cooking disrupted',
+      'Rupee at 92.43 → import costs rising → inflation acceleration',
+      'Stock market lost Rs 25 lakh crore since war began',
+    ],
+    mckinseyAnalysis: [
+      'India faces interconnected crisis: energy → economy → currency → markets → daily life',
+      'Every $10 increase in oil = ~0.3% fiscal deficit impact and 25-30 bps inflation',
+      'India\'s diplomatic tightrope: Iran ties, Israel alliance, Arab relationships all at stake',
+    ],
+    impactProbability: 'Critical – cascading multi-sector impact across Indian economy',
+    predictionMarketAngle: 'Will Iran-US ceasefire happen before April 2026?',
+    categoryLabel: 'Geopolitics',
+    categoryEmoji: '⚠️',
+    updatedAt: '2026-03-13T00:00:00Z',
+  },
 ];
 
 export const EVENT_CATEGORIES: {
@@ -594,4 +895,5 @@ export const EVENT_CATEGORIES: {
   { value: 'technology', label: 'Technology', emoji: '💻' },
   { value: 'entertainment', label: 'Entertainment', emoji: '🎬' },
   { value: 'regulation', label: 'Regulation', emoji: '⚖️' },
+  { value: 'energy', label: 'Energy', emoji: '⛽' },
 ];

@@ -42,7 +42,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     category: 'markets',
     status: 'critical',
     summary:
-      'Sensex fell 1.08% to 76,034 and Nifty 50 dropped 0.95% to 23,639 on March 12, 2026 as crude oil crossed $100 amid West Asia tensions.',
+      'Sensex fell 1.72% to 76,863.71 and Nifty 50 fell to 23,866.85 on March 11, 2026 amid West Asia tensions and oil-price volatility.',
     imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
     keyDrivers: [
       'West Asia / Middle East tensions (US & Israel airstrikes on Iran)',
@@ -60,7 +60,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     predictionMarketAngle: 'Will Nifty recover above 24,000 by end of March 2026?',
     categoryLabel: 'Markets',
     categoryEmoji: '📉',
-    updatedAt: '2026-03-13T16:57:00Z',
+    updatedAt: '2026-03-13T18:00:00Z',
   },
   {
     id: 'evt-2',
@@ -84,10 +84,11 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
       'India-EU FTA progress adding confidence',
       'Rising oil prices could complicate inflation outlook',
     ],
-    predictionMarketAngle: 'Will RBI cut rates before June 2026?',
+    predictionMarketAngle:
+      'Will FY26 inflation print below 3.0% (annual average) as projected by RBI?',
     categoryLabel: 'Economy',
     categoryEmoji: '🏦',
-    updatedAt: '2026-03-13T00:00:00Z',
+    updatedAt: '2026-03-13T18:00:00Z',
   },
   {
     id: 'evt-3',
@@ -678,28 +679,69 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
   },
   {
     id: 'evt-30',
+    slug: 'prediction-markets-us-oversight-reuters-duffy',
+    title: 'Prediction Markets Face Regulatory Pushback in the US',
+    category: 'regulation',
+    status: 'active',
+    summary:
+      'CME Group CEO Terry Duffy said prediction markets need clearer rules to separate financial contracts from gambling, as US states challenge platforms like Kalshi and Polymarket.',
+    keyDrivers: [
+      'Blurred lines between event contracts used for hedging and sports-style wagering',
+      'State-level legal challenges and court actions against sports-event contracts',
+      'Potential new federal legislation to define and regulate event contracts',
+    ],
+    impactOnIndia: [
+      'Global regulatory tightening can influence India\'s policy stance on opinion trading',
+      'Offshore platforms offering India-linked markets may face higher compliance friction',
+      'Could accelerate a "regulated-category" debate vs blanket prohibition in India',
+    ],
+    mckinseyAnalysis: [
+      'Regulatory risk is shifting from theoretical to operational: state injunctions and licensing fights can abruptly remove market access and liquidity.',
+      'A clearer US definition of what qualifies as a derivatives-like event contract (vs gambling) could become the de-facto global reference point for policymakers.',
+      'Scenario 1 (base): patchwork state enforcement continues → higher platform compliance costs, more geofencing, and fewer politically sensitive markets.',
+      'Scenario 2 (bear): adverse Supreme Court/federal outcome classifies many event contracts as gambling → contraction of product scope; increased pressure on offshore venues.',
+      'Scenario 3 (bull): a defined federal regime for event contracts → legitimacy improves, institutions participate, and volumes rise; India may copy a similar regulatory taxonomy.',
+    ],
+    impactProbability: 'Medium-High – regulatory momentum is rising as volumes grow',
+    predictionMarketAngle:
+      'Will India announce a consultation paper/framework for regulated prediction markets by end of 2026?',
+    categoryLabel: 'Regulation',
+    categoryEmoji: '⚖️',
+    updatedAt: '2026-03-13T18:00:00Z',
+  },
+  {
+    id: 'evt-32',
     slug: 'west-bengal-assembly-elections-2026',
     title: 'West Bengal Assembly Elections 2026 – BJP vs TMC',
     category: 'politics',
     status: 'active',
     summary:
-      'BJP finalized ~140-160 candidates. TMC (Mamata) vs BJP major battle. 193 Opposition INDIA MPs signed notices seeking removal of CEC Gyanesh Kumar. Mamata alleges 63.66 lakh voter names deleted. New Governor RN Ravi just took oath.',
+      'Election Commission is expected to announce the assembly election schedule after March 10 (Assam, Kerala, Tamil Nadu, Puducherry, West Bengal) amid controversy over voter-roll deletions post-SIR; BJP has also started finalizing candidate lists in West Bengal.',
     imageUrl: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800',
     keyDrivers: [
-      'BJP national momentum vs TMC grassroots strength',
-      'Religious polarization and economic discontent',
-      'EC controversy – Mamata alleges EVM manipulation and voter roll deletion',
+      'Election schedule timing and phased polling logistics',
+      'Voter-roll deletion controversy after Special Intensive Revision (SIR)',
+      'High-stakes BJP vs TMC contest and opposition narrative around institutional neutrality',
+    ],
+    keyDataPoints: [
+      { label: 'Schedule expected', value: 'Any time after March 10, 2026' },
+      { label: 'Assembly terms end', value: 'West Bengal May 7; TN May 10; Assam May 20; Kerala May 23; Puducherry Jun 15' },
+      { label: 'Tamil Nadu deletions (post-SIR)', value: '54.07 lakh (8.43%)' },
+      { label: 'Kerala deletions (post-SIR)', value: '8.97 lakh (3.22%)' },
+      { label: 'Puducherry deletions (post-SIR)', value: '77,367 (7.5%)' },
     ],
     mckinseyAnalysis: [
-      'Could reshape eastern India politics; national implications for 2029 Lok Sabha strategy',
-      '70M+ voters, national parties, minority communities at stake',
-      'Muslim-majority Murshidabad (11L) and Malda (8.28L) have highest pending voter scrutiny',
+      'Perceived electoral integrity is becoming a first-order political variable: it can influence turnout, coalition behavior, and post-poll litigation risk.',
+      'Operationally, EC\'s decision on single-phase vs multi-phase polling changes campaign dynamics, security deployment, and volatility risk for local businesses.',
+      'Scenario 1 (base): schedule announced imminently, limited legal disruption → normal election risk premium in affected states.',
+      'Scenario 2 (bear): intensified litigation/protests around SIR deletions → campaign disruptions, higher law-and-order spend, and potential delays.',
     ],
-    impactProbability: 'High – most consequential state election of 2026',
-    predictionMarketAngle: 'Will BJP win West Bengal 2026? Will TMC retain power?',
+    impactProbability: 'High – most consequential state election cluster of 2026',
+    predictionMarketAngle:
+      'Will West Bengal elections be held in 3+ phases? Will turnout exceed 80%?',
     categoryLabel: 'Politics',
     categoryEmoji: '🗳️',
-    updatedAt: '2026-03-13T00:00:00Z',
+    updatedAt: '2026-03-13T18:00:00Z',
   },
   {
     id: 'evt-31',

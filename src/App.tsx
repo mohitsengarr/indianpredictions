@@ -10,6 +10,7 @@ import MarketDetailPage from "./pages/MarketDetailPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import WalletPage from "./pages/WalletPage";
 import ProfilePage from "./pages/ProfilePage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
 import { LivePricesProvider } from "./contexts/LivePricesContext";
 
@@ -29,6 +30,7 @@ const App = () => (
                 <Route path="/" element={<HomePage />} />
                 <Route path="/markets" element={<MarketsPage />} />
                 <Route path="/market/:id" element={<MarketDetailPage />} />
+                <Route path="/analytics" element={<AnalyticsPage />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
                 <Route path="/wallet" element={<WalletPage />} />
                 <Route path="/profile" element={<ProfilePage />} />

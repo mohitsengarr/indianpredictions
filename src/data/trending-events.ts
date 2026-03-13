@@ -42,7 +42,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     category: 'markets',
     status: 'critical',
     summary:
-      'Sensex fell 1.72% to 76,863.71 and Nifty 50 fell to 23,866.85 on March 11, 2026 amid West Asia tensions and oil-price volatility.',
+      'Sensex sold off sharply on March 13, 2026 (down 1,470 points) with Nifty ending below 23,151 amid West Asia conflict escalation and crude oil near/above $100 per barrel.',
     imageUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
     keyDrivers: [
       'West Asia / Middle East tensions (US & Israel airstrikes on Iran)',
@@ -60,7 +60,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     predictionMarketAngle: 'Will Nifty recover above 24,000 by end of March 2026?',
     categoryLabel: 'Markets',
     categoryEmoji: '📉',
-    updatedAt: '2026-03-13T18:00:00Z',
+    updatedAt: '2026-03-13T19:00:00Z',
   },
   {
     id: 'evt-2',
@@ -218,7 +218,7 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     category: 'geopolitics',
     status: 'critical',
     summary:
-      'US and Israel ramped up airstrikes against Iran. Among most intense actions of the ongoing conflict. Oil prices surge past $101/barrel.',
+      'West Asia conflict continued to intensify into mid-March 2026, pushing crude oil back toward ~$100/bbl and tightening global risk appetite.',
     impactOnIndia: [
       'Crude oil surge directly impacts Indian economy (import dependent)',
       'LPG gas shortage across India',
@@ -228,16 +228,16 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
       'Inflation risk if sustained',
     ],
     mckinseyAnalysis: [
-      "India's energy import dependency makes it highly vulnerable",
+      "India's energy import dependency (imports ~90% of crude) makes it highly vulnerable",
       'Every $10 increase in oil = ~0.3% fiscal deficit impact',
-      'Current account deficit will widen',
-      "RBI's inflation management complicated",
+      'If Brent averages ~$100/bbl, economists project India’s current account deficit could widen to ~1.9–2.2% of GDP in FY2026/27 (from ~0.0–0.8% projected)',
+      "Higher crude raises inflation risk (Reuters cited estimates around ~4.1% inflation with $100/bbl averages)",
       'Strategic petroleum reserves being tapped globally',
     ],
     predictionMarketAngle: 'Will Iran-US ceasefire happen before April 2026?',
     categoryLabel: 'Geopolitics',
     categoryEmoji: '🌍',
-    updatedAt: '2026-03-13T00:00:00Z',
+    updatedAt: '2026-03-13T19:00:00Z',
   },
   {
     id: 'evt-10',
@@ -442,21 +442,21 @@ export const TRENDING_EVENTS: TrendingEvent[] = [
     category: 'economy',
     status: 'active',
     summary:
-      "India delays signing US trade deal amid fresh tariff and energy concerns. US launches 'forced labour' trade probe against 60 nations including India. Farmers protesting against deal in Delhi.",
+      "Reuters (Mar 13, 2026) reports India will hold off signing an interim US trade deal for several months amid new US investigations into what it calls ‘structural excess capacity’ among trading partners and broader tariff uncertainty.",
     keyDrivers: [
       'Fresh US tariff threats creating uncertainty',
-      "US 'forced labour' probe targets 60 nations including India",
+      "US launched new probes/investigations that add friction to talks (incl. 'structural excess capacity' under Section 301)",
       'Farmer protests in Delhi against trade deal terms',
     ],
     mckinseyAnalysis: [
       'India weighing short-term tariff relief vs long-term sovereignty concerns',
       'Agricultural lobby remains key political constraint on trade liberalization',
-      'Forced labour probe adds new dimension to bilateral tensions',
+      'New US investigations increase policy uncertainty and reduce near-term probability of a quick interim deal',
     ],
     predictionMarketAngle: 'Will India-US trade deal be signed before June 2026?',
     categoryLabel: 'Economy',
     categoryEmoji: '🇺🇸',
-    updatedAt: '2026-03-13T00:00:00Z',
+    updatedAt: '2026-03-13T19:00:00Z',
   },
   {
     id: 'evt-20',

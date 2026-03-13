@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      polymarket_cache: {
+        Row: {
+          data: Json
+          fetched_at: string
+          id: string
+          is_india: boolean
+          volume: number
+        }
+        Insert: {
+          data: Json
+          fetched_at?: string
+          id: string
+          is_india?: boolean
+          volume?: number
+        }
+        Update: {
+          data?: Json
+          fetched_at?: string
+          id?: string
+          is_india?: boolean
+          volume?: number
+        }
+        Relationships: []
+      }
+      polymarket_meta: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value: string
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

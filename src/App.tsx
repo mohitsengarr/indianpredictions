@@ -16,6 +16,7 @@ import EventDetailPage from "./pages/EventDetailPage";
 import BlogPage from "./pages/BlogPage";
 import BlogPostPage from "./pages/BlogPostPage";
 import InsightsPage from "./pages/InsightsPage";
+import CryptoPage from "./pages/CryptoPage";
 import NotFound from "./pages/NotFound";
 import { LivePricesProvider } from "./contexts/LivePricesContext";
 
@@ -46,6 +47,7 @@ const AnimatedRoutes = () => {
           <Route path="/market/:id" element={<MarketDetailPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/insights" element={<InsightsPage />} />
+          <Route path="/crypto" element={<CryptoPage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/profile" element={<ProfilePage />} />

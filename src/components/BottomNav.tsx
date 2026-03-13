@@ -1,4 +1,4 @@
-import { Home, BarChart3, LineChart, PieChart } from 'lucide-react';
+import { Home, BarChart3, LineChart, PieChart, Bitcoin } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const tabs = [
@@ -6,6 +6,7 @@ const tabs = [
   { path: '/markets', label: 'Markets', icon: BarChart3 },
   { path: '/analytics', label: 'Analytics', icon: LineChart },
   { path: '/insights', label: 'Insights', icon: PieChart },
+  { path: '/crypto', label: 'Crypto', icon: Bitcoin },
 ];
 
 const BottomNav = () => {

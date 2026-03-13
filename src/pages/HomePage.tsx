@@ -6,9 +6,10 @@ import RiskBanner from '@/components/RiskBanner';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
 import TrendingEvents from '@/components/TrendingEvents';
+import EventCard from '@/components/EventCard';
 import { APP_CONFIG, CATEGORY_LABELS } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
-import { TRENDING_EVENTS } from '@/data/trending-events';
+import { TRENDING_EVENTS, type EventCategory } from '@/data/trending-events';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import {
   Search, Bell, Zap, Clock, TrendingUp, RefreshCw, Flame,
@@ -114,7 +115,37 @@ const INDIA_CATEGORY_PILLS = [
   { key: 'economy', emoji: '📈', label: 'Economy' },
   { key: 'entertainment', emoji: '🎬', label: 'Bollywood' },
   { key: 'crypto', emoji: '₿', label: 'Crypto' },
+  { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics' },
+  { key: 'regulation', emoji: '⚖️', label: 'Regulation' },
+  { key: 'technology', emoji: '💻', label: 'Technology' },
+  { key: 'sports', emoji: '⚽', label: 'Sports' },
 ];
+
+/* Map pill keys → event categories they match */
+const PILL_TO_EVENT_CATEGORIES: Record<string, EventCategory[]> = {
+  cricket: ['sports'],
+  politics: ['politics'],
+  economy: ['economy', 'markets'],
+  entertainment: ['entertainment'],
+  crypto: ['markets', 'technology'],
+  geopolitics: ['geopolitics'],
+  regulation: ['regulation'],
+  technology: ['technology'],
+  sports: ['sports'],
+};
+
+/* Map pill keys → market categories they match */
+const PILL_TO_MARKET_CATEGORIES: Record<string, MarketCategory[]> = {
+  cricket: ['cricket'],
+  politics: ['politics'],
+  economy: ['economy'],
+  entertainment: ['entertainment'],
+  crypto: ['crypto'],
+  geopolitics: ['politics'],
+  regulation: ['economy'],
+  technology: ['crypto'],
+  sports: ['cricket'],
+};
 
 const HomePage = () => {
   useSEO({
@@ -132,7 +163,7 @@ const HomePage = () => {
   });
 
   const navigate = useNavigate();
-  const [category, setCategory] = useState<MarketCategory | 'all'>('all');
+  const [category, setCategory] = useState<string>('all');
   const [search, setSearch] = useState('');
   const [email, setEmail] = useState('');
 
@@ -156,10 +187,19 @@ const HomePage = () => {
 
   const enabledMarkets = allMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
   const filtered = enabledMarkets.filter((m) => {
-    const matchCat = category === 'all' || m.category === category;
+    const marketCats = category === 'all' ? null : (PILL_TO_MARKET_CATEGORIES[category] ?? []);
+    const matchCat = !marketCats || marketCats.includes(m.category);
     const matchSearch = m.title.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
+
+  // Trending events matching current category
+  const filteredEvents = category === 'all'
+    ? []
+    : TRENDING_EVENTS.filter((e) => {
+        const eventCats = PILL_TO_EVENT_CATEGORIES[category] ?? [];
+        return eventCats.includes(e.category);
+      });
 
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
 
@@ -289,7 +329,7 @@ const HomePage = () => {
               {INDIA_CATEGORY_PILLS.map(pill => (
                 <button
                   key={pill.key}
-                  onClick={() => setCategory(pill.key as MarketCategory)}
+                  onClick={() => setCategory(pill.key)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
                     category === pill.key
                       ? 'bg-primary text-primary-foreground border-primary'
@@ -305,23 +345,44 @@ const HomePage = () => {
 
         {/* ── Filtered / Search view ── */}
         {(category !== 'all' || search) && (
-          <section>
-            <AnimateIn>
-              <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-primary" />
-                {category !== 'all'
-                  ? `${CATEGORY_LABELS[category as MarketCategory]?.emoji} ${CATEGORY_LABELS[category as MarketCategory]?.label}`
-                  : 'Search Results'}
-                <span className="text-xs text-muted-foreground font-normal">({filtered.length})</span>
-              </h2>
-            </AnimateIn>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.06}>
-              {filtered.length > 0 ? (
-                filtered.map((m) => <MarketCard key={m.id} market={m} />)
-              ) : (
-                <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No markets found</p>
-              )}
-            </StaggerChildren>
+          <section className="space-y-6">
+            {/* Matching Trending Events */}
+            {filteredEvents.length > 0 && !search && (
+              <div>
+                <AnimateIn>
+                  <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-destructive" />
+                    Trending Events
+                    <span className="text-xs text-muted-foreground font-normal">({filteredEvents.length})</span>
+                  </h2>
+                </AnimateIn>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {filteredEvents.map((event, i) => (
+                    <EventCard key={event.id} event={event} index={i} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Matching Markets */}
+            <div>
+              <AnimateIn>
+                <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-primary" />
+                  {category !== 'all'
+                    ? `${INDIA_CATEGORY_PILLS.find(p => p.key === category)?.emoji ?? ''} ${INDIA_CATEGORY_PILLS.find(p => p.key === category)?.label ?? 'Markets'}`
+                    : 'Search Results'}
+                  <span className="text-xs text-muted-foreground font-normal">({filtered.length})</span>
+                </h2>
+              </AnimateIn>
+              <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.06}>
+                {filtered.length > 0 ? (
+                  filtered.map((m) => <MarketCard key={m.id} market={m} />)
+                ) : (
+                  <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No prediction markets in this category yet</p>
+                )}
+              </StaggerChildren>
+            </div>
           </section>
         )}
 

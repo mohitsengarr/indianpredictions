@@ -10,6 +10,7 @@ import MarketDetailPage from "./pages/MarketDetailPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import WalletPage from "./pages/WalletPage";
 import ProfilePage from "./pages/ProfilePage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
 import { LivePricesProvider } from "./contexts/LivePricesContext";
 

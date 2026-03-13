@@ -1,7 +1,7 @@
 /**
  * Edge Function: fetch-polymarket
  * Fetches the latest markets from Polymarket Gamma API and upserts them
- * into the polymarket_cache table. Called by a pg_cron job every 5 minutes.
+ * into the polymarket_cache table. Scheduled every 5 minutes via pg_cron.
  */
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -13,34 +13,26 @@ const corsHeaders = {
 
 const GAMMA_BASE = 'https://gamma-api.polymarket.com';
 
-interface PolymarketToken {
-  token_id: string;
-  outcome: string;
-  price: number;
-  winner: boolean;
-}
-
 interface PolymarketMarket {
   id: string;
   question: string;
-  conditionId: string;
+  conditionId?: string;
   slug: string;
-  resolutionSource: string;
-  endDate: string;
-  startDate: string;
-  liquidity: number;
-  volume: number;
-  volume24hr: number;
+  resolutionSource?: string;
+  endDate?: string;
+  startDate?: string;
+  createdAt?: string;
+  liquidity?: string | number;
+  volume?: string | number;
+  volume24hr?: number;
   active: boolean;
   closed: boolean;
-  archived: boolean;
-  featured: boolean;
-  restricted: boolean;
-  tokens: PolymarketToken[];
-  tags: { id: string; label: string; slug: string }[];
   image?: string;
   description?: string;
-  category?: string;
+  outcomes?: string;       // JSON string: '["Yes","No"]'
+  outcomePrices?: string;  // JSON string: '["0.72","0.28"]'
+  tags?: { id: string; label: string; slug: string }[];
+  clobTokenIds?: string;
 }
 
 type MarketCategory = 'cricket' | 'politics' | 'economy' | 'entertainment' | 'crypto';
@@ -59,16 +51,15 @@ function isIndiaRelated(question: string, tags?: { label: string }[]): boolean {
 }
 
 function inferCategory(market: PolymarketMarket): MarketCategory {
-  const text = [market.question ?? '', ...(market.tags?.map((t) => t.label ?? '') ?? []), market.category ?? '']
+  const text = [market.question ?? '', ...(market.tags?.map((t) => t.label ?? '') ?? [])]
     .join(' ')
     .toLowerCase();
 
-  if (/cricket|ipl|bcci|t20|odi|test match|india.*(win|tour)|match/.test(text)) return 'cricket';
-  if (/bitcoin|crypto|eth|blockchain|upi|web3|token|defi|nft/.test(text)) return 'crypto';
-  if (/election|vote|president|prime minister|minister|politics|parliament|senate|congress|modi|trump|biden|harris/.test(text)) return 'politics';
+  if (/cricket|ipl|bcci|t20|odi|test match|match/.test(text)) return 'cricket';
+  if (/bitcoin|crypto|eth|blockchain|web3|token|defi|nft/.test(text)) return 'crypto';
+  if (/election|vote|president|prime minister|politics|parliament|senate|congress|modi|trump|biden|harris/.test(text)) return 'politics';
   if (/movie|film|box office|bollywood|oscar|emmy|award|celebrity|music|album|series/.test(text)) return 'entertainment';
-  if (/gdp|inflation|rate|fed|rbi|nifty|stock|nasdaq|dow|market|economy|cpi|recession|bank/.test(text)) return 'economy';
-
+  if (/gdp|inflation|rate|fed|rbi|nifty|stock|nasdaq|dow|economy|cpi|recession|bank/.test(text)) return 'economy';
   return 'crypto';
 }
 
@@ -89,18 +80,31 @@ function syntheticPriceHistory(yesPrice: number) {
 }
 
 function mapMarket(pm: PolymarketMarket): object | null {
-  if (!pm.tokens || pm.tokens.length < 2) return null;
+  // Parse outcomes and prices from JSON strings
+  let outcomes: string[] = [];
+  let outcomePrices: string[] = [];
 
-  const yesToken = pm.tokens.find((t) => t.outcome?.toLowerCase() === 'yes') ?? pm.tokens[0];
-  const noToken = pm.tokens.find((t) => t.outcome?.toLowerCase() === 'no') ?? pm.tokens[1];
+  try {
+    outcomes = pm.outcomes ? JSON.parse(pm.outcomes) : [];
+    outcomePrices = pm.outcomePrices ? JSON.parse(pm.outcomePrices) : [];
+  } catch {
+    return null;
+  }
 
-  const yesPrice = parseFloat(String(yesToken.price ?? 0.5));
-  const noPrice = parseFloat(String(noToken.price ?? 1 - yesPrice));
+  // Need at least YES/NO binary market
+  if (outcomes.length < 2 || outcomePrices.length < 2) return null;
 
-  if (yesPrice <= 0 || yesPrice >= 1) return null;
+  const yesIdx = outcomes.findIndex((o) => o.toLowerCase() === 'yes');
+  const noIdx = outcomes.findIndex((o) => o.toLowerCase() === 'no');
+
+  const yesPrice = parseFloat(outcomePrices[yesIdx >= 0 ? yesIdx : 0] ?? '0.5');
+  const noPrice = parseFloat(outcomePrices[noIdx >= 0 ? noIdx : 1] ?? String(1 - yesPrice));
+
+  // Skip degenerate / resolved markets
+  if (yesPrice <= 0 || yesPrice >= 1 || isNaN(yesPrice)) return null;
 
   const endDate = pm.endDate ?? '';
-  const startDate = pm.startDate ?? new Date().toISOString();
+  const startDate = pm.createdAt ?? pm.startDate ?? new Date().toISOString();
   const change24h = parseFloat(((Math.random() * 10 - 5)).toFixed(1));
   const volume = parseFloat(String(pm.volume ?? pm.volume24hr ?? 0));
   const liquidity = parseFloat(String(pm.liquidity ?? 0));
@@ -149,9 +153,8 @@ Deno.serve(async (req) => {
   try {
     console.log('[fetch-polymarket] Starting fetch...');
 
-    // Fetch 200 markets for comprehensive coverage
     const raw = await fetchMarkets(200);
-    console.log(`[fetch-polymarket] Fetched ${raw.length} markets from Polymarket`);
+    console.log(`[fetch-polymarket] Fetched ${raw.length} raw markets`);
 
     const rows: { id: string; data: object; is_india: boolean; volume: number; fetched_at: string }[] = [];
 
@@ -166,12 +169,13 @@ Deno.serve(async (req) => {
         id: pm.id,
         data: mapped,
         is_india: india,
-        volume: vol,
+        volume: isNaN(vol) ? 0 : vol,
         fetched_at: new Date().toISOString(),
       });
     }
 
-    console.log(`[fetch-polymarket] Mapped ${rows.length} valid markets (${rows.filter(r => r.is_india).length} India-related)`);
+    const indiaCount = rows.filter(r => r.is_india).length;
+    console.log(`[fetch-polymarket] Mapped ${rows.length} markets (${indiaCount} India-related)`);
 
     // Upsert in batches of 50
     const BATCH = 50;
@@ -182,7 +186,7 @@ Deno.serve(async (req) => {
         .upsert(batch, { onConflict: 'id' });
 
       if (error) {
-        console.error(`[fetch-polymarket] Upsert error (batch ${i}):`, error);
+        console.error(`[fetch-polymarket] Upsert error:`, error);
         throw error;
       }
     }
@@ -191,23 +195,13 @@ Deno.serve(async (req) => {
     await supabase.from('polymarket_meta').upsert([
       { key: 'last_fetch', value: new Date().toISOString(), updated_at: new Date().toISOString() },
       { key: 'total_markets', value: String(rows.length), updated_at: new Date().toISOString() },
-      { key: 'india_markets', value: String(rows.filter(r => r.is_india).length), updated_at: new Date().toISOString() },
+      { key: 'india_markets', value: String(indiaCount), updated_at: new Date().toISOString() },
     ], { onConflict: 'key' });
-
-    // Clean up stale entries (older than 15 minutes and not in current batch)
-    const currentIds = rows.map(r => r.id);
-    const cutoff = new Date(Date.now() - 15 * 60 * 1000).toISOString();
-    await supabase
-      .from('polymarket_cache')
-      .delete()
-      .lt('fetched_at', cutoff)
-      .not('id', 'in', `(${currentIds.map(id => `"${id}"`).join(',')})`)
-      .limit(500);
 
     console.log('[fetch-polymarket] Done.');
 
     return new Response(
-      JSON.stringify({ success: true, markets: rows.length, india: rows.filter(r => r.is_india).length }),
+      JSON.stringify({ success: true, markets: rows.length, india: indiaCount }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } },
     );
   } catch (err) {

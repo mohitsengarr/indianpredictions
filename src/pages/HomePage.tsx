@@ -396,7 +396,7 @@ const HomePage = () => {
                     {indiaEconomy.map(m => <MarketCard key={m.id} market={m} />)}
                   </StaggerChildren>
                 ) : (
-                  <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-sm text-emerald-700 text-center">
+                  <div className="bg-accent/10 border border-accent/20 rounded-xl p-4 text-sm text-accent-foreground text-center">
                     No active economy markets right now
                   </div>
                 )}

@@ -360,7 +360,7 @@ const HomePage = () => {
                     {indiaPolitics.map(m => <MarketCard key={m.id} market={m} />)}
                   </StaggerChildren>
                 ) : (
-                  <div className="bg-red-50 border border-red-100 rounded-xl p-4 text-sm text-red-700 text-center">
+                  <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4 text-sm text-destructive text-center">
                     No active politics markets right now
                   </div>
                 )}

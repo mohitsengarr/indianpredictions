@@ -280,7 +280,7 @@ const HomePage = () => {
                   {indiaHot.map((m, i) => (
                     <div key={m.id} className="relative">
                       {i === 0 && (
-                        <div className="absolute -top-2 -left-1 z-10 flex items-center gap-1 bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
+                        <div className="absolute -top-2 -left-1 z-10 flex items-center gap-1 bg-warning text-warning-foreground text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
                           <Star className="w-2.5 h-2.5" /> #1
                         </div>
                       )}

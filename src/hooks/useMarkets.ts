@@ -1,17 +1,23 @@
 import { useState, useEffect } from 'react';
 import { Market } from '@/lib/types';
-import { fetchPolymarkets } from '@/lib/polymarket-api';
-import { mapPolymarketsToMarkets } from '@/lib/polymarket-mapper';
 import { MARKETS as FALLBACK_MARKETS } from '@/lib/mock-data';
+import { supabase } from '@/lib/supabase';
 
 interface UseMarketsResult {
   markets: Market[];
   loading: boolean;
   error: string | null;
   refetch: () => void;
+  lastUpdated: Date | null;
 }
 
-/** India-related keywords to filter from Polymarket */
+// Module-level cache so we don't re-fetch on every re-render
+let cachedAll: Market[] | null = null;
+let cachedIndia: Market[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+/** India-related keywords — kept for any client-side fallback filtering */
 const INDIA_KEYWORDS = [
   'india', 'indian', 'modi', 'bjp', 'congress', 'ipl', 'cricket', 'bcci',
   'rupee', 'inr', 'rbi', 'nifty', 'sensex', 'mumbai', 'delhi', 'bollywood',
@@ -21,29 +27,37 @@ const INDIA_KEYWORDS = [
 ];
 
 export function isIndiaRelated(question: string, tags?: { label: string }[]): boolean {
-  const text = [
-    question,
-    ...(tags?.map((t) => t.label) ?? []),
-  ].join(' ').toLowerCase();
-
+  const text = [question, ...(tags?.map((t) => t.label) ?? [])].join(' ').toLowerCase();
   return INDIA_KEYWORDS.some((kw) => text.includes(kw));
 }
 
-// Module-level cache
-let cachedMarkets: Market[] | null = null;
-let cachedIndiaMarkets: Market[] | null = null;
-let cacheTimestamp = 0;
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+/** Fetch all markets from the Supabase polymarket_cache table */
+async function fetchAllFromDB(): Promise<{ all: Market[]; india: Market[] }> {
+  const { data, error } = await supabase
+    .from('polymarket_cache')
+    .select('id, data, is_india, volume, fetched_at')
+    .order('volume', { ascending: false })
+    .limit(300);
+
+  if (error) throw new Error(error.message);
+  if (!data || data.length === 0) throw new Error('No cached markets found');
+
+  const all = data.map((row) => row.data as Market);
+  const india = data.filter((row) => row.is_india).map((row) => row.data as Market);
+
+  return { all, india };
+}
 
 export function useMarkets(): UseMarketsResult {
-  const [markets, setMarkets] = useState<Market[]>(cachedMarkets ?? FALLBACK_MARKETS);
-  const [loading, setLoading] = useState(!cachedMarkets);
+  const [markets, setMarkets] = useState<Market[]>(cachedAll ?? FALLBACK_MARKETS);
+  const [loading, setLoading] = useState(!cachedAll);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
-    if (cachedMarkets && Date.now() - cacheTimestamp < CACHE_TTL) {
-      setMarkets(cachedMarkets);
+    if (cachedAll && Date.now() - cacheTimestamp < CACHE_TTL) {
+      setMarkets(cachedAll);
       setLoading(false);
       return;
     }
@@ -52,24 +66,21 @@ export function useMarkets(): UseMarketsResult {
     setLoading(true);
     setError(null);
 
-    fetchPolymarkets({ limit: 100, active: true, closed: false, order: 'volume24hr' })
-      .then((raw) => {
+    fetchAllFromDB()
+      .then(({ all, india }) => {
         if (cancelled) return;
-        const mapped = mapPolymarketsToMarkets(raw);
-        if (mapped.length > 0) {
-          cachedMarkets = mapped;
-          cacheTimestamp = Date.now();
-          setMarkets(mapped);
-        } else {
-          setMarkets(FALLBACK_MARKETS);
-        }
+        cachedAll = all.length > 0 ? all : FALLBACK_MARKETS;
+        cachedIndia = india.length > 0 ? india : null;
+        cacheTimestamp = Date.now();
+        setMarkets(cachedAll);
+        setLastUpdated(new Date());
         setError(null);
       })
       .catch((err) => {
         if (cancelled) return;
-        console.error('[useMarkets] Failed to fetch from Polymarket:', err);
+        console.error('[useMarkets] Failed to fetch from DB:', err);
         setError(err.message ?? 'Failed to fetch markets');
-        setMarkets(cachedMarkets ?? FALLBACK_MARKETS);
+        setMarkets(cachedAll ?? FALLBACK_MARKETS);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -78,24 +89,26 @@ export function useMarkets(): UseMarketsResult {
     return () => { cancelled = true; };
   }, [tick]);
 
-  return { markets, loading, error, refetch: () => setTick((t) => t + 1) };
+  return { markets, loading, error, lastUpdated, refetch: () => setTick((t) => t + 1) };
 }
 
-/** Hook that fetches India-specific trending markets from Polymarket */
+/** Hook that returns India-specific markets from the DB cache */
 export function useIndiaMarkets(): {
   markets: Market[];
   loading: boolean;
   error: string | null;
   refetch: () => void;
+  lastUpdated: Date | null;
 } {
-  const [markets, setMarkets] = useState<Market[]>(cachedIndiaMarkets ?? FALLBACK_MARKETS);
-  const [loading, setLoading] = useState(!cachedIndiaMarkets);
+  const [markets, setMarkets] = useState<Market[]>(cachedIndia ?? FALLBACK_MARKETS);
+  const [loading, setLoading] = useState(!cachedIndia);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
-    if (cachedIndiaMarkets && Date.now() - cacheTimestamp < CACHE_TTL) {
-      setMarkets(cachedIndiaMarkets);
+    if (cachedIndia && Date.now() - cacheTimestamp < CACHE_TTL) {
+      setMarkets(cachedIndia);
       setLoading(false);
       return;
     }
@@ -104,28 +117,22 @@ export function useIndiaMarkets(): {
     setLoading(true);
     setError(null);
 
-    // Fetch a large batch sorted by volume so India markets surface
-    fetchPolymarkets({ limit: 200, active: true, closed: false, order: 'volume24hr' })
-      .then((raw) => {
+    fetchAllFromDB()
+      .then(({ all, india }) => {
         if (cancelled) return;
-
-        // Filter to India-related markets
-        const indiaRaw = raw.filter((m) => isIndiaRelated(m.question ?? '', m.tags));
-        const mapped = mapPolymarketsToMarkets(indiaRaw.length > 0 ? indiaRaw : raw);
-
-        // Sort by volume descending
-        mapped.sort((a, b) => b.volume - a.volume);
-
-        const result = mapped.length > 0 ? mapped : FALLBACK_MARKETS;
-        cachedIndiaMarkets = result;
+        cachedAll = all.length > 0 ? all : FALLBACK_MARKETS;
+        cachedIndia = india.length > 0 ? india : all.slice(0, 20);
+        cacheTimestamp = Date.now();
+        const result = cachedIndia ?? FALLBACK_MARKETS;
         setMarkets(result);
+        setLastUpdated(new Date());
         setError(null);
       })
       .catch((err) => {
         if (cancelled) return;
         console.error('[useIndiaMarkets] Failed:', err);
         setError(err.message ?? 'Failed to fetch India markets');
-        setMarkets(cachedIndiaMarkets ?? FALLBACK_MARKETS);
+        setMarkets(cachedIndia ?? FALLBACK_MARKETS);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -134,7 +141,7 @@ export function useIndiaMarkets(): {
     return () => { cancelled = true; };
   }, [tick]);
 
-  return { markets, loading, error, refetch: () => setTick((t) => t + 1) };
+  return { markets, loading, error, lastUpdated, refetch: () => setTick((t) => t + 1) };
 }
 
 /** Fetch a single market by id */

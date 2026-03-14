@@ -16,22 +16,8 @@ interface FAQSectionProps {
 const FAQSection = ({ faqs, title = 'Frequently Asked Questions', subtitle }: FAQSectionProps) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
-
   return (
     <section>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="flex items-center gap-2 mb-4">
         <div className="w-7 h-7 rounded-full bg-secondary/15 flex items-center justify-center">
           <HelpCircle className="w-4 h-4 text-secondary" />

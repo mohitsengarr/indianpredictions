@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useRef, useCallback } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface AnimateInProps {
@@ -24,7 +24,13 @@ const AnimateIn = ({
   blur = false,
   as: Tag = 'div',
 }: AnimateInProps) => {
-  const [ref, isVisible] = useScrollReveal<HTMLElement>();
+  const [scrollRef, isVisible] = useScrollReveal<HTMLElement>();
+
+  // Use a callback ref to forward to the scrollReveal ref without type conflicts
+  const setRef = useCallback((node: HTMLElement | null) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (scrollRef as any).current = node;
+  }, [scrollRef]);
 
   const getTransform = () => {
     if (!isVisible) {
@@ -41,9 +47,12 @@ const AnimateIn = ({
     return 'translateY(0) translateX(0) scale(1)';
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const TagAny = Tag as any;
+
   return (
-    <Tag
-      ref={ref}
+    <TagAny
+      ref={setRef}
       className={className}
       style={{
         opacity: isVisible ? 1 : 0,
@@ -54,7 +63,7 @@ const AnimateIn = ({
       }}
     >
       {children}
-    </Tag>
+    </TagAny>
   );
 };
 

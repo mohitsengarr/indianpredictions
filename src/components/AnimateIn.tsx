@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useRef } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface AnimateInProps {
@@ -24,7 +24,7 @@ const AnimateIn = ({
   blur = false,
   as: Tag = 'div',
 }: AnimateInProps) => {
-  const [ref, isVisible] = useScrollReveal<HTMLDivElement>();
+  const [ref, isVisible] = useScrollReveal<HTMLElement>();
 
   const getTransform = () => {
     if (!isVisible) {

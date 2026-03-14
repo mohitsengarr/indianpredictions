@@ -1,5 +1,18 @@
 import { motion } from 'framer-motion';
-import { EVENT_CATEGORIES, type EventCategory } from '@/data/trending-events';
+import { EventCategory } from '@/data/trending-events';
+
+const EVENT_CATEGORIES: { value: EventCategory | 'all'; label: string; emoji: string }[] = [
+  { value: 'all', label: 'All', emoji: '🌐' },
+  { value: 'politics', label: 'Politics', emoji: '🗳️' },
+  { value: 'markets', label: 'Markets', emoji: '📈' },
+  { value: 'sports', label: 'Sports', emoji: '🏏' },
+  { value: 'economy', label: 'Economy', emoji: '💰' },
+  { value: 'geopolitics', label: 'Geopolitics', emoji: '🌏' },
+  { value: 'technology', label: 'Technology', emoji: '💻' },
+  { value: 'entertainment', label: 'Bollywood', emoji: '🎬' },
+  { value: 'regulation', label: 'Regulation', emoji: '⚖️' },
+  { value: 'energy', label: 'Energy', emoji: '⚡' },
+];
 
 interface CategoryFilterProps {
   selected: EventCategory | 'all';

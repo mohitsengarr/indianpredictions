@@ -2,18 +2,17 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import MarketCard from '@/components/MarketCard';
-import RiskBanner from '@/components/RiskBanner';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
-import TrendingEvents from '@/components/TrendingEvents';
 import EventCard from '@/components/EventCard';
 import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
 import { TRENDING_EVENTS, type EventCategory } from '@/data/trending-events';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import {
-  Search, Bell, Zap, Clock, TrendingUp, RefreshCw,
-  ChevronRight, ArrowRight, BookOpen, Mail, Newspaper, BarChart3,
+  Search, Zap, Clock, TrendingUp, RefreshCw,
+  ChevronRight, ArrowRight, BookOpen, Mail, BarChart3,
+  Target, Eye, Gamepad2, Send, CheckCircle,
 } from 'lucide-react';
 import { useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
@@ -30,8 +29,8 @@ const SkeletonCard = () => (
     <div className="h-4 bg-muted rounded w-full" />
     <div className="h-4 bg-muted rounded w-3/4" />
     <div className="flex gap-2 mt-2">
-      <div className="flex-1 h-12 bg-muted rounded-md" />
-      <div className="flex-1 h-12 bg-muted rounded-md" />
+      <div className="flex-1 h-10 bg-muted rounded-md" />
+      <div className="flex-1 h-10 bg-muted rounded-md" />
     </div>
   </div>
 );
@@ -61,99 +60,56 @@ const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: numbe
   return <span ref={ref}>{prefix}{count.toLocaleString('en-IN')}{suffix}</span>;
 };
 
-/* ── Live Events Ticker with Market Data ── */
-const LiveTicker = () => {
-  const critical = TRENDING_EVENTS.filter((e) => e.status === 'critical' || e.status === 'active');
-  const tickerItems = [
-    ...MARKET_PULSE_DATA.map((d) => ({
-      type: 'market' as const,
-      label: d.label,
-      value: d.value,
-      change: d.change,
-    })),
-    ...critical.map((e) => ({
-      type: 'event' as const,
-      id: e.id,
-      slug: e.slug,
-      status: e.status,
-      emoji: e.categoryEmoji,
-      title: e.title,
-    })),
-  ];
-  return (
-    <div className="overflow-hidden bg-muted/50 border-y border-border py-2">
-      <motion.div
-        className="flex gap-8 whitespace-nowrap"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-      >
-        {[...tickerItems, ...tickerItems].map((item, i) =>
-          item.type === 'market' ? (
-            <span key={`m-${i}`} className="inline-flex items-center gap-2 text-xs font-medium">
-              <span className="text-muted-foreground">{item.label}</span>
-              <span className="font-semibold">{item.value}</span>
-              <span className={`font-bold ${item.change >= 0 ? 'text-success' : 'text-destructive'}`}>
-                {item.change >= 0 ? '+' : ''}{item.change}%
-              </span>
-            </span>
-          ) : (
-            <Link key={`e-${i}`} to={`/events/${item.slug}`} className="inline-flex items-center gap-2 text-xs font-medium hover:text-primary transition-colors">
-              <span className={`w-1.5 h-1.5 rounded-full ${item.status === 'critical' ? 'bg-destructive animate-pulse' : 'bg-success'}`} />
-              <span>{item.emoji} {item.title}</span>
-            </Link>
-          )
-        )}
-      </motion.div>
-    </div>
-  );
-};
+/* ── Macro Ticker Strip ── */
+const MacroTicker = () => (
+  <div className="overflow-hidden bg-muted/60 border-b border-border py-1.5">
+    <motion.div
+      className="flex gap-8 whitespace-nowrap"
+      animate={{ x: ['0%', '-50%'] }}
+      transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+    >
+      {[...MARKET_PULSE_DATA, ...MARKET_PULSE_DATA].map((d, i) => (
+        <span key={i} className="inline-flex items-center gap-2 text-[11px] font-medium">
+          <span className="text-muted-foreground">{d.label}</span>
+          <span className="font-semibold text-foreground">{d.value}</span>
+          <span className={`font-bold ${d.change >= 0 ? 'text-success' : 'text-destructive'}`}>
+            {d.change >= 0 ? '+' : ''}{d.change}%
+          </span>
+        </span>
+      ))}
+    </motion.div>
+  </div>
+);
 
-/* ── Category pills ── */
-const INDIA_CATEGORY_PILLS = [
-  { key: 'cricket', emoji: '🏏', label: 'Cricket & IPL' },
-  { key: 'politics', emoji: '🗳️', label: 'Politics' },
-  { key: 'economy', emoji: '📈', label: 'Economy' },
-  { key: 'entertainment', emoji: '🎬', label: 'Bollywood' },
-  { key: 'crypto', emoji: '₿', label: 'Crypto' },
-  { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics' },
-  { key: 'regulation', emoji: '⚖️', label: 'Regulation' },
-  { key: 'technology', emoji: '💻', label: 'Technology' },
-  { key: 'sports', emoji: '⚽', label: 'Sports' },
-  { key: 'energy', emoji: '⛽', label: 'Energy & Oil' },
+/* ── Category pills config ── */
+const CATEGORY_SECTIONS: { key: string; emoji: string; label: string; eventCats: EventCategory[]; marketCats: MarketCategory[] }[] = [
+  { key: 'cricket', emoji: '🏏', label: 'Cricket & IPL', eventCats: ['sports'], marketCats: ['cricket'] },
+  { key: 'politics', emoji: '🗳️', label: 'Politics', eventCats: ['politics'], marketCats: ['politics'] },
+  { key: 'economy', emoji: '📈', label: 'Economy', eventCats: ['economy', 'markets'], marketCats: ['economy'] },
+  { key: 'entertainment', emoji: '🎬', label: 'Bollywood', eventCats: ['entertainment'], marketCats: ['entertainment'] },
+  { key: 'crypto', emoji: '₿', label: 'Crypto', eventCats: ['markets', 'technology'], marketCats: ['crypto'] },
+  { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics', eventCats: ['geopolitics'], marketCats: ['politics'] },
+  { key: 'regulation', emoji: '⚖️', label: 'Regulation', eventCats: ['regulation'], marketCats: ['economy'] },
+  { key: 'technology', emoji: '💻', label: 'Technology', eventCats: ['technology'], marketCats: ['crypto'] },
+  { key: 'sports', emoji: '⚽', label: 'Sports', eventCats: ['sports'], marketCats: ['cricket'] },
+  { key: 'energy', emoji: '⛽', label: 'Energy & Oil', eventCats: ['energy'], marketCats: ['economy'] },
 ];
 
-/* Map pill keys → event categories they match */
-const PILL_TO_EVENT_CATEGORIES: Record<string, EventCategory[]> = {
-  cricket: ['sports'],
-  politics: ['politics'],
-  economy: ['economy', 'markets'],
-  entertainment: ['entertainment'],
-  crypto: ['markets', 'technology'],
-  geopolitics: ['geopolitics'],
-  regulation: ['regulation'],
-  technology: ['technology'],
-  sports: ['sports'],
-  energy: ['energy'],
-};
-
-/* Map pill keys → market categories they match */
-const PILL_TO_MARKET_CATEGORIES: Record<string, MarketCategory[]> = {
-  cricket: ['cricket'],
-  politics: ['politics'],
-  economy: ['economy'],
-  entertainment: ['entertainment'],
-  crypto: ['crypto'],
-  geopolitics: ['politics'],
-  regulation: ['economy'],
-  technology: ['crypto'],
-  sports: ['cricket'],
-  energy: ['economy'],
-};
+/* ── Section category config for default view ── */
+const HOME_SECTIONS: { key: EventCategory; emoji: string; label: string; sub: string; limit: number; pillKey: string }[] = [
+  { key: 'markets', emoji: '📉', label: 'Markets & Economy', sub: 'Stock market, currency & financial developments', limit: 2, pillKey: 'economy' },
+  { key: 'politics', emoji: '🗳️', label: 'Politics & Elections', sub: 'Elections, governance & policy decisions', limit: 2, pillKey: 'politics' },
+  { key: 'sports', emoji: '🏏', label: 'Sports', sub: 'Cricket, IPL & sporting events', limit: 2, pillKey: 'cricket' },
+  { key: 'energy', emoji: '⛽', label: 'Energy & Oil', sub: 'Oil prices, LPG crisis & energy security', limit: 2, pillKey: 'energy' },
+  { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics', sub: 'Global events impacting India', limit: 2, pillKey: 'geopolitics' },
+  { key: 'technology', emoji: '💻', label: 'Technology & Startups', sub: 'Tech policy, startups & innovation', limit: 2, pillKey: 'technology' },
+  { key: 'entertainment', emoji: '🎬', label: 'Entertainment', sub: 'Bollywood, OTT & box office', limit: 2, pillKey: 'entertainment' },
+];
 
 const HomePage = () => {
   useSEO({
     title: "India Predictions – Live Prediction Markets for Cricket, Politics & Economy",
-    description: "India's #1 opinion trading platform. Live prediction markets for IPL, cricket, RBI rates, Nifty, Bollywood box office & Bitcoin. Real-time prices in INR.",
+    description: "Track and explore prediction markets on India's elections, economy, cricket and more—powered by Polymarket data and tailored for Indian watchers.",
     keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
     canonical: "/",
     schema: {
@@ -161,7 +117,7 @@ const HomePage = () => {
       '@type': 'WebSite',
       name: 'India Predictions',
       url: 'https://indianpredictions.lovable.app',
-      description: "India's #1 opinion trading platform",
+      description: "India's #1 prediction market hub",
     },
   });
 
@@ -169,43 +125,64 @@ const HomePage = () => {
   const [category, setCategory] = useState<string>('all');
   const [search, setSearch] = useState('');
   const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
 
   const loading = indiaLoading;
-  const refetch = () => { refetchIndia(); };
+
+  // Featured events for hero (top 4 by status priority)
+  const featuredEvents = [...TRENDING_EVENTS]
+    .sort((a, b) => {
+      const order: Record<string, number> = { critical: 0, active: 1, upcoming: 2, completed: 3 };
+      return (order[a.status] ?? 9) - (order[b.status] ?? 9);
+    })
+    .slice(0, 4);
 
   // Market sections
-  const indiaTrending = indiaMarkets.slice(0, 6);
-  const indiaClosingSoon = indiaMarkets
-    .filter((m) => { const ms = new Date(m.closesAt).getTime() - Date.now(); return ms > 0 && ms < 7 * 24 * 60 * 60 * 1000; })
-    .slice(0, 3);
-  const indiaCricket = indiaMarkets.filter(m => m.category === 'cricket').slice(0, 3);
-  const indiaPolitics = indiaMarkets.filter(m => m.category === 'politics').slice(0, 3);
-  const indiaEconomy = indiaMarkets.filter(m => m.category === 'economy').slice(0, 3);
   const enabledMarkets = indiaMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
   const filtered = enabledMarkets.filter((m) => {
-    const marketCats = category === 'all' ? null : (PILL_TO_MARKET_CATEGORIES[category] ?? []);
+    const catConfig = CATEGORY_SECTIONS.find(c => c.key === category);
+    const marketCats = category === 'all' ? null : (catConfig?.marketCats ?? []);
     const matchCat = !marketCats || marketCats.includes(m.category);
     const matchSearch = m.title.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
   });
 
-  // Trending events matching current category
   const filteredEvents = category === 'all'
     ? []
     : TRENDING_EVENTS.filter((e) => {
-        const eventCats = PILL_TO_EVENT_CATEGORIES[category] ?? [];
-        return eventCats.includes(e.category);
+        const catConfig = CATEGORY_SECTIONS.find(c => c.key === category);
+        return catConfig?.eventCats.includes(e.category) ?? false;
       });
 
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
 
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  const handleCategoryClick = (key: string) => {
+    setCategory(key);
+    if (key !== 'all') {
+      // Scroll to filtered section
+      setTimeout(() => {
+        const el = document.getElementById('filtered-section');
+        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  };
+
+  const handleSubscribe = () => {
+    if (email) setSubscribed(true);
+  };
+
   return (
     <div className="pb-24 lg:pb-8">
 
-      {/* ── Hero Header ── */}
+      {/* ── Macro Ticker Strip (thin, secondary) ── */}
+      <MacroTicker />
+
+      {/* ── HERO ── */}
       <div className="relative overflow-hidden">
         {/* Tricolour stripe */}
         <div className="h-1 w-full flex">
@@ -214,147 +191,205 @@ const HomePage = () => {
           <div className="flex-1" style={{ background: '#138808' }} />
         </div>
 
-        <div className="paytm-header px-4 lg:px-8 pt-10 lg:pt-8 pb-8 relative">
-          {/* Decorative watermark */}
-          <div className="absolute right-4 top-4 text-white/5 text-[120px] leading-none select-none pointer-events-none font-bold">
-            ☸
-          </div>
+        <div className="paytm-header px-4 lg:px-8 pt-8 pb-10 relative">
+          <div className="absolute right-4 top-4 text-white/5 text-[100px] leading-none select-none pointer-events-none font-bold">☸</div>
 
           <div className="max-w-5xl mx-auto">
-            <motion.div initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <div className="flex items-center justify-between mb-5">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-2xl">🇮🇳</span>
-                    <h1 className="font-display text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-                      India<span className="text-secondary">Predictions</span>
-                    </h1>
-                  </div>
-                  <p className="text-xs lg:text-sm text-white/65 mt-0.5">
-                    Predict outcomes on cricket, politics, economy & more
-                  </p>
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+              {/* Left: Brand + Headline + CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: -12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="lg:col-span-3 space-y-4"
+              >
                 <div className="flex items-center gap-2">
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={refetch}
-                    disabled={loading}
-                    className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center transition-all hover:bg-white/20 disabled:opacity-40"
-                    title="Refresh markets"
-                  >
-                    <RefreshCw className={`w-4 h-4 text-white ${loading ? 'animate-spin' : ''}`} />
-                  </motion.button>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all hover:bg-white/20"
-                  >
-                    <Bell className="w-5 h-5 text-white" />
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Search */}
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.5 }}>
-              <div className="relative max-w-md mb-5">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
-                <input
-                  type="text"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search India markets..."
-                  className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-white/30 focus:bg-white/15 transition-all"
-                />
-              </div>
-            </motion.div>
-
-            {/* Stats Bar with animated counters */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.15, duration: 0.5 }}
-              className="flex items-center gap-4 flex-wrap"
-            >
-              <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                <span className="text-xs font-semibold text-white">
-                  <CountUp end={indiaMarkets.length} duration={1} /> Live India Markets
-                </span>
-              </div>
-              {indiaTotalVol > 0 && (
-                <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                  <TrendingUp className="w-3 h-3 text-secondary" />
-                  <span className="text-xs font-semibold text-white">
-                    {formatINR(indiaTotalVol)} Total Volume
+                  <span className="text-2xl">🇮🇳</span>
+                  <span className="font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight">
+                    India<span className="text-secondary">Predictions</span>
                   </span>
                 </div>
-              )}
-              <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                <Newspaper className="w-3 h-3 text-warning" />
-                <span className="text-xs font-semibold text-white">
-                  <CountUp end={TRENDING_EVENTS.length} duration={0.8} /> Trending Events
-                </span>
-              </div>
-              <LastUpdated date={lastUpdated ?? liveUpdated} loading={loading || liveLoading} />
-            </motion.div>
+
+                <h1 className="font-display text-2xl lg:text-4xl font-extrabold text-white leading-tight">
+                  Predict India's future with live market odds
+                </h1>
+
+                <p className="text-sm lg:text-base text-white/70 leading-relaxed max-w-lg">
+                  Track and explore prediction markets on India's elections, economy, cricket and more—powered by Polymarket data and tailored for Indian watchers.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-1">
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    onClick={() => {
+                      const el = document.getElementById('browse-categories');
+                      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                    className="bg-secondary text-secondary-foreground px-6 py-2.5 rounded-lg text-sm font-bold shadow-lg hover:brightness-110 transition-all"
+                  >
+                    Explore India Markets
+                  </motion.button>
+                  <Link
+                    to="/blog/what-are-prediction-markets-guide-india"
+                    className="text-sm text-white/70 hover:text-white underline underline-offset-2 transition-colors"
+                  >
+                    Learn how prediction markets work →
+                  </Link>
+                </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <Gamepad2 className="w-4 h-4 text-white/50" />
+                  <p className="text-xs text-white/50">
+                    Play Money Mode – Practice with virtual points, no real money at risk.
+                  </p>
+                </div>
+
+                {/* Stats row */}
+                <div className="flex items-center gap-3 flex-wrap pt-2">
+                  <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                    <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+                    <span className="text-xs font-semibold text-white">
+                      <CountUp end={indiaMarkets.length} duration={1} /> Live Markets
+                    </span>
+                  </div>
+                  {indiaTotalVol > 0 && (
+                    <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                      <TrendingUp className="w-3 h-3 text-secondary" />
+                      <span className="text-xs font-semibold text-white">{formatINR(indiaTotalVol)} Volume</span>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                    <Zap className="w-3 h-3 text-warning" />
+                    <span className="text-xs font-semibold text-white">
+                      <CountUp end={TRENDING_EVENTS.length} duration={0.8} /> Events
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right: Featured Events mini-cards */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="lg:col-span-2 space-y-2.5"
+              >
+                <p className="text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-1">Featured Events</p>
+                {featuredEvents.map((event) => (
+                  <Link
+                    key={event.id}
+                    to={`/events/${event.slug}`}
+                    className="block bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg px-3.5 py-2.5 transition-all group"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-white leading-snug line-clamp-1">{event.title}</p>
+                        <p className="text-[11px] text-white/50 line-clamp-1 mt-0.5">{event.predictionMarketAngle}</p>
+                      </div>
+                      <span className="text-[10px] font-semibold text-secondary group-hover:text-white whitespace-nowrap transition-colors flex items-center gap-0.5">
+                        View <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* ── Live Events Ticker ── */}
-      <LiveTicker />
+      <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-8 mt-6">
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-7 mt-5">
-        <AnimateIn delay={0.05} scale>
-          <RiskBanner />
-        </AnimateIn>
-
-        {/* ── Category Pills ── */}
-        {!search && (
-          <AnimateIn delay={0.1}>
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              <button
-                onClick={() => setCategory('all')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
-                  category === 'all'
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-card text-foreground border-border hover:border-primary/40'
-                }`}
-              >
-                🇮🇳 All India
-              </button>
-              {INDIA_CATEGORY_PILLS.map(pill => (
-                <button
-                  key={pill.key}
-                  onClick={() => setCategory(pill.key)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
-                    category === pill.key
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : 'bg-card text-foreground border-border hover:border-primary/40'
-                  }`}
-                >
-                  {pill.emoji} {pill.label}
-                </button>
+        {/* ── How It Works ── */}
+        <AnimateIn delay={0.05}>
+          <section className="bg-card border border-border rounded-xl p-5 lg:p-6">
+            <h2 className="font-display font-bold text-base lg:text-lg mb-4">How India Predictions works</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { icon: Target, title: 'Choose an event', desc: 'Elections, RBI moves, IPL matches, oil prices and more.' },
+                { icon: Eye, title: 'See live probabilities', desc: 'From active prediction markets powered by Polymarket.' },
+                { icon: Gamepad2, title: 'Practice forecasting', desc: 'With virtual points in Play Money Mode, or use odds as a smarter signal.' },
+                { icon: Send, title: 'Get weekly summaries', desc: "So you don't miss major shifts in sentiment." },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3">
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <item.icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                    <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
+                  </div>
+                </div>
               ))}
             </div>
+            <Link
+              to="/blog/what-are-prediction-markets-guide-india"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline mt-4"
+            >
+              Read full guide <ArrowRight className="w-3 h-3" />
+            </Link>
+          </section>
+        </AnimateIn>
+
+        {/* ── Search ── */}
+        <AnimateIn delay={0.08}>
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search India markets..."
+              className="w-full bg-card border border-border rounded-xl pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+            />
+          </div>
+        </AnimateIn>
+
+        {/* ── Browse by Category ── */}
+        {!search && (
+          <AnimateIn delay={0.1}>
+            <section id="browse-categories">
+              <h2 className="font-display font-bold text-sm text-muted-foreground uppercase tracking-wider mb-3">Browse by category</h2>
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+                <button
+                  onClick={() => handleCategoryClick('all')}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
+                    category === 'all'
+                      ? 'bg-primary text-primary-foreground border-primary shadow-md'
+                      : 'bg-card text-foreground border-border hover:border-primary/40 hover:bg-muted/50'
+                  }`}
+                >
+                  🇮🇳 All India
+                </button>
+                {CATEGORY_SECTIONS.map(pill => (
+                  <button
+                    key={pill.key}
+                    onClick={() => handleCategoryClick(pill.key)}
+                    className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
+                      category === pill.key
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md'
+                        : 'bg-card text-foreground border-border hover:border-primary/40 hover:bg-muted/50'
+                    }`}
+                  >
+                    {pill.emoji} {pill.label}
+                  </button>
+                ))}
+              </div>
+            </section>
           </AnimateIn>
         )}
 
         {/* ── Filtered / Search view ── */}
         {(category !== 'all' || search) && (
-          <section className="space-y-6">
-            {/* Matching Trending Events */}
+          <section id="filtered-section" className="space-y-6">
             {filteredEvents.length > 0 && !search && (
               <div>
-                <AnimateIn>
-                  <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-destructive" />
-                    Trending Events
-                    <span className="text-xs text-muted-foreground font-normal">({filteredEvents.length})</span>
-                  </h2>
-                </AnimateIn>
+                <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-destructive" />
+                  Trending Events
+                  <span className="text-xs text-muted-foreground font-normal">({filteredEvents.length})</span>
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {filteredEvents.map((event, i) => (
                     <EventCard key={event.id} event={event} index={i} />
@@ -362,18 +397,14 @@ const HomePage = () => {
                 </div>
               </div>
             )}
-
-            {/* Matching Markets */}
             <div>
-              <AnimateIn>
-                <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-primary" />
-                  {category !== 'all'
-                    ? `${INDIA_CATEGORY_PILLS.find(p => p.key === category)?.emoji ?? ''} ${INDIA_CATEGORY_PILLS.find(p => p.key === category)?.label ?? 'Markets'}`
-                    : 'Search Results'}
-                  <span className="text-xs text-muted-foreground font-normal">({filtered.length})</span>
-                </h2>
-              </AnimateIn>
+              <h2 className="font-display font-semibold text-sm lg:text-base mb-3 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-primary" />
+                {category !== 'all'
+                  ? `${CATEGORY_SECTIONS.find(p => p.key === category)?.emoji ?? ''} ${CATEGORY_SECTIONS.find(p => p.key === category)?.label ?? 'Markets'}`
+                  : 'Search Results'}
+                <span className="text-xs text-muted-foreground font-normal">({filtered.length})</span>
+              </h2>
               <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.06}>
                 {filtered.length > 0 ? (
                   filtered.map((m) => <MarketCard key={m.id} market={m} />)
@@ -388,171 +419,98 @@ const HomePage = () => {
         {/* ── Default Home View ── */}
         {category === 'all' && !search && (
           <>
-
             {/* ── Category-Wise Trending Events ── */}
-            {(() => {
-              const categoryConfig: { key: EventCategory; emoji: string; label: string; sub: string; limit: number }[] = [
-                { key: 'markets', emoji: '📉', label: 'Markets & Economy', sub: 'Stock market, currency & financial developments', limit: 2 },
-                { key: 'politics', emoji: '🗳️', label: 'Politics & Elections', sub: 'Elections, governance & policy decisions', limit: 2 },
-                { key: 'sports', emoji: '🏏', label: 'Sports', sub: 'Cricket, IPL & sporting events', limit: 2 },
-                { key: 'energy', emoji: '⛽', label: 'Energy & Oil', sub: 'Oil prices, LPG crisis & energy security', limit: 2 },
-                { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics', sub: 'Global events impacting India', limit: 2 },
-                { key: 'technology', emoji: '💻', label: 'Technology & Startups', sub: 'Tech policy, startups & innovation', limit: 2 },
-                { key: 'entertainment', emoji: '🎬', label: 'Entertainment', sub: 'Bollywood, OTT & box office', limit: 2 },
-              ];
-
-              /* For Markets & Economy, also pull economy-category events */
-              const getCategoryEvents = (key: EventCategory) => {
-                if (key === 'markets') return TRENDING_EVENTS.filter(e => e.category === 'markets' || e.category === 'economy');
-                return TRENDING_EVENTS.filter(e => e.category === key);
-              };
-
-              return categoryConfig.map(cat => {
-                const events = getCategoryEvents(cat.key).slice(0, cat.limit);
-                if (events.length === 0) return null;
-                return (
-                  <section key={cat.key}>
-                    <AnimateIn delay={0.1}>
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xl">{cat.emoji}</span>
-                          <div>
-                            <h2 className="font-display font-bold text-base leading-tight">{cat.label}</h2>
-                            <p className="text-[11px] text-muted-foreground">{cat.sub}</p>
-                          </div>
+            {HOME_SECTIONS.map(cat => {
+              const events = cat.key === 'markets'
+                ? TRENDING_EVENTS.filter(e => e.category === 'markets' || e.category === 'economy').slice(0, cat.limit)
+                : TRENDING_EVENTS.filter(e => e.category === cat.key).slice(0, cat.limit);
+              if (events.length === 0) return null;
+              return (
+                <section key={cat.key} ref={el => { sectionRefs.current[cat.key] = el; }}>
+                  <AnimateIn delay={0.1}>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">{cat.emoji}</span>
+                        <div>
+                          <h2 className="font-display font-bold text-base leading-tight">{cat.label}</h2>
+                          <p className="text-[11px] text-muted-foreground">{cat.sub}</p>
                         </div>
-                        <button
-                          onClick={() => setCategory(cat.key === 'markets' ? 'economy' : cat.key === 'energy' ? 'energy' : cat.key === 'sports' ? 'cricket' : cat.key)}
-                          className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
-                        >
-                          More <ChevronRight className="w-3 h-3" />
-                        </button>
                       </div>
-                    </AnimateIn>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {events.map((event, i) => (
-                        <EventCard key={event.id} event={event} index={i} />
-                      ))}
+                      <button
+                        onClick={() => handleCategoryClick(cat.pillKey)}
+                        className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline"
+                      >
+                        More <ChevronRight className="w-3 h-3" />
+                      </button>
                     </div>
-                  </section>
-                );
-              });
-            })()}
+                  </AnimateIn>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {events.map((event, i) => (
+                      <EventCard key={event.id} event={event} index={i} />
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
 
-            {/* Cricket & IPL */}
-            {(indiaCricket.length > 0 || indiaLoading) && (
+            {/* ── All India Markets ── */}
+            {indiaMarkets.length > 0 && (
               <section>
                 <AnimateIn delay={0.1}>
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                      <span className="text-xl">🏏</span>
+                      <span className="text-lg">🇮🇳</span>
                       <div>
-                        <h2 className="font-display font-bold text-base leading-tight">Cricket & IPL</h2>
-                        <p className="text-[11px] text-muted-foreground">Predict match outcomes & series results</p>
+                        <h2 className="font-display font-bold text-base lg:text-lg leading-tight">All India Markets</h2>
+                        <p className="text-[11px] text-muted-foreground">All live India-related prediction markets in one place.</p>
                       </div>
                     </div>
-                    <button onClick={() => setCategory('cricket')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
-                      More <ChevronRight className="w-3 h-3" />
-                    </button>
+                    <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
+                      {indiaMarkets.length} markets live
+                    </span>
                   </div>
                 </AnimateIn>
-                {indiaLoading ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
-                  </div>
-                ) : indiaCricket.length > 0 ? (
-                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-3" staggerDelay={0.07}>
-                    {indiaCricket.map(m => <MarketCard key={m.id} market={m} />)}
-                  </StaggerChildren>
-                ) : (
-                  <div className="bg-secondary/10 border border-secondary/20 rounded-xl p-4 text-sm text-secondary-foreground text-center">
-                    No active cricket markets · Check back during match season
-                  </div>
-                )}
-              </section>
-            )}
-
-            {/* Politics */}
-            {(indiaPolitics.length > 0 || indiaLoading) && (
-              <section>
-                <AnimateIn delay={0.1}>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">🗳️</span>
-                      <div>
-                        <h2 className="font-display font-bold text-base leading-tight">Indian Politics</h2>
-                        <p className="text-[11px] text-muted-foreground">Elections, policy & government decisions</p>
-                      </div>
-                    </div>
-                    <button onClick={() => setCategory('politics')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
-                      More <ChevronRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                </AnimateIn>
-                {indiaLoading ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
-                  </div>
-                ) : indiaPolitics.length > 0 ? (
-                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-3" staggerDelay={0.07}>
-                    {indiaPolitics.map(m => <MarketCard key={m.id} market={m} />)}
-                  </StaggerChildren>
-                ) : (
-                  <div className="bg-destructive/10 border border-destructive/20 rounded-xl p-4 text-sm text-destructive text-center">
-                    No active politics markets right now
-                  </div>
-                )}
-              </section>
-            )}
-
-            {/* Economy */}
-            {(indiaEconomy.length > 0 || indiaLoading) && (
-              <section>
-                <AnimateIn delay={0.1}>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">📈</span>
-                      <div>
-                        <h2 className="font-display font-bold text-base leading-tight">Economy & Finance</h2>
-                        <p className="text-[11px] text-muted-foreground">RBI, Nifty, inflation & macro India</p>
-                      </div>
-                    </div>
-                    <button onClick={() => setCategory('economy')} className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
-                      More <ChevronRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                </AnimateIn>
-                {indiaLoading ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    {Array.from({ length: 3 }).map((_, i) => <SkeletonCard key={i} />)}
-                  </div>
-                ) : indiaEconomy.length > 0 ? (
-                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-3 gap-3" staggerDelay={0.07}>
-                    {indiaEconomy.map(m => <MarketCard key={m.id} market={m} />)}
-                  </StaggerChildren>
-                ) : (
-                  <div className="bg-accent/10 border border-accent/20 rounded-xl p-4 text-sm text-accent-foreground text-center">
-                    No active economy markets right now
-                  </div>
-                )}
-              </section>
-            )}
-
-            {/* Closing Soon */}
-            {indiaClosingSoon.length > 0 && (
-              <section>
-                <AnimateIn delay={0.1}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Clock className="w-4 h-4 text-warning" />
-                    <h2 className="font-display font-semibold text-sm lg:text-base">Closing Soon</h2>
-                    <span className="text-xs text-muted-foreground">India markets ending this week</span>
-                  </div>
-                </AnimateIn>
-                <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" staggerDelay={0.08}>
-                  {indiaClosingSoon.map(m => <MarketCard key={m.id} market={m} compact />)}
+                <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.1} staggerDelay={0.06}>
+                  {indiaMarkets.slice(0, 6).map(m => <MarketCard key={m.id} market={m} />)}
                 </StaggerChildren>
+                {indiaMarkets.length > 6 && (
+                  <div className="text-center mt-4">
+                    <Link to="/markets" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
+                      View all {indiaMarkets.length} markets <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                )}
               </section>
             )}
+
+            {indiaLoading && (
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+              </div>
+            )}
+
+            {/* ── Analytics & Insights Card ── */}
+            <AnimateIn delay={0.1}>
+              <section className="bg-card border border-border rounded-xl p-5 lg:p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-secondary/15 flex items-center justify-center shrink-0">
+                    <BarChart3 className="w-6 h-6 text-secondary" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="font-display font-bold text-base lg:text-lg">Analytics & Insights</h2>
+                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                      Deep dashboards with sector scores, historical trends and correlations across India-focused prediction markets.
+                    </p>
+                    <Link
+                      to="/insights"
+                      className="inline-flex items-center gap-2 mt-3 bg-primary text-primary-foreground px-5 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors"
+                    >
+                      Open Analytics Dashboard <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+              </section>
+            </AnimateIn>
 
             {/* ── Blog Preview ── */}
             <section>
@@ -597,41 +555,6 @@ const HomePage = () => {
               </div>
             </section>
 
-            {/* ── All India Markets Grid ── */}
-            <section>
-              <AnimateIn delay={0.1}>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">🇮🇳</span>
-                    <div>
-                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">All India Markets</h2>
-                      <p className="text-[11px] text-muted-foreground">All live India-related prediction markets</p>
-                    </div>
-                  </div>
-                  {!indiaLoading && (
-                    <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
-                      {indiaMarkets.length} markets
-                    </span>
-                  )}
-                </div>
-              </AnimateIn>
-
-              {indiaLoading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-                  {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
-                </div>
-              ) : indiaTrending.length > 0 ? (
-                <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.1} staggerDelay={0.06}>
-                  {indiaTrending.map(m => <MarketCard key={m.id} market={m} />)}
-                </StaggerChildren>
-              ) : (
-                <div className="bg-muted/50 border border-border rounded-xl p-6 text-center">
-                  <p className="text-sm text-muted-foreground">No India markets available right now</p>
-                  <p className="text-xs text-muted-foreground mt-1">Check back soon — new markets are added regularly</p>
-                </div>
-              )}
-            </section>
-
             {/* ── FAQ Section ── */}
             <AnimateIn delay={0.1}>
               <FAQSection
@@ -662,24 +585,6 @@ const HomePage = () => {
               />
             </AnimateIn>
 
-            {/* ── Insights CTA ── */}
-            <AnimateIn delay={0.1}>
-              <Link to="/insights" className="block">
-                <div className="bg-card rounded-xl border border-border p-5 hover:border-primary/30 transition-colors group">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-secondary/15 flex items-center justify-center">
-                      <BarChart3 className="w-5 h-5 text-secondary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-display font-bold text-sm group-hover:text-primary transition-colors">Analytics Dashboard</h3>
-                      <p className="text-xs text-muted-foreground">McKinsey-style market analytics, sector scores, correlations & more</p>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </div>
-                </div>
-              </Link>
-            </AnimateIn>
-
             {/* ── Newsletter Signup ── */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
@@ -697,22 +602,33 @@ const HomePage = () => {
                   <p className="text-xs text-muted-foreground mt-1">
                     Get weekly prediction market insights, trending events, and analysis delivered to your inbox.
                   </p>
-                  <div className="flex gap-2 mt-3 max-w-sm">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="your@email.com"
-                      className="flex-1 bg-background border border-border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
-                    />
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-semibold hover:bg-primary/90 transition-colors"
-                    >
-                      Subscribe
-                    </motion.button>
-                  </div>
+                  {subscribed ? (
+                    <div className="flex items-center gap-2 mt-3 text-success text-sm font-semibold">
+                      <CheckCircle className="w-4 h-4" />
+                      You're subscribed. Check your inbox for a confirmation email.
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex gap-2 mt-3 max-w-sm">
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="your@email.com"
+                          className="flex-1 bg-background border border-border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+                        />
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={handleSubscribe}
+                          className="bg-primary text-primary-foreground rounded-lg px-4 py-2 text-sm font-semibold hover:bg-primary/90 transition-colors"
+                        >
+                          Subscribe
+                        </motion.button>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground mt-2">One email per week. No spam, unsubscribe anytime.</p>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.section>

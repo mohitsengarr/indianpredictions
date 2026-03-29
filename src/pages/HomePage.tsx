@@ -159,7 +159,7 @@ const HomePage = () => {
 
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
 
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const handleCategoryClick = (key: string) => {
     setCategory(key);

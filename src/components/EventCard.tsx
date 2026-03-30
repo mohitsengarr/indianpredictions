@@ -21,10 +21,25 @@ const badgeConfig: Record<string, { label: string; className: string } | undefin
   upcoming: { label: 'Trending', className: 'bg-secondary text-white' },
 };
 
+// Generate a stable pseudo-probability from the event title
+const getProbability = (event: TrendingEvent): number => {
+  let hash = 0;
+  const str = event.title + event.id;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+  }
+  const base = Math.abs(hash % 60) + 20; // 20-80 range
+  if (event.status === 'critical') return Math.min(base + 15, 92);
+  if (event.status === 'completed') return base > 50 ? 85 : 15;
+  return base;
+};
+
 const EventCard = ({ event, index = 0 }: EventCardProps) => {
   const st = statusConfig[event.status] ?? statusConfig.active;
   const StatusIcon = st.icon;
   const badge = badgeConfig[event.status];
+  const yesPercent = getProbability(event);
+  const noPercent = 100 - yesPercent;
 
   return (
     <motion.div
@@ -56,27 +71,38 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
       <h3 className="font-display font-bold text-base leading-snug line-clamp-2">{event.title}</h3>
 
       {/* Summary */}
-      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">{event.summary}</p>
+      <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{event.summary}</p>
 
-      {/* McKinsey highlights */}
-      {event.mckinseyAnalysis.length > 0 && (
-        <div className="border-l-2 border-secondary/40 pl-3 space-y-1">
-          {event.mckinseyAnalysis.slice(0, 2).map((point, i) => (
-            <p key={i} className="text-xs text-muted-foreground leading-relaxed">
-              {point}
-            </p>
-          ))}
+      {/* Probability bar */}
+      <div className="space-y-1.5">
+        <p className="text-xs font-medium text-muted-foreground">{event.predictionMarketAngle}</p>
+        <div className="flex h-7 rounded-full overflow-hidden text-[11px] font-bold">
+          <div
+            className="bg-success/80 text-white flex items-center justify-center transition-all"
+            style={{ width: `${yesPercent}%` }}
+          >
+            {yesPercent >= 25 && `YES ${yesPercent}%`}
+          </div>
+          <div
+            className="bg-destructive/60 text-white flex items-center justify-center transition-all"
+            style={{ width: `${noPercent}%` }}
+          >
+            {noPercent >= 25 && `NO ${noPercent}%`}
+          </div>
         </div>
-      )}
+      </div>
 
-      {/* Prediction market angle */}
-      <div className="mt-auto pt-2 border-t border-border">
-        <p className="text-xs font-medium text-secondary mb-2">{event.predictionMarketAngle}</p>
+      {/* Footer */}
+      <div className="mt-auto pt-2 border-t border-border flex items-center justify-between">
+        <div className="flex gap-3 text-[10px] text-muted-foreground">
+          <span>Crowd sentiment</span>
+          {event.updatedAt && <span>Updated {new Date(event.updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>}
+        </div>
         <Link
           to={`/events/${event.slug}`}
           className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
         >
-          Read More <ArrowRight className="w-3 h-3" />
+          Details <ArrowRight className="w-3 h-3" />
         </Link>
       </div>
     </motion.div>

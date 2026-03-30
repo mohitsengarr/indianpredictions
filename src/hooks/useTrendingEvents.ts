@@ -87,9 +87,14 @@ export function useTrendingEvents(): UseTrendingEventsResult {
     Promise.all([fetchEvents(), fetchLastScraped()])
       .then(([resolved, scraped]) => {
         if (cancelled) return;
-        cachedEvents = resolved;
+        // Sort: critical first, then active, upcoming, completed last
+        const statusOrder: Record<string, number> = { critical: 0, active: 1, upcoming: 2, completed: 3 };
+        const sorted = [...resolved].sort(
+          (a, b) => (statusOrder[a.status] ?? 9) - (statusOrder[b.status] ?? 9)
+        );
+        cachedEvents = sorted;
         cacheTimestamp = Date.now();
-        setEvents(resolved);
+        setEvents(sorted);
         setLastScraped(scraped);
         setError(null);
       })

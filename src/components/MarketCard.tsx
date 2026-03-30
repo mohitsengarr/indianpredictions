@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Market } from '@/lib/types';
 import { formatINR, formatPercent, formatProbability, timeUntil } from '@/lib/formatters';
 import { CATEGORY_LABELS } from '@/lib/mock-data';
-import { TrendingUp, TrendingDown, Clock, Users } from 'lucide-react';
+import { TrendingUp, TrendingDown, Clock, Users, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLivePrice } from '@/contexts/LivePricesContext';
 
@@ -122,6 +122,16 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
           </span>
         </div>
       )}
+
+              <a
+                href={`https://polymarket.com/event/${market.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] text-muted-foreground hover:text-primary transition-colors mt-2 inline-flex items-center gap-0.5"
+                onClick={(e) => e.stopPropagation()}
+              >
+                View on Polymarket <ExternalLink className="w-2.5 h-2.5" />
+              </a>
     </button>
   );
 };

@@ -78,26 +78,14 @@ const EventDetailPage = () => {
     title: event ? event.title : 'Event Not Found',
     description: event ? event.summary : 'This event could not be found.',
     canonical: event ? `/events/${event.slug}` : undefined,
-    schema: event
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'NewsArticle',
-          headline: event.title,
-          description: event.summary,
-          dateModified: event.updatedAt,
-          datePublished: event.updatedAt,
-          author: { '@type': 'Organization', name: 'India Predictions' },
-          publisher: {
-            '@type': 'Organization',
-            name: 'India Predictions',
-            url: 'https://indianpredictions.lovable.app',
-          },
-          mainEntityOfPage: {
-            '@type': 'WebPage',
-            '@id': `https://indianpredictions.lovable.app/events/${event.slug}`,
-          },
-        }
-      : undefined,
+    schema: event ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: event.title,
+      description: event.summary,
+      author: { '@type': 'Organization', name: 'India Predictions' },
+      publisher: { '@type': 'Organization', name: 'India Predictions', url: 'https://indiapredictions.com' },
+    } : undefined,
   });
 
   if (!event) {

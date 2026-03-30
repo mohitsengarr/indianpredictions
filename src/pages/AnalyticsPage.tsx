@@ -263,6 +263,13 @@ export default function AnalyticsPage() {
 
       <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-8 mt-4">
 
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 flex items-center gap-2">
+          <BarChart3 className="w-4 h-4 text-primary shrink-0" />
+          <p className="text-xs text-muted-foreground">
+            Data sourced from <strong className="text-foreground">Polymarket</strong> for India-relevant markets. Filtered to show markets with India impact. Auto-refreshes every 5 minutes.
+          </p>
+        </div>
+
         {/* ── KPI Strip ─────────────────────────────────────── */}
         <AnimateIn delay={0.05} scale>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">

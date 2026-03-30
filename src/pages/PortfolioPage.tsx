@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
+import { useSEO } from '@/hooks/useSEO';
 import { POSITIONS, USER } from '@/lib/mock-data';
 import { formatINR, formatPercent } from '@/lib/formatters';
 import { useState } from 'react';
-import { useSEO } from '@/hooks/useSEO';
-import { TrendingUp, TrendingDown, ArrowUpRight } from 'lucide-react';
+import { TrendingUp, TrendingDown, ArrowUpRight, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
@@ -10,17 +11,17 @@ import StaggerChildren from '@/components/StaggerChildren';
 const PortfolioPage = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState<'open' | 'settled'>('open');
+  const [showDemo, setShowDemo] = useState(false);
 
   useSEO({
     title: "My Portfolio – Open Positions & P&L",
-    description: "Track your open prediction market positions, P&L, and settled markets on India Predictions. View your trading history and performance.",
+    description: "Track your prediction market positions, P&L, and settled markets on India Predictions.",
     canonical: "/portfolio",
   });
 
   const openPositions = POSITIONS.filter((p) => p.status === 'open');
   const settledPositions = POSITIONS.filter((p) => p.status === 'settled');
   const positions = tab === 'open' ? openPositions : settledPositions;
-
   const openPnl = openPositions.reduce((sum, p) => sum + p.pnl, 0);
 
   return (
@@ -30,76 +31,94 @@ const PortfolioPage = () => {
           <AnimateIn direction="down" distance={10}>
             <h1 className="font-display text-xl lg:text-2xl font-bold text-secondary-foreground mb-4">Portfolio</h1>
           </AnimateIn>
-
-          <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
-            {[
-              { label: 'Balance', value: formatINR(USER.balance), color: '' },
-              { label: 'Open P&L', value: `${openPnl >= 0 ? '+' : ''}${formatINR(openPnl)}`, color: openPnl >= 0 ? 'text-success' : 'text-destructive' },
-              { label: 'Win Rate', value: `${USER.winRate}%`, color: '' },
-              { label: 'Total Trades', value: `${USER.tradesCount}`, color: '', extraClass: 'hidden lg:block' },
-            ].map((stat, i) => (
-              <AnimateIn key={stat.label} delay={0.1 + i * 0.07} scale className={stat.extraClass || ''}>
-                <div className="bg-secondary-foreground/10 rounded-lg p-3 lg:p-4">
-                  <div className="text-[10px] lg:text-xs text-secondary-foreground/60 uppercase tracking-wide">{stat.label}</div>
-                  <div className={`font-display font-bold text-secondary-foreground lg:text-lg ${stat.color}`}>{stat.value}</div>
-                </div>
-              </AnimateIn>
-            ))}
-          </div>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 lg:px-8 mt-4 space-y-4">
-        <AnimateIn delay={0.2} direction="left" distance={16}>
-          <div className="flex gap-2">
-            {(['open', 'settled'] as const).map((t) => (
-              <button
-                key={t}
-                onClick={() => setTab(t)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-250 ease-out active:scale-95 ${
-                  tab === t ? 'bg-primary text-primary-foreground shadow-md shadow-primary/10' : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                }`}
-              >
-                {t === 'open' ? `Open (${openPositions.length})` : `Settled (${settledPositions.length})`}
-              </button>
-            ))}
-          </div>
-        </AnimateIn>
+      <div className="max-w-lg mx-auto px-4 py-12 text-center">
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+          <LogIn className="w-8 h-8 text-primary" />
+        </div>
+        <h2 className="text-xl font-display font-bold mb-2">Track Your Predictions</h2>
+        <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
+          Sign in to track your prediction accuracy, build your portfolio, and compete on the leaderboard. Coming soon.
+        </p>
+        <Link
+          to="/markets"
+          className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors"
+        >
+          Browse Markets
+        </Link>
 
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-3" staggerDelay={0.07} baseDelay={0.25}>
-          {positions.length === 0 ? (
-            <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No {tab} positions</p>
-          ) : (
-            positions.map((pos) => (
-              <button
-                key={pos.id}
-                onClick={() => navigate(`/market/${pos.marketId}`)}
-                className="group w-full text-left bg-card rounded-lg border border-border p-4 transition-all duration-300 ease-out hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-0.5 active:scale-[0.98]"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-display font-semibold text-sm leading-snug pr-4 text-foreground transition-colors duration-200 group-hover:text-primary">
-                    {pos.marketTitle}
-                  </h3>
-                  <ArrowUpRight className="w-4 h-4 text-muted-foreground shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </div>
-                <div className="flex items-center gap-3 text-xs">
-                  <span className={`px-2 py-0.5 rounded-full font-medium ${
-                    pos.side === 'yes' ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive'
-                  }`}>
-                    {pos.side.toUpperCase()} × {pos.shares}
-                  </span>
-                  <span className="text-muted-foreground">Avg: ₹{pos.avgPrice.toFixed(2)}</span>
-                  <span className={`ml-auto font-medium flex items-center gap-1 ${
-                    pos.pnl >= 0 ? 'text-success' : 'text-destructive'
-                  }`}>
-                    {pos.pnl >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                    {formatINR(pos.pnl)} ({formatPercent(pos.pnlPercent)})
-                  </span>
-                </div>
-              </button>
-            ))
+        {/* Demo toggle */}
+        <div className="mt-12 border-t border-border pt-8">
+          <button
+            onClick={() => setShowDemo(!showDemo)}
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {showDemo ? 'Hide' : 'Show'} sample portfolio (demo data)
+          </button>
+
+          {showDemo && (
+            <div className="mt-4 space-y-4">
+              <div className="bg-muted/50 rounded-lg p-3 text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
+                Sample Data — Not Real
+              </div>
+
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: 'Balance', value: formatINR(USER.balance) },
+                  { label: 'Win Rate', value: `${USER.winRate}%` },
+                  { label: 'Trades', value: `${USER.tradesCount}` },
+                ].map((stat) => (
+                  <div key={stat.label} className="bg-card rounded-lg border border-border p-3">
+                    <div className="text-[10px] text-muted-foreground">{stat.label}</div>
+                    <div className="font-display font-bold text-sm">{stat.value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-2 justify-center">
+                {(['open', 'settled'] as const).map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTab(t)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium ${
+                      tab === t ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'
+                    }`}
+                  >
+                    {t === 'open' ? `Open (${openPositions.length})` : `Settled (${settledPositions.length})`}
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+                {positions.map((pos) => (
+                  <div
+                    key={pos.id}
+                    className="bg-card rounded-lg border border-border p-4 opacity-70"
+                  >
+                    <h3 className="font-display font-semibold text-sm leading-snug pr-4 mb-2">
+                      {pos.marketTitle}
+                    </h3>
+                    <div className="flex items-center gap-3 text-xs">
+                      <span className={`px-2 py-0.5 rounded-full font-medium ${
+                        pos.side === 'yes' ? 'bg-success/10 text-success' : 'bg-destructive/10 text-destructive'
+                      }`}>
+                        {pos.side.toUpperCase()} × {pos.shares}
+                      </span>
+                      <span className={`ml-auto font-medium flex items-center gap-1 ${
+                        pos.pnl >= 0 ? 'text-success' : 'text-destructive'
+                      }`}>
+                        {pos.pnl >= 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                        {formatINR(pos.pnl)}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
-        </StaggerChildren>
+        </div>
       </div>
     </div>
   );

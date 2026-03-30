@@ -18,6 +18,10 @@ import BlogPostPage from "./pages/BlogPostPage";
 import InsightsPage from "./pages/InsightsPage";
 import CryptoPage from "./pages/CryptoPage";
 import NotFound from "./pages/NotFound";
+import TermsPage from "./pages/TermsPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import DisclaimerPage from "./pages/DisclaimerPage";
+import Footer from "./components/Footer";
 import { LivePricesProvider } from "./contexts/LivePricesContext";
 
 const queryClient = new QueryClient();
@@ -54,6 +58,9 @@ const AnimatedRoutes = () => {
           <Route path="/events/:slug" element={<EventDetailPage />} />
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/disclaimer" element={<DisclaimerPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
@@ -72,6 +79,7 @@ const App = () => (
             <BottomNav />
             <div className="lg:ml-64">
               <AnimatedRoutes />
+              <Footer />
             </div>
           </div>
         </LivePricesProvider>

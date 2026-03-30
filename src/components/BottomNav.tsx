@@ -1,5 +1,5 @@
 import { Home, BarChart3, LineChart, PieChart, Bitcoin } from 'lucide-react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const tabs = [
   { path: '/', label: 'Home', icon: Home },
@@ -11,7 +11,6 @@ const tabs = [
 
 const BottomNav = () => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -31,10 +30,10 @@ const BottomNav = () => {
               IP
             </div>
             <div>
-              <h1 className="font-display text-lg font-extrabold text-white tracking-tight leading-none">
+              <p className="font-display text-lg font-extrabold text-white tracking-tight leading-none">
                 India<span className="text-secondary">Predictions</span>
-              </h1>
-              <p className="text-[10px] text-white/50 mt-0.5 font-medium">India's Opinion Trading</p>
+              </p>
+              <p className="text-[10px] text-white/50 mt-0.5 font-medium">Prediction Market Tracker</p>
             </div>
           </div>
         </div>
@@ -45,9 +44,9 @@ const BottomNav = () => {
             const Icon = tab.icon;
             const active = isActive(tab.path);
             return (
-              <button
+              <Link
                 key={tab.path}
-                onClick={() => navigate(tab.path)}
+                to={tab.path}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 group ${
                   active
                     ? 'bg-secondary text-white shadow-paytm-blue'
@@ -57,20 +56,16 @@ const BottomNav = () => {
                 <Icon className="w-[18px] h-[18px]" strokeWidth={active ? 2.5 : 2} />
                 {tab.label}
                 {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-white/70" />}
-              </button>
+              </Link>
             );
           })}
         </nav>
 
         {/* Footer badge */}
         <div className="px-4 py-4 border-t border-white/10">
-          <div className="bg-white/8 rounded-xl px-3 py-2.5 flex items-center gap-2">
-            <span className="text-base">🎮</span>
-            <div>
-              <p className="text-xs font-semibold text-white/80">Play Money Mode</p>
-              <p className="text-[10px] text-white/40">No real money at risk</p>
-            </div>
-          </div>
+          <p className="text-[10px] text-white/30 text-center leading-relaxed">
+            Prediction market tracker. No real money involved.
+          </p>
         </div>
       </aside>
 
@@ -81,9 +76,9 @@ const BottomNav = () => {
             const Icon = tab.icon;
             const active = isActive(tab.path);
             return (
-              <button
+              <Link
                 key={tab.path}
-                onClick={() => navigate(tab.path)}
+                to={tab.path}
                 className={`flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl min-w-[56px] transition-all duration-200 ease-out active:scale-90 ${
                   active ? 'text-primary' : 'text-muted-foreground'
                 }`}
@@ -95,7 +90,7 @@ const BottomNav = () => {
                   <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
                 </div>
                 <span className={`text-[10px] font-semibold tracking-tight`}>{tab.label}</span>
-              </button>
+              </Link>
             );
           })}
         </div>

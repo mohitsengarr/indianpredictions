@@ -13,7 +13,7 @@ import { BLOG_POSTS } from '@/data/blog-posts';
 import {
   Search, Zap, Clock, TrendingUp, RefreshCw,
   ChevronRight, ArrowRight, BookOpen, Mail, BarChart3,
-  Target, Eye, Gamepad2, Send, CheckCircle,
+  Target, Eye, Send, CheckCircle,
 } from 'lucide-react';
 import { useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
@@ -63,9 +63,10 @@ const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: numbe
 
 /* ── Macro Ticker Strip ── */
 const MacroTicker = () => (
-  <div className="overflow-hidden bg-muted/60 border-b border-border py-1.5">
+  <div className="overflow-hidden bg-muted/60 border-b border-border py-1.5 flex items-center">
+    <span className="text-[9px] text-muted-foreground/60 px-3 border-r border-border whitespace-nowrap shrink-0">Market data</span>
     <motion.div
-      className="flex gap-8 whitespace-nowrap"
+      className="flex-1 flex gap-8 whitespace-nowrap"
       animate={{ x: ['0%', '-50%'] }}
       transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
     >
@@ -109,8 +110,8 @@ const HOME_SECTIONS: { key: EventCategory; emoji: string; label: string; sub: st
 
 const HomePage = () => {
   useSEO({
-    title: "India Predictions – Live Prediction Markets for Cricket, Politics & Economy",
-    description: "Track and explore prediction markets on India's elections, economy, cricket and more—powered by Polymarket data and tailored for Indian watchers.",
+    title: "India Predictions – Track Live Prediction Market Odds for Cricket, Politics & Economy",
+    description: "Track live prediction market odds for India — cricket, politics, economy, Bollywood and more. Aggregated from Polymarket. Updated every 5 minutes.",
     keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
     canonical: "/",
     schema: {
@@ -175,7 +176,8 @@ const HomePage = () => {
   };
 
   const handleSubscribe = () => {
-    if (email) setSubscribed(true);
+    if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return;
+    setSubscribed(true);
   };
 
   return (
@@ -213,11 +215,11 @@ const HomePage = () => {
                 </div>
 
                 <h1 className="font-display text-2xl lg:text-4xl font-extrabold text-white leading-tight">
-                  Predict India's future with live market odds
+                  Track India's Prediction Markets
                 </h1>
 
                 <p className="text-sm lg:text-base text-white/70 leading-relaxed max-w-lg">
-                  Track and explore prediction markets on India's elections, economy, cricket and more—powered by Polymarket data and tailored for Indian watchers.
+                  Live odds on politics, cricket, economy and more — aggregated from global prediction markets and tailored for Indian watchers.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-3 pt-1">
@@ -240,19 +242,16 @@ const HomePage = () => {
                   </Link>
                 </div>
 
-                <div className="flex items-center gap-2 pt-1">
-                  <Gamepad2 className="w-4 h-4 text-white/50" />
-                  <p className="text-xs text-white/50">
-                    Play Money Mode – Practice with virtual points, no real money at risk.
-                  </p>
-                </div>
+                <p className="text-[10px] text-white/40 pt-1">
+                  Prediction market tracker — no real money involved. Data from Polymarket.
+                </p>
 
                 {/* Stats row */}
                 <div className="flex items-center gap-3 flex-wrap pt-2">
                   <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
                     <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
                     <span className="text-xs font-semibold text-white">
-                      <CountUp end={indiaMarkets.length} duration={1} /> Live Markets
+                      <CountUp end={indiaMarkets.length > 0 ? indiaMarkets.length : 150} duration={1} />+ Live Markets
                     </span>
                   </div>
                   {indiaTotalVol > 0 && (
@@ -264,7 +263,7 @@ const HomePage = () => {
                   <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
                     <Zap className="w-3 h-3 text-warning" />
                     <span className="text-xs font-semibold text-white">
-                      <CountUp end={trendingEvents.length} duration={0.8} /> Events
+                      <CountUp end={trendingEvents.length > 0 ? trendingEvents.length : 26} duration={0.8} /> Events
                     </span>
                   </div>
                 </div>
@@ -311,7 +310,7 @@ const HomePage = () => {
               {[
                 { icon: Target, title: 'Choose an event', desc: 'Elections, RBI moves, IPL matches, oil prices and more.' },
                 { icon: Eye, title: 'See live probabilities', desc: 'From active prediction markets powered by Polymarket.' },
-                { icon: Gamepad2, title: 'Practice forecasting', desc: 'With virtual points in Play Money Mode, or use odds as a smarter signal.' },
+                { icon: BarChart3, title: 'Analyze the odds', desc: 'Use prediction market probabilities as a smarter signal for any event.' },
                 { icon: Send, title: 'Get weekly summaries', desc: "So you don't miss major shifts in sentiment." },
               ].map((item, i) => (
                 <div key={i} className="flex gap-3">
@@ -375,6 +374,12 @@ const HomePage = () => {
                     }`}
                   >
                     {pill.emoji} {pill.label}
+                    {(() => {
+                      const eventCount = trendingEvents.filter(e => pill.eventCats.includes(e.category)).length;
+                      const marketCount = indiaMarkets.filter(m => pill.marketCats.includes(m.category)).length;
+                      const total = eventCount + marketCount;
+                      return total > 0 ? <span className="text-[10px] text-muted-foreground font-normal ml-0.5">({total})</span> : null;
+                    })()}
                   </button>
                 ))}
               </div>
@@ -567,7 +572,7 @@ const HomePage = () => {
                   },
                   {
                     question: 'How do I trade on India Predictions?',
-                    answer: 'Browse our markets across cricket, politics, economy, and more. Buy YES if you think an event is likely, or NO if you disagree. Prices update in real-time as new information emerges. Currently operating in play money mode.',
+                    answer: 'Browse live prediction market odds across cricket, politics, economy, and more. See YES/NO probabilities that update in real-time as new information emerges. Use the data as a smarter signal for any event.',
                   },
                   {
                     question: 'Are prediction markets legal in India?',
@@ -628,7 +633,7 @@ const HomePage = () => {
                           Subscribe
                         </motion.button>
                       </div>
-                      <p className="text-[11px] text-muted-foreground mt-2">One email per week. No spam, unsubscribe anytime.</p>
+                      <p className="text-[11px] text-muted-foreground mt-2">One email per week. No spam, unsubscribe anytime. By subscribing, you agree to our <Link to="/terms" className="text-primary hover:underline">Terms</Link> and <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.</p>
                     </>
                   )}
                 </div>

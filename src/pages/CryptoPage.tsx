@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { CRYPTO_DATA } from '@/data/crypto-data';
 import CryptoStatsBar from '@/components/crypto/CryptoStatsBar';
 import CryptoTable from '@/components/crypto/CryptoTable';
@@ -23,6 +24,16 @@ const CryptoPage = () => {
       <CryptoStatsBar showINR={showINR} livePrices={prices} isConnected={isConnected} />
 
       <div className="max-w-7xl mx-auto px-4 lg:px-8 py-6">
+        <div className="bg-card border border-border rounded-xl p-5 mb-6">
+          <h2 className="font-display font-bold text-base mb-1">Crypto Prediction Markets</h2>
+          <p className="text-sm text-muted-foreground">
+            What will Bitcoin, Ethereum, and other cryptos do next? Live prices below with prediction market context.
+            <Link to="/markets" className="text-primary font-medium hover:underline ml-1">
+              See crypto prediction markets →
+            </Link>
+          </p>
+        </div>
+
         {/* Page Header */}
         <motion.div
           initial={{ opacity: 0, y: -8 }}

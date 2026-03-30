@@ -7,7 +7,8 @@ import StaggerChildren from '@/components/StaggerChildren';
 import EventCard from '@/components/EventCard';
 import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
-import { TRENDING_EVENTS, type EventCategory } from '@/data/trending-events';
+import { type EventCategory } from '@/data/trending-events';
+import { useTrendingEvents } from '@/hooks/useTrendingEvents';
 import { BLOG_POSTS } from '@/data/blog-posts';
 import {
   Search, Zap, Clock, TrendingUp, RefreshCw,
@@ -129,11 +130,12 @@ const HomePage = () => {
 
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
+  const { events: trendingEvents } = useTrendingEvents();
 
   const loading = indiaLoading;
 
   // Featured events for hero (top 4 by status priority)
-  const featuredEvents = [...TRENDING_EVENTS]
+  const featuredEvents = [...trendingEvents]
     .sort((a, b) => {
       const order: Record<string, number> = { critical: 0, active: 1, upcoming: 2, completed: 3 };
       return (order[a.status] ?? 9) - (order[b.status] ?? 9);
@@ -152,7 +154,7 @@ const HomePage = () => {
 
   const filteredEvents = category === 'all'
     ? []
-    : TRENDING_EVENTS.filter((e) => {
+    : trendingEvents.filter((e) => {
         const catConfig = CATEGORY_SECTIONS.find(c => c.key === category);
         return catConfig?.eventCats.includes(e.category) ?? false;
       });
@@ -262,7 +264,7 @@ const HomePage = () => {
                   <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
                     <Zap className="w-3 h-3 text-warning" />
                     <span className="text-xs font-semibold text-white">
-                      <CountUp end={TRENDING_EVENTS.length} duration={0.8} /> Events
+                      <CountUp end={trendingEvents.length} duration={0.8} /> Events
                     </span>
                   </div>
                 </div>
@@ -422,8 +424,8 @@ const HomePage = () => {
             {/* ── Category-Wise Trending Events ── */}
             {HOME_SECTIONS.map(cat => {
               const events = cat.key === 'markets'
-                ? TRENDING_EVENTS.filter(e => e.category === 'markets' || e.category === 'economy').slice(0, cat.limit)
-                : TRENDING_EVENTS.filter(e => e.category === cat.key).slice(0, cat.limit);
+                ? trendingEvents.filter(e => e.category === 'markets' || e.category === 'economy').slice(0, cat.limit)
+                : trendingEvents.filter(e => e.category === cat.key).slice(0, cat.limit);
               if (events.length === 0) return null;
               return (
                 <section key={cat.key} ref={el => { sectionRefs.current[cat.key] = el; }}>

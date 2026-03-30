@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TRENDING_EVENTS, type EventCategory } from '@/data/trending-events';
+import { type EventCategory } from '@/data/trending-events';
 import EventCard from './EventCard';
 import CategoryFilter from './CategoryFilter';
+import { useTrendingEvents } from '@/hooks/useTrendingEvents';
 
 interface TrendingEventsProps {
   limit?: number;
@@ -10,12 +11,13 @@ interface TrendingEventsProps {
 }
 
 const TrendingEvents = ({ limit, showFilter = true }: TrendingEventsProps) => {
+  const { events } = useTrendingEvents();
   const [category, setCategory] = useState<EventCategory | 'all'>('all');
 
   const filtered =
     category === 'all'
-      ? TRENDING_EVENTS
-      : TRENDING_EVENTS.filter((e) => e.category === category);
+      ? events
+      : events.filter((e) => e.category === category);
 
   const display = limit ? filtered.slice(0, limit) : filtered;
 

@@ -10,7 +10,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import { TRENDING_EVENTS } from '@/data/trending-events';
+import { useTrendingEvents } from '@/hooks/useTrendingEvents';
 import { getEventHistory } from '@/data/event-history-data';
 import EventDetailSection from '@/components/EventDetailSection';
 import EventTimeline from '@/components/EventTimeline';
@@ -71,6 +71,7 @@ const getImpactLevel = (status: string): Record<string, { score: number; label: 
 const EventDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { events: TRENDING_EVENTS } = useTrendingEvents();
   const event = TRENDING_EVENTS.find((e) => e.slug === slug);
 
   useSEO({

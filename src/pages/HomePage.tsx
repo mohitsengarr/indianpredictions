@@ -19,7 +19,7 @@ import { useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR } from '@/lib/formatters';
 import FAQSection from '@/components/FAQSection';
-import { MARKET_PULSE_DATA } from '@/data/analytics-data';
+import { MARKET_PULSE_DATA, TIMELINE_EVENTS } from '@/data/analytics-data';
 import LastUpdated from '@/components/LastUpdated';
 import { useDataRefresh } from '@/hooks/useDataRefresh';
 
@@ -568,6 +568,67 @@ const HomePage = () => {
                     </Link>
                   </motion.div>
                 ))}
+              </div>
+            </section>
+
+            {/* ── Upcoming Events Timeline ── */}
+            <section>
+              <AnimateIn delay={0.1}>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
+                      <Clock className="w-4 h-4 text-warning" />
+                    </div>
+                    <div>
+                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Upcoming Events</h2>
+                      <p className="text-[11px] text-muted-foreground">Key events on the horizon with importance ratings</p>
+                    </div>
+                  </div>
+                  <Link to="/insights" className="text-xs text-primary font-semibold flex items-center gap-0.5 hover:underline">
+                    Full Insights <ChevronRight className="w-3 h-3" />
+                  </Link>
+                </div>
+              </AnimateIn>
+              <div className="relative">
+                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border" />
+                <div className="space-y-3">
+                  {TIMELINE_EVENTS.slice(0, 6).map((item, i) => {
+                    const impColor = item.importance === 'high' ? 'bg-destructive' : item.importance === 'medium' ? 'bg-warning' : 'bg-muted-foreground';
+                    const d = new Date(item.date);
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.04 }}
+                        className="flex items-start gap-4 pl-1"
+                      >
+                        <div className={`w-7 h-7 rounded-full ${impColor} flex items-center justify-center flex-shrink-0 relative z-10`}>
+                          <Clock className="w-3.5 h-3.5 text-white" />
+                        </div>
+                        <div className="flex-1 bg-card rounded-lg p-3 border border-border/50">
+                          <div className="flex items-center justify-between">
+                            <p className="text-xs font-semibold text-foreground">{item.event}</p>
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
+                              item.importance === 'high' ? 'bg-destructive/15 text-destructive' :
+                              item.importance === 'medium' ? 'bg-warning/15 text-warning' :
+                              'bg-muted text-muted-foreground'
+                            }`}>
+                              {item.importance}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-[10px] text-muted-foreground">
+                              {d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            </span>
+                            <span className="text-[10px] text-primary font-medium">{item.category}</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
               </div>
             </section>
 

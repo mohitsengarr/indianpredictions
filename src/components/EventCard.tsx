@@ -47,11 +47,26 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ y: -4, boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}
-      className="paytm-card p-5 flex flex-col gap-3 relative"
+      className="paytm-card flex flex-col relative overflow-hidden"
     >
+      {/* Event Image */}
+      {event.imageUrl && (
+        <div className="relative w-full h-36 overflow-hidden bg-muted">
+          <img
+            src={event.imageUrl}
+            alt={event.title}
+            loading="lazy"
+            className="w-full h-full object-cover"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent" />
+        </div>
+      )}
+
+      <div className="p-5 flex flex-col gap-3">
       {/* Trending/Hot/Breaking Badge */}
       {badge && (
-        <div className={`absolute -top-2 -right-1 z-10 text-[10px] font-bold px-2 py-0.5 rounded-full shadow ${badge.className}`}>
+        <div className={`absolute ${event.imageUrl ? 'top-2 right-2' : '-top-2 -right-1'} z-10 text-[10px] font-bold px-2 py-0.5 rounded-full shadow ${badge.className}`}>
           {badge.label}
         </div>
       )}
@@ -104,6 +119,7 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
         >
           Details <ArrowRight className="w-3 h-3" />
         </Link>
+      </div>
       </div>
     </motion.div>
   );

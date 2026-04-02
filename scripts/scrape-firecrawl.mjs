@@ -43,10 +43,20 @@ const JSON_SCHEMA = {
     mckinseyAnalysis:      { type: 'array', items: { type: 'string' }, description: '3-5 analytical points' },
     predictionMarketAngle: { type: 'string', description: 'A yes/no prediction question about this event' },
     status:                { type: 'string', enum: ['active', 'critical', 'upcoming', 'completed'] },
-    imageUrl:              { type: 'string', description: 'URL of main image if available' },
+    imageUrl:              { type: 'string', description: 'URL of the main article hero/featured image (not logos or icons). Must be an absolute URL starting with http' },
   },
   required: ['title', 'summary', 'keyDrivers', 'mckinseyAnalysis', 'predictionMarketAngle', 'status'],
 };
+
+// ── Image quality filter ──
+function isValidImageUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  if (!url.startsWith('http')) return false;
+  // Filter out tiny icons, logos, tracking pixels, and favicons
+  const lower = url.toLowerCase();
+  const rejects = ['logo', 'icon', 'favicon', 'pixel', 'tracking', '1x1', 'badge', 'avatar', 'sprite', '.svg', 'back.png'];
+  return !rejects.some(r => lower.includes(r));
+}
 
 // ── Firecrawl Search ──
 async function firecrawlSearch(query) {
@@ -60,9 +70,9 @@ async function firecrawlSearch(query) {
       query,
       limit: 3,
       scrapeOptions: {
-        formats: ['json'],
+        formats: ['json', 'markdown'],
         jsonOptions: {
-          prompt: 'Extract the main news event from this page relevant to India',
+          prompt: 'Extract the main news event from this page relevant to India. For imageUrl, find the main hero/featured image of the article — not logos, icons, or ads.',
           schema: JSON_SCHEMA,
         },
       },
@@ -89,10 +99,27 @@ function slugify(text) {
     .replace(/^-|-$/g, '');
 }
 
-function buildEvent(json, sourceUrl, category, index) {
+// Extract first large image URL from markdown content
+function extractImageFromMarkdown(markdown) {
+  if (!markdown) return null;
+  const imgRegex = /!\[.*?\]\((https?:\/\/[^\s)]+)\)/g;
+  let match;
+  while ((match = imgRegex.exec(markdown)) !== null) {
+    if (isValidImageUrl(match[1])) return match[1];
+  }
+  return null;
+}
+
+function buildEvent(json, sourceUrl, category, index, markdown) {
   const id = `evt-scrape-${category.key}-${index}`;
   const slug = slugify(json.title || 'untitled');
   const now = new Date().toISOString();
+
+  // Try JSON-extracted image first, then fall back to markdown image
+  let imageUrl = isValidImageUrl(json.imageUrl) ? json.imageUrl : null;
+  if (!imageUrl) {
+    imageUrl = extractImageFromMarkdown(markdown);
+  }
 
   return {
     id,
@@ -101,7 +128,7 @@ function buildEvent(json, sourceUrl, category, index) {
     category: category.key,
     status: json.status || 'active',
     summary: json.summary || '',
-    imageUrl: json.imageUrl || undefined,
+    imageUrl: imageUrl || undefined,
     keyDrivers: json.keyDrivers || [],
     mckinseyAnalysis: json.mckinseyAnalysis || [],
     predictionMarketAngle: json.predictionMarketAngle || '',
@@ -136,9 +163,10 @@ async function main() {
         const json = item.json ?? item.extract ?? item;
         if (!json || !json.title) continue;
 
-        const event = buildEvent(json, item.url || item.sourceURL || '', cat, eventIndex);
+        const markdown = item.markdown || item.content || '';
+        const event = buildEvent(json, item.url || item.sourceURL || '', cat, eventIndex, markdown);
         allEvents.push(event);
-        console.log(`  ✅ [${cat.key}] ${event.title}`);
+        console.log(`  ✅ [${cat.key}] ${event.title} ${event.imageUrl ? '📷' : '⬜'}`);
         eventIndex++;
       }
     }

@@ -5,6 +5,7 @@ import { CATEGORY_LABELS } from '@/lib/mock-data';
 import { TrendingUp, TrendingDown, Clock, Users, ExternalLink } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLivePrice } from '@/contexts/LivePricesContext';
+import { trackMarketClick, trackPolymarketClick } from '@/lib/analytics';
 
 interface MarketCardProps {
   market: Market;
@@ -54,7 +55,7 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
 
   return (
     <button
-      onClick={() => navigate(`/market/${market.id}`)}
+      onClick={() => { trackMarketClick(market.id, market.category); navigate(`/market/${market.id}`); }}
       className={`group w-full text-left bg-white rounded-xl border border-border shadow-card p-4 transition-all duration-200 ease-out
         hover:shadow-card-hover hover:border-primary/25 hover:-translate-y-0.5 active:scale-[0.98]
         overflow-hidden relative
@@ -128,7 +129,7 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-muted-foreground hover:text-primary transition-colors mt-2 inline-flex items-center gap-0.5"
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e) => { e.stopPropagation(); trackPolymarketClick(market.id); }}
               >
                 View on Polymarket <ExternalLink className="w-2.5 h-2.5" />
               </a>

@@ -16,9 +16,12 @@ import {
   Target, Eye, Send, CheckCircle,
 } from 'lucide-react';
 import { useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
-import { formatPercent } from '@/lib/formatters';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR, timeUntil } from '@/lib/formatters';
+import { useGeo } from '@/contexts/GeoContext';
+import { getRegionalMarkets } from '@/lib/recommendations';
+import { trackCategoryClick } from '@/lib/analytics';
+import { MapPin } from 'lucide-react';
 import FAQSection from '@/components/FAQSection';
 import { MARKET_PULSE_DATA, TIMELINE_EVENTS } from '@/data/analytics-data';
 import LastUpdated from '@/components/LastUpdated';
@@ -136,6 +139,8 @@ const HomePage = () => {
   const { markets: closingSoon, loading: closingLoading } = useClosingSoon(6);
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
   const { events: trendingEvents } = useTrendingEvents();
+  const geo = useGeo();
+  const regionalMarkets = geo.region ? getRegionalMarkets(indiaMarkets, geo.region, 4) : [];
 
   const loading = indiaLoading;
 
@@ -170,6 +175,7 @@ const HomePage = () => {
 
   const handleCategoryClick = (key: string) => {
     setCategory(key);
+    if (key !== 'all') trackCategoryClick(key);
     if (key !== 'all') {
       // Scroll to filtered section
       setTimeout(() => {
@@ -510,6 +516,32 @@ const HomePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                 {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
               </div>
+            )}
+
+            {/* ── Trending Near You (geo-personalized) ── */}
+            {regionalMarkets.length > 0 && geo.regionName && (
+              <section>
+                <AnimateIn delay={0.1}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-primary" />
+                      </div>
+                      <div>
+                        <h2 className="font-display font-bold text-base leading-tight">Trending in {geo.regionName}</h2>
+                        <p className="text-[11px] text-muted-foreground">Markets relevant to your region</p>
+                      </div>
+                    </div>
+                  </div>
+                </AnimateIn>
+                <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:pb-0">
+                  {regionalMarkets.map((m) => (
+                    <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                      <MarketCard market={m} />
+                    </div>
+                  ))}
+                </div>
+              </section>
             )}
 
             {/* ── Biggest Movers ── */}

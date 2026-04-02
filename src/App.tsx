@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +9,9 @@ import BottomNav from "./components/BottomNav";
 import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
 import { LivePricesProvider } from "./contexts/LivePricesContext";
+import { GeoProvider } from "./contexts/GeoContext";
+import { trackPageView, initScrollTracking, setAnalyticsGeo } from "./lib/analytics";
+import { useGeo } from "./contexts/GeoContext";
 
 // Lazy load non-critical pages for better initial load performance
 const MarketsPage = lazy(() => import("./pages/MarketsPage"));
@@ -33,6 +36,24 @@ const pageVariants = {
   initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -8 },
+};
+
+/** Track page views on route change + init scroll tracking + sync geo to analytics */
+const RouteTracker = () => {
+  const location = useLocation();
+  const geo = useGeo();
+
+  useEffect(() => {
+    if (geo.country) setAnalyticsGeo(geo.country, geo.region);
+  }, [geo.country, geo.region]);
+
+  useEffect(() => {
+    trackPageView(location.pathname);
+    const cleanup = initScrollTracking();
+    return cleanup;
+  }, [location.pathname]);
+
+  return null;
 };
 
 const AnimatedRoutes = () => {
@@ -79,7 +100,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <GeoProvider>
         <LivePricesProvider>
+          <RouteTracker />
           <div className="min-h-screen bg-background relative">
             <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold">
               Skip to content
@@ -91,6 +114,7 @@ const App = () => (
             </main>
           </div>
         </LivePricesProvider>
+        </GeoProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

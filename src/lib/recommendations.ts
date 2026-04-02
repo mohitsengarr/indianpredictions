@@ -128,6 +128,98 @@ export function filterQuality(markets: Market[], minScore = 0.3): Market[] {
   return markets.filter(m => qualityScore(m) >= minScore);
 }
 
+// ── Regional / Geo Boosting ──────────────────────────────────────
+
+/** IPL teams → home state codes */
+const IPL_TEAM_REGIONS: Record<string, string[]> = {
+  csk: ['TN'],       // Chennai Super Kings → Tamil Nadu
+  mi: ['MH'],        // Mumbai Indians → Maharashtra
+  rcb: ['KA'],       // Royal Challengers Bangalore → Karnataka
+  kkr: ['WB'],       // Kolkata Knight Riders → West Bengal
+  dc: ['DL'],        // Delhi Capitals → Delhi
+  srh: ['TG', 'AP'], // Sunrisers Hyderabad → Telangana, AP
+  rr: ['RJ'],        // Rajasthan Royals → Rajasthan
+  pbks: ['PB'],      // Punjab Kings → Punjab
+  gt: ['GJ'],        // Gujarat Titans → Gujarat
+  lsg: ['UP'],       // Lucknow Super Giants → UP
+};
+
+/** State election keywords → state codes */
+const STATE_ELECTION_REGIONS: Record<string, string[]> = {
+  'maharashtra election': ['MH'], 'bihar election': ['BR'],
+  'west bengal election': ['WB'], 'tamil nadu election': ['TN'],
+  'uttar pradesh election': ['UP'], 'karnataka election': ['KA'],
+  'rajasthan election': ['RJ'], 'madhya pradesh election': ['MP'],
+  'delhi election': ['DL'], 'gujarat election': ['GJ'],
+  'assam election': ['AS'], 'kerala election': ['KL'],
+  'punjab election': ['PB'], 'telangana election': ['TG'],
+  'andhra pradesh election': ['AP'], 'jharkhand election': ['JH'],
+  'chhattisgarh election': ['CT'], 'goa election': ['GA'],
+  'odisha election': ['OR'], 'haryana election': ['HR'],
+};
+
+/**
+ * Detect which Indian state(s) a market is relevant to.
+ */
+export function detectMarketRegions(market: Market): string[] {
+  const text = `${market.title} ${market.description}`.toLowerCase();
+  const regions = new Set<string>();
+
+  // Check IPL teams
+  for (const [team, states] of Object.entries(IPL_TEAM_REGIONS)) {
+    if (text.includes(team)) states.forEach(s => regions.add(s));
+  }
+  // Also check full team names
+  if (text.includes('chennai') || text.includes('super kings')) regions.add('TN');
+  if (text.includes('mumbai indians')) regions.add('MH');
+  if (text.includes('bangalore') || text.includes('challengers')) regions.add('KA');
+  if (text.includes('kolkata') || text.includes('knight riders')) regions.add('WB');
+  if (text.includes('delhi capitals')) regions.add('DL');
+  if (text.includes('hyderabad') || text.includes('sunrisers')) { regions.add('TG'); regions.add('AP'); }
+  if (text.includes('rajasthan royals')) regions.add('RJ');
+  if (text.includes('punjab kings')) regions.add('PB');
+  if (text.includes('gujarat titans')) regions.add('GJ');
+  if (text.includes('lucknow') || text.includes('super giants')) regions.add('UP');
+
+  // Check state elections
+  for (const [kw, states] of Object.entries(STATE_ELECTION_REGIONS)) {
+    if (text.includes(kw)) states.forEach(s => regions.add(s));
+  }
+
+  // Check city/state names directly
+  if (text.includes('mumbai') || text.includes('maharashtra')) regions.add('MH');
+  if (text.includes('delhi')) regions.add('DL');
+  if (text.includes('bangalore') || text.includes('bengaluru') || text.includes('karnataka')) regions.add('KA');
+  if (text.includes('chennai') || text.includes('tamil nadu')) regions.add('TN');
+  if (text.includes('kolkata') || text.includes('west bengal')) regions.add('WB');
+  if (text.includes('hyderabad') || text.includes('telangana')) regions.add('TG');
+
+  return [...regions];
+}
+
+/**
+ * Compute geo boost for a market given user's region.
+ * Returns 0–15 points.
+ */
+export function geoBoost(market: Market, userRegion: string): number {
+  if (!userRegion) return 0;
+  const marketRegions = detectMarketRegions(market);
+  if (marketRegions.includes(userRegion)) return 15; // Strong regional match
+  return 0;
+}
+
+/**
+ * Get markets relevant to a specific Indian state/region.
+ */
+export function getRegionalMarkets(markets: Market[], userRegion: string, limit = 6): Market[] {
+  if (!userRegion) return [];
+  return markets
+    .filter(m => m.status === 'live' && qualityScore(m) >= 0.3)
+    .filter(m => detectMarketRegions(m).includes(userRegion))
+    .sort((a, b) => b.volume - a.volume)
+    .slice(0, limit);
+}
+
 // ── Trending Score ───────────────────────────────────────────────
 
 /**
@@ -141,7 +233,7 @@ export function filterQuality(markets: Market[], minScore = 0.3): Market[] {
  * + qualityScore * 5
  * + volatilityBoost * 10     (big probability moves)
  */
-export function trendingScore(market: Market, allMarkets: Market[]): number {
+export function trendingScore(market: Market, allMarkets: Market[], userRegion = ''): number {
   // Normalize volume: max volume across all markets = 1.0
   const maxVolume = Math.max(...allMarkets.map(m => m.volume), 1);
   const normalizedVolume = market.volume / maxVolume;
@@ -169,14 +261,17 @@ export function trendingScore(market: Market, allMarkets: Market[]): number {
   // Volatility boost for big movers (0–10)
   const volatility = Math.min(Math.abs(market.change24h), 30) / 30 * 10;
 
-  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility;
+  // Geo boost (0–15) — regional relevance
+  const geo = geoBoost(market, userRegion);
+
+  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility + geo;
 }
 
 /**
  * Sort markets by trending score (highest first).
  */
-export function sortByTrending(markets: Market[]): Market[] {
-  return [...markets].sort((a, b) => trendingScore(b, markets) - trendingScore(a, markets));
+export function sortByTrending(markets: Market[], userRegion = ''): Market[] {
+  return [...markets].sort((a, b) => trendingScore(b, markets, userRegion) - trendingScore(a, markets, userRegion));
 }
 
 // ── Biggest Movers ───────────────────────────────────────────────

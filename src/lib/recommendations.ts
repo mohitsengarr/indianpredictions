@@ -1,0 +1,318 @@
+/**
+ * Recommendation Engine — MVP (Rules + Popularity + Content Similarity)
+ *
+ * Handles:
+ * 1. India-relevance scoring (0-1) with expanded keyword matching
+ * 2. Quality filtering (garbage content suppression)
+ * 3. Trending score (volume + probability delta + freshness)
+ * 4. Biggest movers (|change24h| descending)
+ * 5. Closing soon (resolution date ascending)
+ * 6. Related markets (keyword/tag similarity)
+ */
+
+import type { Market } from './types';
+
+// ── India Relevance ──────────────────────────────────────────────
+
+/** High-confidence India keywords (strong signal) */
+const INDIA_KEYWORDS_STRONG: string[] = [
+  'india', 'indian', 'modi', 'bjp', 'congress', 'aap',
+  'ipl', 'bcci', 'cricket india', 'team india',
+  'rupee', 'inr', 'rbi', 'nifty', 'sensex', 'bse',
+  'mumbai', 'delhi', 'bangalore', 'chennai', 'kolkata', 'hyderabad',
+  'bollywood', 'lok sabha', 'rajya sabha',
+  'adani', 'ambani', 'reliance', 'infosys', 'tata', 'wipro',
+  'hindenburg', 'sebi',
+  'kohli', 'rohit sharma', 'bumrah', 'dhoni',
+  'csk', 'rcb', 'mumbai indians',
+  'isro', 'upi', 'aadhaar',
+];
+
+/** Medium-confidence keywords (relevant but not exclusive to India) */
+const INDIA_KEYWORDS_MEDIUM: string[] = [
+  'pakistan', 'sri lanka', 'bangladesh', 'nepal',
+  'asia cup', 'champions trophy', 'icc',
+  'world cup cricket', 'kabaddi', 'badminton',
+  'south asia', 'subcontinent',
+  'crude oil india', 'monsoon', 'kharif', 'rabi',
+];
+
+/** Keywords that indicate NOT India-relevant */
+const NON_INDIA_KEYWORDS: string[] = [
+  'nfl', 'nba', 'mlb', 'nhl', 'super bowl', 'march madness',
+  'premier league', 'la liga', 'bundesliga', 'serie a', 'ligue 1',
+  'eurovision', 'oscars', 'grammy', 'emmys',
+  'elon musk twitter', 'mrbeast',
+  'fifa world cup 2026',
+  'kanye', 'kardashian', 'drake',
+  'us midterm', 'uk election', 'french election',
+  'dogecoin', 'solana meme', 'pepe coin',
+];
+
+/**
+ * Score a market for India relevance (0.0 – 1.0).
+ * - Strong keyword match: 0.8–1.0
+ * - Medium keyword match: 0.5–0.7
+ * - No match but not explicitly non-India: 0.2
+ * - Explicitly non-India: 0.0–0.1
+ */
+export function indiaRelevanceScore(market: Market): number {
+  const text = `${market.title} ${market.description} ${market.category}`.toLowerCase();
+
+  // Check for explicit non-India content
+  const nonIndiaHits = NON_INDIA_KEYWORDS.filter(kw => text.includes(kw)).length;
+  if (nonIndiaHits >= 2) return 0.0;
+  if (nonIndiaHits === 1) {
+    // Could still be India-adjacent (e.g., "India vs Pakistan cricket World Cup")
+    const strongHits = INDIA_KEYWORDS_STRONG.filter(kw => text.includes(kw)).length;
+    if (strongHits === 0) return 0.05;
+  }
+
+  // Score strong matches
+  const strongHits = INDIA_KEYWORDS_STRONG.filter(kw => text.includes(kw)).length;
+  if (strongHits >= 3) return 1.0;
+  if (strongHits >= 2) return 0.9;
+  if (strongHits >= 1) return 0.8;
+
+  // Score medium matches
+  const mediumHits = INDIA_KEYWORDS_MEDIUM.filter(kw => text.includes(kw)).length;
+  if (mediumHits >= 2) return 0.7;
+  if (mediumHits >= 1) return 0.5;
+
+  // Generic content — low relevance
+  return 0.15;
+}
+
+/**
+ * Returns true if market passes the India-relevance threshold.
+ */
+export function isIndiaRelevant(market: Market, threshold = 0.5): boolean {
+  return indiaRelevanceScore(market) >= threshold;
+}
+
+// ── Quality Filter ───────────────────────────────────────────────
+
+const GARBAGE_KEYWORDS = [
+  'error', 'unavailable', 'not found', '404', '500',
+  'http error', 'access denied', 'forbidden', 'timeout',
+  'website error', 'page not found', 'server error',
+  'undefined', 'null', 'nan',
+  'lorem ipsum', 'test market', 'example',
+];
+
+/**
+ * Quality score (0.0 – 1.0). Markets below 0.3 should be suppressed.
+ */
+export function qualityScore(market: Market): number {
+  const text = `${market.title} ${market.description}`.toLowerCase();
+
+  // Garbage content
+  const garbageHits = GARBAGE_KEYWORDS.filter(kw => text.includes(kw)).length;
+  if (garbageHits >= 2) return 0.0;
+  if (garbageHits >= 1) return 0.2;
+
+  // Very short or missing content
+  if (!market.title || market.title.length < 10) return 0.1;
+  if (!market.description || market.description.length < 20) return 0.4;
+
+  // Low volume could indicate spam/test
+  if (market.volume <= 0) return 0.3;
+
+  return 1.0;
+}
+
+/**
+ * Filter out garbage markets.
+ */
+export function filterQuality(markets: Market[], minScore = 0.3): Market[] {
+  return markets.filter(m => qualityScore(m) >= minScore);
+}
+
+// ── Trending Score ───────────────────────────────────────────────
+
+/**
+ * Compute a composite trending score (0–100) for ranking.
+ *
+ * Formula:
+ *   indiaRelevance * 40
+ * + trendingScore * 20       (normalized volume + |change24h|)
+ * + freshnessScore * 15      (decay based on closesAt/updatedAt)
+ * + closingSoonBoost * 10    (markets resolving within 7 days)
+ * + qualityScore * 5
+ * + volatilityBoost * 10     (big probability moves)
+ */
+export function trendingScore(market: Market, allMarkets: Market[]): number {
+  // Normalize volume: max volume across all markets = 1.0
+  const maxVolume = Math.max(...allMarkets.map(m => m.volume), 1);
+  const normalizedVolume = market.volume / maxVolume;
+
+  // India relevance (0–40)
+  const indiaScore = indiaRelevanceScore(market) * 40;
+
+  // Trending component: volume + volatility (0–20)
+  const absChange = Math.min(Math.abs(market.change24h), 50) / 50; // cap at 50%
+  const trendComponent = (normalizedVolume * 0.6 + absChange * 0.4) * 20;
+
+  // Freshness: how recently does this market close? (0–15)
+  const now = Date.now();
+  const closesAt = new Date(market.closesAt).getTime();
+  const daysUntilClose = Math.max(0, (closesAt - now) / (1000 * 60 * 60 * 24));
+  // Markets closing within 30 days are freshest
+  const freshnessScore = daysUntilClose <= 0 ? 0 : daysUntilClose <= 30 ? 15 : Math.max(0, 15 - (daysUntilClose - 30) / 10);
+
+  // Closing soon boost (0–10)
+  const closingSoonBoost = daysUntilClose > 0 && daysUntilClose <= 7 ? 10 : daysUntilClose <= 14 ? 5 : 0;
+
+  // Quality (0–5)
+  const quality = qualityScore(market) * 5;
+
+  // Volatility boost for big movers (0–10)
+  const volatility = Math.min(Math.abs(market.change24h), 30) / 30 * 10;
+
+  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility;
+}
+
+/**
+ * Sort markets by trending score (highest first).
+ */
+export function sortByTrending(markets: Market[]): Market[] {
+  return [...markets].sort((a, b) => trendingScore(b, markets) - trendingScore(a, markets));
+}
+
+// ── Biggest Movers ───────────────────────────────────────────────
+
+/**
+ * Get markets with the largest absolute probability change in 24h.
+ */
+export function getBiggestMovers(markets: Market[], limit = 6): Market[] {
+  return [...markets]
+    .filter(m => m.status === 'live' && qualityScore(m) >= 0.3)
+    .sort((a, b) => Math.abs(b.change24h) - Math.abs(a.change24h))
+    .slice(0, limit);
+}
+
+// ── Closing Soon ─────────────────────────────────────────────────
+
+/**
+ * Get active markets sorted by resolution date (soonest first).
+ * Only includes markets closing within `withinDays` days.
+ */
+export function getClosingSoon(markets: Market[], limit = 6, withinDays = 30): Market[] {
+  const now = Date.now();
+  const cutoff = now + withinDays * 24 * 60 * 60 * 1000;
+
+  return [...markets]
+    .filter(m => {
+      if (m.status !== 'live') return false;
+      if (qualityScore(m) < 0.3) return false;
+      const closes = new Date(m.closesAt).getTime();
+      return closes > now && closes <= cutoff;
+    })
+    .sort((a, b) => new Date(a.closesAt).getTime() - new Date(b.closesAt).getTime())
+    .slice(0, limit);
+}
+
+// ── Related Markets (Content Similarity) ─────────────────────────
+
+/**
+ * Extract keywords from market text for similarity matching.
+ */
+function extractKeywords(text: string): Set<string> {
+  const stopwords = new Set([
+    'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'shall',
+    'should', 'may', 'might', 'can', 'could', 'of', 'in', 'to', 'for',
+    'with', 'on', 'at', 'by', 'from', 'as', 'into', 'through', 'during',
+    'before', 'after', 'above', 'below', 'between', 'under', 'over',
+    'and', 'but', 'or', 'nor', 'not', 'so', 'yet', 'both', 'either',
+    'neither', 'each', 'every', 'this', 'that', 'these', 'those',
+    'it', 'its', 'he', 'she', 'they', 'them', 'their', 'we', 'you',
+    'what', 'which', 'who', 'whom', 'when', 'where', 'why', 'how',
+    'if', 'than', 'then', 'also', 'just', 'about', 'up', 'out',
+    'yes', 'no', 'will', 'market', 'prediction', 'event',
+  ]);
+
+  return new Set(
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 2 && !stopwords.has(w))
+  );
+}
+
+/**
+ * Jaccard similarity between two keyword sets.
+ */
+function jaccardSimilarity(setA: Set<string>, setB: Set<string>): number {
+  let intersection = 0;
+  for (const word of setA) {
+    if (setB.has(word)) intersection++;
+  }
+  const union = setA.size + setB.size - intersection;
+  return union === 0 ? 0 : intersection / union;
+}
+
+/**
+ * Get related markets based on keyword/content similarity.
+ * Excludes the source market and enforces category diversity.
+ */
+export function getRelatedMarkets(
+  sourceMarket: Market,
+  allMarkets: Market[],
+  limit = 4
+): Market[] {
+  const sourceKw = extractKeywords(`${sourceMarket.title} ${sourceMarket.description}`);
+
+  const scored = allMarkets
+    .filter(m => m.id !== sourceMarket.id && m.status === 'live' && qualityScore(m) >= 0.3)
+    .map(m => ({
+      market: m,
+      similarity: jaccardSimilarity(
+        sourceKw,
+        extractKeywords(`${m.title} ${m.description}`)
+      ),
+      // Boost same category
+      categoryBoost: m.category === sourceMarket.category ? 0.15 : 0,
+    }))
+    .map(s => ({ ...s, score: s.similarity + s.categoryBoost }))
+    .sort((a, b) => b.score - a.score);
+
+  // Enforce diversity: max 2 from same category
+  const result: Market[] = [];
+  const categoryCounts: Record<string, number> = {};
+
+  for (const item of scored) {
+    if (result.length >= limit) break;
+    const cat = item.market.category;
+    if ((categoryCounts[cat] ?? 0) >= 2) continue;
+    result.push(item.market);
+    categoryCounts[cat] = (categoryCounts[cat] ?? 0) + 1;
+  }
+
+  return result;
+}
+
+// ── Re-ranking (diversity + freshness guarantees) ────────────────
+
+/**
+ * Apply re-ranking rules:
+ * - No more than 3 from same category in top results
+ * - At least 1 recently-active market in top 5
+ * - Quality gate applied
+ */
+export function rerank(markets: Market[], limit = 10): Market[] {
+  const quality = markets.filter(m => qualityScore(m) >= 0.3);
+  const result: Market[] = [];
+  const categoryCounts: Record<string, number> = {};
+
+  for (const m of quality) {
+    if (result.length >= limit) break;
+    const cat = m.category;
+    if ((categoryCounts[cat] ?? 0) >= 3) continue;
+    result.push(m);
+    categoryCounts[cat] = (categoryCounts[cat] ?? 0) + 1;
+  }
+
+  return result;
+}

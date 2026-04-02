@@ -11,10 +11,13 @@ import {
   ReferenceLine,
 } from 'recharts';
 import { useTrendingEvents } from '@/hooks/useTrendingEvents';
+import { useIndiaMarkets } from '@/hooks/useMarkets';
+import { getRelatedMarkets } from '@/lib/recommendations';
 import { getEventHistory } from '@/data/event-history-data';
 import EventDetailSection from '@/components/EventDetailSection';
 import EventTimeline from '@/components/EventTimeline';
 import EventComparisonWidget from '@/components/EventComparisonWidget';
+import MarketCard from '@/components/MarketCard';
 import SocialShare from '@/components/SocialShare';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { useSEO } from '@/hooks/useSEO';
@@ -75,6 +78,7 @@ const EventDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { events: TRENDING_EVENTS } = useTrendingEvents();
+  const { markets: allMarkets } = useIndiaMarkets();
   const event = TRENDING_EVENTS.find((e) => e.slug === slug);
 
   useSEO({
@@ -584,6 +588,41 @@ const EventDetailPage = () => {
             <EventTimeline events={related} />
           </motion.div>
         )}
+
+        {/* Related Prediction Markets */}
+        {allMarkets.length > 0 && (() => {
+          // Create a seed market from event keywords for similarity matching
+          const seedMarket = {
+            id: event.id,
+            title: event.title + ' ' + event.predictionMarketAngle,
+            description: event.summary + ' ' + (event.keyDrivers?.join(' ') ?? ''),
+            category: (event.category === 'markets' ? 'economy' : event.category === 'sports' ? 'cricket' : event.category) as import('@/lib/types').MarketCategory,
+            status: 'live' as const,
+            yesPrice: 0.5, noPrice: 0.5, volume: 0, liquidity: 0, traders: 0,
+            change24h: 0, closesAt: '', resolvesAt: '', resolutionCriteria: '',
+            resolutionSource: '', resolutionSourceUrl: '', createdAt: '',
+            priceHistory: [],
+          };
+          const relatedMarkets = getRelatedMarkets(seedMarket, allMarkets, 4);
+          if (relatedMarkets.length === 0) return null;
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="font-display font-bold text-sm mb-4 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-primary" />
+                Related Prediction Markets
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {relatedMarkets.map(m => (
+                  <MarketCard key={m.id} market={m} compact />
+                ))}
+              </div>
+            </motion.div>
+          );
+        })()}
 
         {/* Internal Links CTA */}
         <motion.div

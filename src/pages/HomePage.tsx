@@ -15,9 +15,10 @@ import {
   ChevronRight, ArrowRight, BookOpen, Mail, BarChart3,
   Target, Eye, Send, CheckCircle,
 } from 'lucide-react';
-import { useIndiaMarkets } from '@/hooks/useMarkets';
+import { useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
+import { formatPercent } from '@/lib/formatters';
 import { useSEO } from '@/hooks/useSEO';
-import { formatINR } from '@/lib/formatters';
+import { formatINR, timeUntil } from '@/lib/formatters';
 import FAQSection from '@/components/FAQSection';
 import { MARKET_PULSE_DATA, TIMELINE_EVENTS } from '@/data/analytics-data';
 import LastUpdated from '@/components/LastUpdated';
@@ -131,6 +132,8 @@ const HomePage = () => {
   const [emailError, setEmailError] = useState('');
 
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
+  const { markets: biggestMovers, loading: moversLoading } = useBiggestMovers(6);
+  const { markets: closingSoon, loading: closingLoading } = useClosingSoon(6);
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
   const { events: trendingEvents } = useTrendingEvents();
 
@@ -507,6 +510,58 @@ const HomePage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
                 {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
               </div>
+            )}
+
+            {/* ── Biggest Movers ── */}
+            {biggestMovers.length > 0 && (
+              <section>
+                <AnimateIn delay={0.1}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full bg-destructive/15 flex items-center justify-center">
+                        <TrendingUp className="w-4 h-4 text-destructive" />
+                      </div>
+                      <div>
+                        <h2 className="font-display font-bold text-base leading-tight">Biggest Movers</h2>
+                        <p className="text-[11px] text-muted-foreground">Markets with the largest probability shifts in 24h</p>
+                      </div>
+                    </div>
+                  </div>
+                </AnimateIn>
+                <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+                  {biggestMovers.map((m, i) => (
+                    <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                      <MarketCard market={m} />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── Closing Soon ── */}
+            {closingSoon.length > 0 && (
+              <section>
+                <AnimateIn delay={0.1}>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
+                        <Clock className="w-4 h-4 text-warning" />
+                      </div>
+                      <div>
+                        <h2 className="font-display font-bold text-base leading-tight">Closing Soon</h2>
+                        <p className="text-[11px] text-muted-foreground">Markets about to resolve — last chance to track</p>
+                      </div>
+                    </div>
+                  </div>
+                </AnimateIn>
+                <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+                  {closingSoon.map((m, i) => (
+                    <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                      <MarketCard market={m} />
+                    </div>
+                  ))}
+                </div>
+              </section>
             )}
 
             {/* ── Analytics & Insights Card ── */}

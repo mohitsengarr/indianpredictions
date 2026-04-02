@@ -1,16 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Market } from '@/lib/types';
 import { MARKETS as FALLBACK_MARKETS } from '@/lib/mock-data';
 import { supabase } from '@/lib/supabase';
-
-const GARBAGE_KEYWORDS = ['error', 'unavailable', 'not found', '404', '500', 'http error', 'access denied', 'forbidden'];
-
-function filterGarbageMarkets(markets: Market[]): Market[] {
-  return markets.filter(m => {
-    const lower = (m.title + ' ' + m.description).toLowerCase();
-    return !GARBAGE_KEYWORDS.some(kw => lower.includes(kw));
-  });
-}
+import {
+  filterQuality,
+  isIndiaRelevant,
+  sortByTrending,
+  getBiggestMovers,
+  getClosingSoon,
+  getRelatedMarkets,
+} from '@/lib/recommendations';
 
 interface UseMarketsResult {
   markets: Market[];
@@ -51,8 +50,10 @@ async function fetchAllFromDB(): Promise<{ all: Market[]; india: Market[] }> {
   if (error) throw new Error(error.message);
   if (!data || data.length === 0) throw new Error('No cached markets found');
 
-  const all = data.map((row) => row.data as Market);
-  const india = data.filter((row) => row.is_india).map((row) => row.data as Market);
+  const allRaw = data.map((row) => row.data as Market);
+  // Use enhanced quality + India-relevance scoring
+  const all = filterQuality(allRaw);
+  const india = all.filter(m => isIndiaRelevant(m));
 
   return { all, india };
 }
@@ -78,8 +79,8 @@ export function useMarkets(): UseMarketsResult {
     fetchAllFromDB()
       .then(({ all, india }) => {
         if (cancelled) return;
-        cachedAll = filterGarbageMarkets(all.length > 0 ? all : FALLBACK_MARKETS);
-        cachedIndia = filterGarbageMarkets(india).length > 0 ? filterGarbageMarkets(india) : null;
+        cachedAll = filterQuality(all.length > 0 ? all : FALLBACK_MARKETS);
+        cachedIndia = filterQuality(india).length > 0 ? filterQuality(india) : null;
         cacheTimestamp = Date.now();
         setMarkets(cachedAll);
         setLastUpdated(new Date());
@@ -129,8 +130,8 @@ export function useIndiaMarkets(): {
     fetchAllFromDB()
       .then(({ all, india }) => {
         if (cancelled) return;
-        cachedAll = filterGarbageMarkets(all.length > 0 ? all : FALLBACK_MARKETS);
-        cachedIndia = filterGarbageMarkets(india);
+        cachedAll = filterQuality(all.length > 0 ? all : FALLBACK_MARKETS);
+        cachedIndia = filterQuality(india);
         cacheTimestamp = Date.now();
         const result = cachedIndia;
         setMarkets(result);
@@ -162,4 +163,35 @@ export function useMarket(id: string | undefined): {
   const { markets, loading, error } = useMarkets();
   const market = id ? (markets.find((m) => m.id === id) ?? null) : null;
   return { market, loading, error };
+}
+
+/** Hook: India markets sorted by trending score */
+export function useTrendingIndiaMarkets(limit = 10) {
+  const { markets, loading } = useIndiaMarkets();
+  const sorted = useMemo(() => sortByTrending(markets).slice(0, limit), [markets, limit]);
+  return { markets: sorted, loading };
+}
+
+/** Hook: Biggest probability movers */
+export function useBiggestMovers(limit = 6) {
+  const { markets, loading } = useMarkets();
+  const movers = useMemo(() => getBiggestMovers(markets, limit), [markets, limit]);
+  return { markets: movers, loading };
+}
+
+/** Hook: Markets closing soon */
+export function useClosingSoon(limit = 6) {
+  const { markets, loading } = useMarkets();
+  const closing = useMemo(() => getClosingSoon(markets, limit), [markets, limit]);
+  return { markets: closing, loading };
+}
+
+/** Hook: Related markets for a given market */
+export function useRelatedMarkets(market: Market | null, limit = 4) {
+  const { markets } = useMarkets();
+  const related = useMemo(
+    () => market ? getRelatedMarkets(market, markets, limit) : [],
+    [market, markets, limit]
+  );
+  return related;
 }

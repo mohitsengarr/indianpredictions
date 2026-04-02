@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import MarketCard from '@/components/MarketCard';
 import CategoryTabs from '@/components/CategoryTabs';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
 import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory } from '@/lib/types';
-import { Search, SlidersHorizontal, RefreshCw, AlertCircle } from 'lucide-react';
-import { useMarkets } from '@/hooks/useMarkets';
+import { Search, SlidersHorizontal, RefreshCw, AlertCircle, Globe, MapPin } from 'lucide-react';
+import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
+import { sortByTrending } from '@/lib/recommendations';
 
 const MarketsPage = () => {
   const [category, setCategory] = useState<MarketCategory | 'all'>('all');
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState<'volume' | 'change' | 'closing'>('volume');
-  const { markets, loading, error, refetch } = useMarkets();
+  const [sort, setSort] = useState<'volume' | 'change' | 'closing' | 'trending'>('trending');
+  const [indiaOnly, setIndiaOnly] = useState(true);
+  const { markets: allMarkets, loading: allLoading, error, refetch } = useMarkets();
+  const { markets: indiaMarkets, loading: indiaLoading } = useIndiaMarkets();
+  const markets = indiaOnly ? indiaMarkets : allMarkets;
+  const loading = indiaOnly ? indiaLoading : allLoading;
 
   useSEO({
     title: "All Prediction Markets – Cricket, Economy, Crypto, Bollywood",
@@ -32,11 +37,14 @@ const MarketsPage = () => {
     return matchCat && matchSearch;
   });
 
-  filtered.sort((a, b) => {
-    if (sort === 'volume') return b.volume - a.volume;
-    if (sort === 'change') return Math.abs(b.change24h) - Math.abs(a.change24h);
-    return new Date(a.closesAt).getTime() - new Date(b.closesAt).getTime();
-  });
+  const sorted = useMemo(() => {
+    const arr = [...filtered];
+    if (sort === 'trending') return sortByTrending(arr);
+    if (sort === 'volume') return arr.sort((a, b) => b.volume - a.volume);
+    if (sort === 'change') return arr.sort((a, b) => Math.abs(b.change24h) - Math.abs(a.change24h));
+    return arr.sort((a, b) => new Date(a.closesAt).getTime() - new Date(b.closesAt).getTime());
+  }, [filtered, sort]);
+  filtered = sorted;
 
   return (
     <div className="pb-24 lg:pb-8">
@@ -84,21 +92,33 @@ const MarketsPage = () => {
         </AnimateIn>
 
         <AnimateIn delay={0.16}>
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
-            {(['volume', 'change', 'closing'] as const).map((s) => (
-              <button
-                key={s}
-                onClick={() => setSort(s)}
-                className={`text-xs px-3 py-1.5 rounded-full border font-semibold transition-all duration-200 active:scale-90 ${
-                  sort === s
-                    ? 'bg-primary text-white border-primary'
-                    : 'bg-white text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
-                }`}
-              >
-                {s === 'volume' ? 'Top Volume' : s === 'change' ? 'Most Active' : 'Closing Soon'}
-              </button>
-            ))}
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-2">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
+              {(['trending', 'volume', 'change', 'closing'] as const).map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSort(s)}
+                  className={`text-xs px-3 py-1.5 rounded-full border font-semibold transition-all duration-200 active:scale-90 ${
+                    sort === s
+                      ? 'bg-primary text-white border-primary'
+                      : 'bg-white text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
+                  }`}
+                >
+                  {s === 'trending' ? 'Trending' : s === 'volume' ? 'Top Volume' : s === 'change' ? 'Most Active' : 'Closing Soon'}
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setIndiaOnly(v => !v)}
+              className={`text-xs px-3 py-1.5 rounded-full border font-semibold transition-all duration-200 active:scale-90 inline-flex items-center gap-1 ${
+                indiaOnly
+                  ? 'bg-orange-50 text-orange-700 border-orange-200'
+                  : 'bg-white text-muted-foreground border-border hover:border-primary/40'
+              }`}
+            >
+              {indiaOnly ? <><MapPin className="w-3 h-3" /> India</> : <><Globe className="w-3 h-3" /> Global</>}
+            </button>
           </div>
         </AnimateIn>
 

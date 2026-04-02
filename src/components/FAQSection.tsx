@@ -34,7 +34,10 @@ const FAQSection = ({ faqs, title = 'Frequently Asked Questions', subtitle }: FA
           return (
             <div key={i} className="bg-card rounded-xl border border-border overflow-hidden">
               <button
+                id={`faq-question-${i}`}
                 onClick={() => setOpenIndex(isOpen ? null : i)}
+                aria-expanded={isOpen}
+                aria-controls={`faq-answer-${i}`}
                 className="w-full flex items-center justify-between px-4 py-3 text-left transition-colors hover:bg-muted/30"
               >
                 <span className="text-sm font-semibold pr-4">{faq.question}</span>
@@ -42,13 +45,17 @@ const FAQSection = ({ faqs, title = 'Frequently Asked Questions', subtitle }: FA
                   <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
                 </motion.div>
               </button>
-              <AnimatePresence>
+              <AnimatePresence initial={false}>
                 {isOpen && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25 }}
+                    style={{ overflow: 'hidden' }}
+                    role="region"
+                    id={`faq-answer-${i}`}
+                    aria-labelledby={`faq-question-${i}`}
                   >
                     <div className="px-4 pb-4 text-sm text-muted-foreground leading-relaxed border-t border-border/50 pt-3">
                       {faq.answer}

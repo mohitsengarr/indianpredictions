@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { TRENDING_EVENTS, TrendingEvent } from '@/data/trending-events';
 
+const GARBAGE_KEYWORDS = ['error', 'unavailable', 'not found', '404', '500', 'http error', 'access denied', 'forbidden'];
+
+function filterGarbageEvents(events: TrendingEvent[]): TrendingEvent[] {
+  return events.filter(e => {
+    const lower = (e.title + ' ' + e.summary).toLowerCase();
+    return !GARBAGE_KEYWORDS.some(kw => lower.includes(kw));
+  });
+}
+
 interface UseTrendingEventsResult {
   events: TrendingEvent[];
   loading: boolean;
@@ -87,9 +96,11 @@ export function useTrendingEvents(): UseTrendingEventsResult {
     Promise.all([fetchEvents(), fetchLastScraped()])
       .then(([resolved, scraped]) => {
         if (cancelled) return;
+        // Filter out garbage/error entries before sorting
+        const cleaned = filterGarbageEvents(resolved);
         // Sort: critical first, then active, upcoming, completed last
         const statusOrder: Record<string, number> = { critical: 0, active: 1, upcoming: 2, completed: 3 };
-        const sorted = [...resolved].sort(
+        const sorted = [...cleaned].sort(
           (a, b) => (statusOrder[a.status] ?? 9) - (statusOrder[b.status] ?? 9)
         );
         cachedEvents = sorted;

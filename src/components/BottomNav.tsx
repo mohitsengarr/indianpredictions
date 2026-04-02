@@ -20,7 +20,7 @@ const BottomNav = () => {
   return (
     <>
       {/* ── Desktop sidebar – Paytm navy ──────────────────────────── */}
-      <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 flex-col z-50"
+      <nav aria-label="Main navigation" className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 flex-col z-50"
         style={{ background: 'linear-gradient(180deg, hsl(222 100% 18%) 0%, hsl(222 100% 14%) 100%)' }}>
 
         {/* Logo area */}
@@ -39,7 +39,7 @@ const BottomNav = () => {
         </div>
 
         {/* Nav links */}
-        <nav className="flex-1 px-3 py-4 space-y-0.5">
+        <div className="flex-1 px-3 py-4 space-y-0.5">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const active = isActive(tab.path);
@@ -59,7 +59,7 @@ const BottomNav = () => {
               </Link>
             );
           })}
-        </nav>
+        </div>
 
         {/* Footer badge */}
         <div className="px-4 py-4 border-t border-white/10">
@@ -67,10 +67,10 @@ const BottomNav = () => {
             Prediction market tracker. No real money involved.
           </p>
         </div>
-      </aside>
+      </nav>
 
       {/* ── Mobile bottom nav – white with blue active ─────────────── */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-border/60 shadow-[0_-2px_12px_0_rgba(0,41,112,0.08)]">
+      <nav aria-label="Main navigation" className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-border/60 shadow-[0_-2px_12px_0_rgba(0,41,112,0.08)]">
         <div className="flex items-center justify-around max-w-lg mx-auto h-[60px]">
           {tabs.map((tab) => {
             const Icon = tab.icon;

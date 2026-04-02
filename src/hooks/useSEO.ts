@@ -10,7 +10,7 @@ interface SEOMeta {
   schema?: object | object[];
 }
 
-const BASE_URL = 'https://indianpredictions.lovable.app';
+const BASE_URL = 'https://indianpredictions.vercel.app';
 const DEFAULT_IMAGE = 'https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/07c14fad-e803-4809-8654-86579cab78d8/id-preview-a8d4ee2e--5fc81140-cec5-43a7-b277-b2d8ba92190f.lovable.app-1771895603345.png';
 const SEO_ATTR = 'data-seo-managed';
 

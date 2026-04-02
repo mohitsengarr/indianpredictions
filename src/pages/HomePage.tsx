@@ -118,7 +118,7 @@ const HomePage = () => {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'India Predictions',
-      url: 'https://indianpredictions.lovable.app',
+      url: 'https://indianpredictions.vercel.app',
       description: "India's #1 prediction market hub",
     },
   });
@@ -128,6 +128,7 @@ const HomePage = () => {
   const [search, setSearch] = useState('');
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
@@ -176,7 +177,11 @@ const HomePage = () => {
   };
 
   const handleSubscribe = () => {
-    if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return;
+    if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setEmailError('Please enter a valid email address');
+      return;
+    }
+    setEmailError('');
     setSubscribed(true);
   };
 
@@ -355,6 +360,8 @@ const HomePage = () => {
               <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
                 <button
                   onClick={() => handleCategoryClick('all')}
+                  aria-label="Filter by All India categories"
+                  aria-pressed={category === 'all'}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
                     category === 'all'
                       ? 'bg-primary text-primary-foreground border-primary shadow-md'
@@ -367,6 +374,8 @@ const HomePage = () => {
                   <button
                     key={pill.key}
                     onClick={() => handleCategoryClick(pill.key)}
+                    aria-label={`Filter by ${pill.label} category`}
+                    aria-pressed={category === pill.key}
                     className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap border transition-all ${
                       category === pill.key
                         ? 'bg-primary text-primary-foreground border-primary shadow-md'
@@ -617,10 +626,12 @@ const HomePage = () => {
                   ) : (
                     <>
                       <div className="flex gap-2 mt-3 max-w-sm">
+                        <label htmlFor="newsletter-email" className="sr-only">Email address</label>
                         <input
+                          id="newsletter-email"
                           type="email"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
                           placeholder="your@email.com"
                           className="flex-1 bg-background border border-border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/30"
                         />
@@ -633,6 +644,7 @@ const HomePage = () => {
                           Subscribe
                         </motion.button>
                       </div>
+                      {emailError && <p className="text-xs text-destructive mt-1">{emailError}</p>}
                       <p className="text-[11px] text-muted-foreground mt-2">One email per week. No spam, unsubscribe anytime. By subscribing, you agree to our <Link to="/terms" className="text-primary hover:underline">Terms</Link> and <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.</p>
                     </>
                   )}

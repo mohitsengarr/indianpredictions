@@ -1,5 +1,5 @@
 # India Predictions – robots.txt
-# https://indianpredictions.lovable.app/
+# https://indianpredictions.vercel.app/
 
 # ── Standard search engine crawlers ──────────────────────────────────
 User-agent: Googlebot
@@ -84,4 +84,4 @@ User-agent: *
 Allow: /
 
 # ── Sitemap ──────────────────────────────────────────────────────────
-Sitemap: https://indianpredictions.lovable.app/sitemap.xml
+Sitemap: https://indianpredictions.vercel.app/sitemap.xml

@@ -109,8 +109,8 @@ const MarketDetailPage = () => {
           startDate: market.createdAt,
           endDate: market.closesAt,
           eventStatus: 'https://schema.org/EventScheduled',
-          location: { '@type': 'VirtualLocation', url: `https://indianpredictions.lovable.app/market/${market.id}` },
-          organizer: { '@type': 'Organization', name: 'India Predictions', url: 'https://indianpredictions.lovable.app' },
+          location: { '@type': 'VirtualLocation', url: `https://indianpredictions.vercel.app/market/${market.id}` },
+          organizer: { '@type': 'Organization', name: 'India Predictions', url: 'https://indianpredictions.vercel.app' },
         }
       : undefined,
   });

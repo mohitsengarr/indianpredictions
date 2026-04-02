@@ -43,7 +43,8 @@ const IMPACT_CATEGORIES = [
   { key: 'consumer', label: 'Consumer', icon: Users },
 ];
 
-const getImpactLevel = (status: string): Record<string, { score: number; label: string }> => {
+const getImpactLevel = (status: string, category?: string): Record<string, { score: number; label: string }> => {
+  // For critical events, impact is always negative/severe
   if (status === 'critical') {
     return {
       markets: { score: -85, label: 'Severe Negative' },
@@ -52,19 +53,21 @@ const getImpactLevel = (status: string): Record<string, { score: number; label: 
       consumer: { score: -45, label: 'High Negative' },
     };
   }
-  if (status === 'active') {
+  // For completed events, impact is neutral/resolved
+  if (status === 'completed') {
     return {
-      markets: { score: 25, label: 'Moderate Positive' },
-      currency: { score: 10, label: 'Slight Positive' },
-      inflation: { score: -10, label: 'Slight Downward' },
-      consumer: { score: 30, label: 'Moderate Positive' },
+      markets: { score: 5, label: 'Resolved' },
+      currency: { score: 0, label: 'Neutral' },
+      inflation: { score: 0, label: 'Neutral' },
+      consumer: { score: 5, label: 'Resolved' },
     };
   }
+  // Active and upcoming: mild uncertainty
   return {
-    markets: { score: 15, label: 'Slight Positive' },
-    currency: { score: 5, label: 'Neutral' },
-    inflation: { score: 0, label: 'Neutral' },
-    consumer: { score: 10, label: 'Slight Positive' },
+    markets: { score: 10, label: 'Mild Uncertainty' },
+    currency: { score: -5, label: 'Slight Pressure' },
+    inflation: { score: 5, label: 'Marginal' },
+    consumer: { score: 0, label: 'Neutral' },
   };
 };
 
@@ -114,7 +117,7 @@ const EventDetailPage = () => {
     window.history.length > 1 ? navigate(-1) : navigate('/');
   };
 
-  const impacts = getImpactLevel(event.status);
+  const impacts = getImpactLevel(event.status, event.category);
   const drivers = event.keyDrivers || event.mckinseyAnalysis.slice(0, 5);
 
   return (
@@ -485,10 +488,19 @@ const EventDetailPage = () => {
             </div>
           </div>
           <div className="bg-muted/30 rounded-lg p-4 border border-border/50">
-            <p className="text-sm text-muted-foreground italic">
-              "This event has significant implications for Indian markets. The prediction market pricing reflects the consensus view, but there's meaningful uncertainty around the key drivers listed above."
-            </p>
-            <p className="text-xs text-muted-foreground mt-2 font-semibold">— India Predictions Research Team</p>
+            {event.mckinseyAnalysis && event.mckinseyAnalysis.length > 0 ? (
+              <div className="space-y-2">
+                {event.mckinseyAnalysis.slice(0, 3).map((point, i) => (
+                  <p key={i} className="text-sm text-muted-foreground">
+                    {point}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground italic">
+                Detailed analysis for this event is being prepared. Check back soon.
+              </p>
+            )}
           </div>
           <p className="text-xs text-muted-foreground">
             Expert analysis is updated regularly. Check back for detailed commentary from economists, market strategists, and domain specialists.

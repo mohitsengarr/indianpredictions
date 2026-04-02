@@ -3,6 +3,15 @@ import { Market } from '@/lib/types';
 import { MARKETS as FALLBACK_MARKETS } from '@/lib/mock-data';
 import { supabase } from '@/lib/supabase';
 
+const GARBAGE_KEYWORDS = ['error', 'unavailable', 'not found', '404', '500', 'http error', 'access denied', 'forbidden'];
+
+function filterGarbageMarkets(markets: Market[]): Market[] {
+  return markets.filter(m => {
+    const lower = (m.title + ' ' + m.description).toLowerCase();
+    return !GARBAGE_KEYWORDS.some(kw => lower.includes(kw));
+  });
+}
+
 interface UseMarketsResult {
   markets: Market[];
   loading: boolean;
@@ -69,8 +78,8 @@ export function useMarkets(): UseMarketsResult {
     fetchAllFromDB()
       .then(({ all, india }) => {
         if (cancelled) return;
-        cachedAll = all.length > 0 ? all : FALLBACK_MARKETS;
-        cachedIndia = india.length > 0 ? india : null;
+        cachedAll = filterGarbageMarkets(all.length > 0 ? all : FALLBACK_MARKETS);
+        cachedIndia = filterGarbageMarkets(india).length > 0 ? filterGarbageMarkets(india) : null;
         cacheTimestamp = Date.now();
         setMarkets(cachedAll);
         setLastUpdated(new Date());
@@ -120,8 +129,8 @@ export function useIndiaMarkets(): {
     fetchAllFromDB()
       .then(({ all, india }) => {
         if (cancelled) return;
-        cachedAll = all.length > 0 ? all : FALLBACK_MARKETS;
-        cachedIndia = india;
+        cachedAll = filterGarbageMarkets(all.length > 0 ? all : FALLBACK_MARKETS);
+        cachedIndia = filterGarbageMarkets(india);
         cacheTimestamp = Date.now();
         const result = cachedIndia;
         setMarkets(result);

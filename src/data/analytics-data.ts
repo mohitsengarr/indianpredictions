@@ -155,16 +155,18 @@ export const CORRELATION_NODES = [
 
 // ── Timeline Events ──
 export const TIMELINE_EVENTS: TimelineItem[] = [
-  { date: '2026-03-14', event: 'RBI MPC Minutes Release', importance: 'medium', category: 'Economy' },
-  { date: '2026-03-16', event: 'Rajya Sabha Elections (37 seats)', importance: 'high', category: 'Politics' },
-  { date: '2026-03-19', event: 'Bollywood 4-Way Clash', importance: 'low', category: 'Entertainment' },
-  { date: '2026-03-21', event: 'India CPI Data Release (Feb)', importance: 'high', category: 'Economy' },
-  { date: '2026-03-28', event: 'IPL 2026 Season Opens', importance: 'high', category: 'Sports' },
-  { date: '2026-04-01', event: 'FY27 Begins / New Tax Rules', importance: 'medium', category: 'Economy' },
-  { date: '2026-04-08', event: 'RBI MPC April Decision', importance: 'high', category: 'Economy' },
-  { date: '2026-04-15', event: 'Q4 FY26 Results Season', importance: 'medium', category: 'Markets' },
-  { date: '2026-05-01', event: 'State Election Phase 1', importance: 'high', category: 'Politics' },
-  { date: '2026-05-15', event: 'GDP Q4 FY26 Data Release', importance: 'medium', category: 'Economy' },
+  { date: '2026-04-08', event: 'RBI MPC April Decision — Rate Cut Expected', importance: 'high', category: 'Economy' },
+  { date: '2026-04-12', event: 'IPL 2026: CSK vs MI (El Clasico)', importance: 'medium', category: 'Sports' },
+  { date: '2026-04-15', event: 'Q4 FY26 Corporate Results Season Begins', importance: 'high', category: 'Markets' },
+  { date: '2026-04-18', event: 'SEBI Board Meeting — F&O Regulation Update', importance: 'medium', category: 'Regulation' },
+  { date: '2026-04-23', event: 'India CPI Inflation Data (March)', importance: 'medium', category: 'Economy' },
+  { date: '2026-04-30', event: 'Assam State Election Phase 1', importance: 'high', category: 'Politics' },
+  { date: '2026-05-06', event: 'India-UK FTA Signing Expected', importance: 'high', category: 'Geopolitics' },
+  { date: '2026-05-15', event: 'GDP Q4 FY26 Advance Estimate', importance: 'high', category: 'Economy' },
+  { date: '2026-05-26', event: 'IPL 2026 Qualifier 1', importance: 'medium', category: 'Sports' },
+  { date: '2026-05-31', event: 'IPL 2026 Final — Ahmedabad', importance: 'high', category: 'Sports' },
+  { date: '2026-06-03', event: 'RBI MPC June Decision', importance: 'high', category: 'Economy' },
+  { date: '2026-06-15', event: 'Monsoon Onset — Kharif Season Begins', importance: 'medium', category: 'Economy' },
 ];
 
 // ── Economic Health Scorecard ──

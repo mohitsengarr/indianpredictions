@@ -406,9 +406,11 @@ const HomePage = () => {
                   Trending Events
                   <span className="text-xs text-muted-foreground font-normal">({filteredEvents.length})</span>
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
                   {filteredEvents.map((event, i) => (
-                    <EventCard key={event.id} event={event} index={i} />
+                    <div key={event.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                      <EventCard event={event} index={i} />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -460,9 +462,11 @@ const HomePage = () => {
                       </button>
                     </div>
                   </AnimateIn>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 sm:overflow-visible sm:snap-none sm:pb-0">
                     {events.map((event, i) => (
-                      <EventCard key={event.id} event={event} index={i} />
+                      <div key={event.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                        <EventCard event={event} index={i} />
+                      </div>
                     ))}
                   </div>
                 </section>

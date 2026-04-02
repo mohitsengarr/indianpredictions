@@ -47,7 +47,7 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
       whileHover={{ y: -4, boxShadow: '0 8px 30px rgba(0,0,0,0.08)' }}
-      className="paytm-card flex flex-col relative overflow-hidden"
+      className="paytm-card flex flex-col relative overflow-hidden h-full"
     >
       {/* Event Image */}
       {event.imageUrl && (

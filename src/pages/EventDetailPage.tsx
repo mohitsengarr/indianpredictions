@@ -183,6 +183,26 @@ const EventDetailPage = () => {
         </div>
       </div>
 
+      {/* Hero Image */}
+      {event.imageUrl && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.15 }}
+          className="max-w-3xl mx-auto px-4 lg:px-8 mt-6"
+        >
+          <div className="relative w-full h-48 sm:h-64 lg:h-72 rounded-xl overflow-hidden bg-muted">
+            <img
+              src={event.imageUrl}
+              alt={event.title}
+              className="w-full h-full object-cover"
+              onError={(e) => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+          </div>
+        </motion.div>
+      )}
+
       <div className="max-w-3xl mx-auto px-4 lg:px-8 mt-6 space-y-8">
         {/* Prediction Market Angle */}
         <motion.div

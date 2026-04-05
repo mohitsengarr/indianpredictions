@@ -124,7 +124,7 @@ const HomePage = () => {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'India Predictions',
-      url: 'https://indianpredictions.vercel.app',
+      url: 'https://indiapredictions.com',
       description: "India's #1 prediction market hub",
     },
   });
@@ -252,7 +252,7 @@ const HomePage = () => {
                     }}
                     className="bg-secondary text-secondary-foreground px-6 py-2.5 rounded-lg text-sm font-bold shadow-lg hover:brightness-110 transition-all"
                   >
-                    Explore India Markets
+                    Browse Live India Markets
                   </motion.button>
                   <Link
                     to="/blog/what-are-prediction-markets-guide-india"
@@ -353,51 +353,6 @@ const HomePage = () => {
           </section>
         </AnimateIn>
 
-        {/* ── Breaking News (SEO-friendly with semantic markup + JSON-LD) ── */}
-        {breakingNews.length > 0 && (
-            <section aria-label="Breaking India news" itemScope itemType="https://schema.org/ItemList" className="bg-card border border-border rounded-xl p-5 lg:p-6">
-              <meta itemProp="name" content="Breaking India News" />
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <Newspaper className="w-5 h-5 text-destructive" />
-                  <h2 className="font-display font-bold text-base lg:text-lg">Breaking News</h2>
-                  <span className="text-[10px] bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-semibold animate-pulse" aria-label="Live updates">LIVE</span>
-                </div>
-                <time dateTime={breakingNews[0]?.fetchedAt} className="text-[10px] text-muted-foreground">
-                  Updated {new Date(breakingNews[0]?.fetchedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
-                </time>
-              </div>
-              <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:snap-none sm:pb-0" role="list">
-                {breakingNews.map((item, idx) => (
-                  <article
-                    key={item.id}
-                    itemScope
-                    itemType="https://schema.org/NewsArticle"
-                    itemProp="itemListElement"
-                    className="min-w-[75vw] snap-center sm:min-w-0"
-                    role="listitem"
-                  >
-                    <meta itemProp="position" content={String(idx + 1)} />
-                    <a
-                      href={item.source}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      itemProp="url"
-                      className="block bg-muted/50 hover:bg-muted border border-border rounded-lg p-3 transition-all group h-full"
-                    >
-                      <span className="text-[10px] font-semibold text-primary uppercase tracking-wide" itemProp="articleSection">{item.category}</span>
-                      <h3 className="text-xs font-semibold text-foreground leading-snug line-clamp-2 mt-1 group-hover:text-primary transition-colors" itemProp="headline">{item.title}</h3>
-                      <p className="text-[11px] text-muted-foreground line-clamp-2 mt-1" itemProp="description">{item.summary.substring(0, 120)}...</p>
-                      <time dateTime={item.publishedDate} itemProp="datePublished" className="sr-only">
-                        {new Date(item.publishedDate).toISOString()}
-                      </time>
-                    </a>
-                  </article>
-                ))}
-              </div>
-            </section>
-        )}
-
         {/* ── Search ── */}
         <AnimateIn delay={0.08}>
           <div className="relative max-w-md">
@@ -412,10 +367,10 @@ const HomePage = () => {
           </div>
         </AnimateIn>
 
-        {/* ── Browse by Category ── */}
+        {/* ── Browse by Category (sticky on scroll) ── */}
         {!search && (
           <AnimateIn delay={0.1}>
-            <section id="browse-categories">
+            <section id="browse-categories" className="sticky top-0 z-30 bg-background/95 backdrop-blur-md -mx-4 px-4 lg:-mx-8 lg:px-8 py-3 -mt-2">
               <h2 className="font-display font-bold text-sm text-muted-foreground uppercase tracking-wider mb-3">Browse by category</h2>
               <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
                 <button
@@ -595,7 +550,52 @@ const HomePage = () => {
               </section>
             )}
 
-            {/* ── Biggest Movers ── */}
+            {/* ── Breaking News (lower in page to reduce homepage noise & external link leakage) ── */}
+            {breakingNews.length > 0 && (
+              <section aria-label="Breaking India news" itemScope itemType="https://schema.org/ItemList" className="bg-card border border-border rounded-xl p-5 lg:p-6">
+                <meta itemProp="name" content="Breaking India News" />
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Newspaper className="w-5 h-5 text-destructive" />
+                    <h2 className="font-display font-bold text-base lg:text-lg">Breaking News</h2>
+                    <span className="text-[10px] bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-semibold animate-pulse" aria-label="Live updates">LIVE</span>
+                  </div>
+                  <time dateTime={breakingNews[0]?.fetchedAt} className="text-[10px] text-muted-foreground">
+                    Updated {new Date(breakingNews[0]?.fetchedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                  </time>
+                </div>
+                <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:snap-none sm:pb-0" role="list">
+                  {breakingNews.slice(0, 4).map((item, idx) => (
+                    <article
+                      key={item.id}
+                      itemScope
+                      itemType="https://schema.org/NewsArticle"
+                      itemProp="itemListElement"
+                      className="min-w-[75vw] snap-center sm:min-w-0"
+                      role="listitem"
+                    >
+                      <meta itemProp="position" content={String(idx + 1)} />
+                      <a
+                        href={item.source}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        itemProp="url"
+                        className="block bg-muted/50 hover:bg-muted border border-border rounded-lg p-3 transition-all group h-full"
+                      >
+                        <span className="text-[10px] font-semibold text-primary uppercase tracking-wide" itemProp="articleSection">{item.category}</span>
+                        <h3 className="text-xs font-semibold text-foreground leading-snug line-clamp-2 mt-1 group-hover:text-primary transition-colors" itemProp="headline">{item.title}</h3>
+                        <p className="text-[11px] text-muted-foreground line-clamp-2 mt-1" itemProp="description">{item.summary.substring(0, 120)}...</p>
+                        <time dateTime={item.publishedDate} itemProp="datePublished" className="sr-only">
+                          {new Date(item.publishedDate).toISOString()}
+                        </time>
+                      </a>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* ── Biggest Movers (India-relevant only) ── */}
             {biggestMovers.length > 0 && (
               <section>
                 <AnimateIn delay={0.1}>
@@ -605,8 +605,8 @@ const HomePage = () => {
                         <TrendingUp className="w-4 h-4 text-destructive" />
                       </div>
                       <div>
-                        <h2 className="font-display font-bold text-base leading-tight">Biggest Movers</h2>
-                        <p className="text-[11px] text-muted-foreground">Markets with the largest probability shifts in 24h</p>
+                        <h2 className="font-display font-bold text-base leading-tight">Biggest India Movers</h2>
+                        <p className="text-[11px] text-muted-foreground">India markets with the largest probability shifts in 24h</p>
                       </div>
                     </div>
                   </div>
@@ -632,7 +632,7 @@ const HomePage = () => {
                       </div>
                       <div>
                         <h2 className="font-display font-bold text-base leading-tight">Closing Soon</h2>
-                        <p className="text-[11px] text-muted-foreground">Markets about to resolve — last chance to track</p>
+                        <p className="text-[11px] text-muted-foreground">India markets about to resolve — last chance to track</p>
                       </div>
                     </div>
                   </div>
@@ -819,7 +819,7 @@ const HomePage = () => {
                 <div className="flex-1">
                   <h2 className="font-display font-bold text-base">Stay Ahead of the Market</h2>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Get weekly prediction market insights, trending events, and analysis delivered to your inbox.
+                    Every Monday: top 5 India probability shifts, 2 key charts, and one "market says X but headlines say Y" insight.
                   </p>
                   {subscribed ? (
                     <div className="flex items-center gap-2 mt-3 text-success text-sm font-semibold">

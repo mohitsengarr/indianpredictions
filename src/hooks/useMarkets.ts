@@ -172,16 +172,16 @@ export function useTrendingIndiaMarkets(limit = 10) {
   return { markets: sorted, loading };
 }
 
-/** Hook: Biggest probability movers */
+/** Hook: Biggest probability movers (India-relevant only) */
 export function useBiggestMovers(limit = 6) {
-  const { markets, loading } = useMarkets();
+  const { markets, loading } = useIndiaMarkets();
   const movers = useMemo(() => getBiggestMovers(markets, limit), [markets, limit]);
   return { markets: movers, loading };
 }
 
-/** Hook: Markets closing soon */
+/** Hook: Markets closing soon (India-relevant only) */
 export function useClosingSoon(limit = 6) {
-  const { markets, loading } = useMarkets();
+  const { markets, loading } = useIndiaMarkets();
   const closing = useMemo(() => getClosingSoon(markets, limit), [markets, limit]);
   return { markets: closing, loading };
 }

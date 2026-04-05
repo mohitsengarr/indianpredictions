@@ -15,7 +15,7 @@ import {
   ChevronRight, ArrowRight, BookOpen, Mail, BarChart3,
   Target, Eye, Send, CheckCircle,
 } from 'lucide-react';
-import { useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
+import { useMarkets, useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR, timeUntil } from '@/lib/formatters';
 import { useGeo } from '@/contexts/GeoContext';
@@ -26,6 +26,8 @@ import FAQSection from '@/components/FAQSection';
 import { MARKET_PULSE_DATA, TIMELINE_EVENTS } from '@/data/analytics-data';
 import LastUpdated from '@/components/LastUpdated';
 import { useDataRefresh } from '@/hooks/useDataRefresh';
+import { useBreakingNews } from '@/hooks/useBreakingNews';
+import { Newspaper } from 'lucide-react';
 
 /* ── Skeleton ── */
 const SkeletonCard = () => (
@@ -134,7 +136,10 @@ const HomePage = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [emailError, setEmailError] = useState('');
 
-  const { markets: indiaMarkets, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
+  const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated: allUpdated } = useMarkets();
+  const { markets: indiaOnly, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
+  // Fall back to all markets when India-specific markets are too few
+  const indiaMarkets = indiaOnly.length >= 3 ? indiaOnly : allMarkets;
   const { markets: biggestMovers, loading: moversLoading } = useBiggestMovers(6);
   const { markets: closingSoon, loading: closingLoading } = useClosingSoon(6);
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
@@ -142,7 +147,8 @@ const HomePage = () => {
   const geo = useGeo();
   const regionalMarkets = geo.region ? getRegionalMarkets(indiaMarkets, geo.region, 4) : [];
 
-  const loading = indiaLoading;
+  const { news: breakingNews } = useBreakingNews(8);
+  const loading = indiaLoading || allLoading;
 
   // Featured events for hero (top 4 by status priority)
   const featuredEvents = [...trendingEvents]
@@ -346,6 +352,53 @@ const HomePage = () => {
             </Link>
           </section>
         </AnimateIn>
+
+        {/* ── Breaking News (SEO-friendly with semantic markup + JSON-LD) ── */}
+        {breakingNews.length > 0 && (
+          <AnimateIn delay={0.06}>
+            <section aria-label="Breaking India news" itemScope itemType="https://schema.org/ItemList" className="bg-card border border-border rounded-xl p-5 lg:p-6">
+              <meta itemProp="name" content="Breaking India News" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <Newspaper className="w-5 h-5 text-destructive" />
+                  <h2 className="font-display font-bold text-base lg:text-lg">Breaking News</h2>
+                  <span className="text-[10px] bg-destructive/10 text-destructive px-2 py-0.5 rounded-full font-semibold animate-pulse" aria-label="Live updates">LIVE</span>
+                </div>
+                <time dateTime={breakingNews[0]?.fetchedAt} className="text-[10px] text-muted-foreground">
+                  Updated {new Date(breakingNews[0]?.fetchedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                </time>
+              </div>
+              <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:snap-none sm:pb-0" role="list">
+                {breakingNews.map((item, idx) => (
+                  <article
+                    key={item.id}
+                    itemScope
+                    itemType="https://schema.org/NewsArticle"
+                    itemProp="itemListElement"
+                    className="min-w-[75vw] snap-center sm:min-w-0"
+                    role="listitem"
+                  >
+                    <meta itemProp="position" content={String(idx + 1)} />
+                    <a
+                      href={item.source}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      itemProp="url"
+                      className="block bg-muted/50 hover:bg-muted border border-border rounded-lg p-3 transition-all group h-full"
+                    >
+                      <span className="text-[10px] font-semibold text-primary uppercase tracking-wide" itemProp="articleSection">{item.category}</span>
+                      <h3 className="text-xs font-semibold text-foreground leading-snug line-clamp-2 mt-1 group-hover:text-primary transition-colors" itemProp="headline">{item.title}</h3>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 mt-1" itemProp="description">{item.summary.substring(0, 120)}...</p>
+                      <time dateTime={item.publishedDate} itemProp="datePublished" className="sr-only">
+                        {new Date(item.publishedDate).toISOString()}
+                      </time>
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </section>
+          </AnimateIn>
+        )}
 
         {/* ── Search ── */}
         <AnimateIn delay={0.08}>

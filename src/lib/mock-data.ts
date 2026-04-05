@@ -249,7 +249,7 @@ export const USER: UserProfile = {
 
 export const APP_CONFIG: AppConfig = {
   mode: 'play_money', // Toggle: 'play_money' | 'real_money'
-  enabledCategories: ['cricket', 'economy', 'entertainment', 'crypto'], // politics disabled by default
+  enabledCategories: ['cricket', 'economy', 'entertainment', 'crypto', 'politics'],
   maxStakePerMarket: 5000,
   dailyVolumeLimit: 5000,
   weeklyVolumeLimit: 25000,

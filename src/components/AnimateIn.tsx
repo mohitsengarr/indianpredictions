@@ -1,5 +1,4 @@
-import { ReactNode, useRef, useCallback } from 'react';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { ReactNode, CSSProperties } from 'react';
 
 interface AnimateInProps {
   children: ReactNode;
@@ -13,6 +12,11 @@ interface AnimateInProps {
   as?: keyof JSX.IntrinsicElements;
 }
 
+/**
+ * AnimateIn – CSS keyframe-based entrance animation.
+ * Uses animation-fill-mode: both so content is always visible after the
+ * animation completes. No JavaScript, no IntersectionObserver, no state.
+ */
 const AnimateIn = ({
   children,
   className = '',
@@ -24,46 +28,65 @@ const AnimateIn = ({
   blur = false,
   as: Tag = 'div',
 }: AnimateInProps) => {
-  const [scrollRef, isVisible] = useScrollReveal<HTMLElement>();
+  const prefersReduced =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Use a callback ref to forward to the scrollReveal ref without type conflicts
-  const setRef = useCallback((node: HTMLElement | null) => {
+  if (prefersReduced) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (scrollRef as any).current = node;
-  }, [scrollRef]);
+    const TagAny = Tag as any;
+    return <TagAny className={className}>{children}</TagAny>;
+  }
 
-  const getTransform = () => {
-    if (!isVisible) {
-      const transforms: string[] = [];
-      switch (direction) {
-        case 'up': transforms.push(`translateY(${distance}px)`); break;
-        case 'down': transforms.push(`translateY(-${distance}px)`); break;
-        case 'left': transforms.push(`translateX(${distance}px)`); break;
-        case 'right': transforms.push(`translateX(-${distance}px)`); break;
-      }
-      if (scale) transforms.push('scale(0.96)');
-      return transforms.join(' ') || 'none';
+  const getTranslate = () => {
+    switch (direction) {
+      case 'up': return `translateY(${distance}px)`;
+      case 'down': return `translateY(-${distance}px)`;
+      case 'left': return `translateX(${distance}px)`;
+      case 'right': return `translateX(-${distance}px)`;
+      default: return 'none';
     }
-    return 'translateY(0) translateX(0) scale(1)';
+  };
+
+  const transforms: string[] = [];
+  if (direction !== 'none') transforms.push(getTranslate());
+  if (scale) transforms.push('scale(0.96)');
+  const fromTransform = transforms.length ? transforms.join(' ') : 'none';
+
+  const keyframeId = `anim-in-${direction}-${distance}-${scale ? 's' : ''}-${blur ? 'b' : ''}`;
+
+  const style: CSSProperties = {
+    animationName: keyframeId,
+    animationDuration: `${duration}s`,
+    animationDelay: `${delay}s`,
+    animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    animationFillMode: 'both',
+    // Inline keyframe via CSS custom property trick — we use a <style> injection
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const TagAny = Tag as any;
 
   return (
-    <TagAny
-      ref={setRef}
-      className={className}
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: getTransform(),
-        filter: blur && !isVisible ? 'blur(4px)' : 'blur(0px)',
-        transition: `opacity ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, filter ${duration}s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
-        willChange: 'opacity, transform',
-      }}
-    >
-      {children}
-    </TagAny>
+    <>
+      <style>{`
+        @keyframes ${keyframeId} {
+          from {
+            opacity: 0;
+            transform: ${fromTransform};
+            ${blur ? 'filter: blur(4px);' : ''}
+          }
+          to {
+            opacity: 1;
+            transform: none;
+            ${blur ? 'filter: blur(0);' : ''}
+          }
+        }
+      `}</style>
+      <TagAny className={className} style={style}>
+        {children}
+      </TagAny>
+    </>
   );
 };
 

@@ -1,17 +1,15 @@
 # India Predictions – robots.txt
-# https://indianpredictions.vercel.app/
+# https://indiapredictions.com/
 
 # ── Standard search engine crawlers ──────────────────────────────────
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 1
 
 User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 2
 
 User-agent: Slurp
 Allow: /
@@ -84,4 +82,4 @@ User-agent: *
 Allow: /
 
 # ── Sitemap ──────────────────────────────────────────────────────────
-Sitemap: https://indianpredictions.vercel.app/sitemap.xml
+Sitemap: https://indiapredictions.com/sitemap.xml

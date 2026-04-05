@@ -5,8 +5,8 @@
 
   <!-- Home -->
   <url>
-    <loc>https://indianpredictions.vercel.app/</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -17,188 +17,196 @@
 
   <!-- Markets -->
   <url>
-    <loc>https://indianpredictions.vercel.app/markets</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/markets</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Crypto -->
+  <url>
+    <loc>https://indiapredictions.com/crypto</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>hourly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Analytics -->
   <url>
-    <loc>https://indianpredictions.vercel.app/analytics</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/analytics</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Insights Dashboard -->
   <url>
-    <loc>https://indianpredictions.vercel.app/insights</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/insights</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <!-- Events -->
   <url>
-    <loc>https://indianpredictions.vercel.app/events</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Blog -->
   <url>
-    <loc>https://indianpredictions.vercel.app/blog</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Portfolio -->
   <url>
-    <loc>https://indianpredictions.vercel.app/portfolio</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/portfolio</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Wallet -->
   <url>
-    <loc>https://indianpredictions.vercel.app/wallet</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/wallet</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- Profile -->
   <url>
-    <loc>https://indianpredictions.vercel.app/profile</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/profile</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <!-- Event Detail Pages -->
   <url>
-    <loc>https://indianpredictions.vercel.app/events/stock-market-crash-fearful-friday</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/stock-market-crash-fearful-friday</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/rbi-monetary-policy-rates-on-hold</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/rbi-monetary-policy-rates-on-hold</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/us-india-trade-deal-impact</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/us-india-trade-deal-impact</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/gold-silver-rally</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/gold-silver-rally</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/2026-state-assembly-elections</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/2026-state-assembly-elections</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/rajya-sabha-elections</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/rajya-sabha-elections</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/ipl-2026-season</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/ipl-2026-season</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/india-wins-icc-t20-world-cup-2026</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/india-wins-icc-t20-world-cup-2026</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/west-asia-middle-east-crisis</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/west-asia-middle-east-crisis</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/india-tech-startup-ecosystem-2026</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/india-tech-startup-ecosystem-2026</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/bollywood-march-2026-releases</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/bollywood-march-2026-releases</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/events/prediction-markets-legal-status-india</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/events/prediction-markets-legal-status-india</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Blog Post Pages -->
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/what-are-prediction-markets-guide-india</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/what-are-prediction-markets-guide-india</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/ipl-2026-prediction-markets-cricket-betting</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/ipl-2026-prediction-markets-cricket-betting</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/rbi-rate-decision-prediction-market-signals</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/rbi-rate-decision-prediction-market-signals</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/west-asia-crisis-impact-indian-economy-2026</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/west-asia-crisis-impact-indian-economy-2026</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/2026-state-elections-prediction-market-tracker</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/2026-state-elections-prediction-market-tracker</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/india-market-volatility-vix-surge-2026</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/india-market-volatility-vix-surge-2026</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/prediction-market-analytics-data-driven-traders</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/prediction-market-analytics-data-driven-traders</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://indianpredictions.vercel.app/blog/ipl-2026-vs-state-elections-sports-politics-prediction-markets</loc>
-    <lastmod>2026-03-13</lastmod>
+    <loc>https://indiapredictions.com/blog/ipl-2026-vs-state-elections-sports-politics-prediction-markets</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

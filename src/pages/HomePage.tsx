@@ -355,7 +355,6 @@ const HomePage = () => {
 
         {/* ── Breaking News (SEO-friendly with semantic markup + JSON-LD) ── */}
         {breakingNews.length > 0 && (
-          <AnimateIn delay={0.06}>
             <section aria-label="Breaking India news" itemScope itemType="https://schema.org/ItemList" className="bg-card border border-border rounded-xl p-5 lg:p-6">
               <meta itemProp="name" content="Breaking India News" />
               <div className="flex items-center justify-between mb-3">
@@ -397,7 +396,6 @@ const HomePage = () => {
                 ))}
               </div>
             </section>
-          </AnimateIn>
         )}
 
         {/* ── Search ── */}

@@ -7,6 +7,7 @@
  */
 
 import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { createHash } from 'crypto';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -76,7 +77,7 @@ function parseResult(result, category) {
   if (!summary || summary.length < 30) return null;
 
   return {
-    id: `exa-${Buffer.from(result.url).toString('base64url').substring(0, 20)}`,
+    id: `exa-${createHash('sha256').update(result.url).digest('hex').substring(0, 16)}`,
     title: title.substring(0, 120),
     summary,
     category,

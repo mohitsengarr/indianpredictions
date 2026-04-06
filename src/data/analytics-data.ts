@@ -223,10 +223,7 @@ export const VOLATILITY_DATA: VolatilityPoint[] = [
 export const MARKET_PULSE_DATA = [
   { label: 'Sensex', value: '72,450', change: -2.1 },
   { label: 'Nifty 50', value: '22,124', change: -1.8 },
-  { label: 'Gold', value: '$5,265', change: 1.4 },
   { label: 'Brent Crude', value: '$101.3', change: 3.2 },
   { label: 'USD/INR', value: '87.42', change: -0.3 },
   { label: 'India VIX', value: '19.80', change: -15.0 },
-  { label: 'Silver', value: '$94.50', change: 2.1 },
-  { label: 'Nifty Bank', value: '48,320', change: -1.5 },
 ];

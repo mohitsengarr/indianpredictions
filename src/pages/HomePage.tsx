@@ -67,25 +67,18 @@ const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: numbe
   return <span ref={ref}>{prefix}{count.toLocaleString('en-IN')}{suffix}</span>;
 };
 
-/* ── Macro Ticker Strip ── */
+/* ── Macro Ticker Strip (simplified: 5 key India indicators, no duplication) ── */
 const MacroTicker = () => (
-  <div className="overflow-hidden bg-muted/60 border-b border-border py-1.5 flex items-center">
-    <span className="text-[9px] text-muted-foreground/60 px-3 border-r border-border whitespace-nowrap shrink-0">Market data</span>
-    <motion.div
-      className="flex-1 flex gap-8 whitespace-nowrap"
-      animate={{ x: ['0%', '-50%'] }}
-      transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
-    >
-      {[...MARKET_PULSE_DATA, ...MARKET_PULSE_DATA].map((d, i) => (
-        <span key={i} className="inline-flex items-center gap-2 text-[11px] font-medium">
-          <span className="text-muted-foreground">{d.label}</span>
-          <span className="font-semibold text-foreground">{d.value}</span>
-          <span className={`font-bold ${d.change >= 0 ? 'text-success' : 'text-destructive'}`}>
-            {d.change >= 0 ? '+' : ''}{d.change}%
-          </span>
+  <div className="bg-muted/60 border-b border-border py-1.5 flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide px-3">
+    {MARKET_PULSE_DATA.map((d, i) => (
+      <span key={i} className="inline-flex items-center gap-1.5 text-[11px] font-medium whitespace-nowrap">
+        <span className="text-muted-foreground">{d.label}</span>
+        <span className="font-semibold text-foreground">{d.value}</span>
+        <span className={`font-bold ${d.change >= 0 ? 'text-success' : 'text-destructive'}`}>
+          {d.change >= 0 ? '+' : ''}{d.change}%
         </span>
-      ))}
-    </motion.div>
+      </span>
+    ))}
   </div>
 );
 
@@ -103,15 +96,15 @@ const CATEGORY_SECTIONS: { key: string; emoji: string; label: string; eventCats:
   { key: 'energy', emoji: '⛽', label: 'Energy & Oil', eventCats: ['energy'], marketCats: ['economy'] },
 ];
 
-/* ── Section category config for default view ── */
+/* ── Section category config for default view ──
+   Reduced to 4 highest-priority India verticals per PM audit.
+   Other categories (Tech, Entertainment, Geopolitics) remain accessible
+   via category chips and /markets page. */
 const HOME_SECTIONS: { key: EventCategory; emoji: string; label: string; sub: string; limit: number; pillKey: string }[] = [
   { key: 'markets', emoji: '📉', label: 'Markets & Economy', sub: 'Stock market, currency & financial developments', limit: 2, pillKey: 'economy' },
   { key: 'politics', emoji: '🗳️', label: 'Politics & Elections', sub: 'Elections, governance & policy decisions', limit: 2, pillKey: 'politics' },
-  { key: 'sports', emoji: '🏏', label: 'Sports', sub: 'Cricket, IPL & sporting events', limit: 2, pillKey: 'cricket' },
+  { key: 'sports', emoji: '🏏', label: 'Cricket & IPL', sub: 'Cricket, IPL & sporting events', limit: 2, pillKey: 'cricket' },
   { key: 'energy', emoji: '⛽', label: 'Energy & Oil', sub: 'Oil prices, LPG crisis & energy security', limit: 2, pillKey: 'energy' },
-  { key: 'geopolitics', emoji: '🌍', label: 'Geopolitics', sub: 'Global events impacting India', limit: 2, pillKey: 'geopolitics' },
-  { key: 'technology', emoji: '💻', label: 'Technology & Startups', sub: 'Tech policy, startups & innovation', limit: 2, pillKey: 'technology' },
-  { key: 'entertainment', emoji: '🎬', label: 'Entertainment', sub: 'Bollywood, OTT & box office', limit: 2, pillKey: 'entertainment' },
 ];
 
 const HomePage = () => {
@@ -241,6 +234,9 @@ const HomePage = () => {
                 <p className="text-sm lg:text-base text-white/70 leading-relaxed max-w-lg">
                   Live odds on politics, cricket, economy and more — aggregated from global prediction markets and tailored for Indian watchers.
                 </p>
+                <p className="text-[11px] text-white/40 max-w-md">
+                  For Indian investors, policy watchers, and cricket fans who want data-driven probabilities, not just headlines.
+                </p>
 
                 <div className="flex flex-wrap items-center gap-3 pt-1">
                   <motion.button
@@ -296,7 +292,7 @@ const HomePage = () => {
                 transition={{ duration: 0.5, delay: 0.15 }}
                 className="lg:col-span-2 space-y-2.5"
               >
-                <p className="text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-1">Featured Events</p>
+                <p className="text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-1">Most-Watched India Events</p>
                 {featuredEvents.map((event) => (
                   <Link
                     key={event.id}
@@ -351,6 +347,25 @@ const HomePage = () => {
               Read full guide <ArrowRight className="w-3 h-3" />
             </Link>
           </section>
+        </AnimateIn>
+
+        {/* ── Analytics Quick CTA (elevated for power users per PM audit) ── */}
+        <AnimateIn delay={0.06}>
+          <Link
+            to="/insights"
+            className="flex items-center gap-3 bg-gradient-to-r from-secondary/10 to-primary/10 border border-secondary/20 rounded-xl px-4 py-3 group hover:border-secondary/40 transition-all"
+          >
+            <div className="w-9 h-9 rounded-lg bg-secondary/15 flex items-center justify-center shrink-0">
+              <BarChart3 className="w-5 h-5 text-secondary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-bold text-foreground">Dashboards for markets, elections & oil</p>
+              <p className="text-[10px] text-muted-foreground">Sector scores, correlations & historical trends</p>
+            </div>
+            <span className="text-xs font-semibold text-secondary group-hover:text-primary whitespace-nowrap flex items-center gap-0.5 transition-colors">
+              Open Analytics <ArrowRight className="w-3 h-3" />
+            </span>
+          </Link>
         </AnimateIn>
 
         {/* ── Search ── */}

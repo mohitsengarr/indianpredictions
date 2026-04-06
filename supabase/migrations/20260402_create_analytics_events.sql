@@ -1,5 +1,6 @@
 -- Analytics Events table for tracking user interactions
--- Run this migration in your Supabase SQL editor
+-- Apply manually in SQL Editor (no CLI/MCP required):
+-- https://supabase.com/dashboard/project/hivvemtveyjexrwgruhs/sql/new
 
 CREATE TABLE IF NOT EXISTS analytics_events (
   id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,

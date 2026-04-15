@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, AlertTriangle, Clock, CheckCircle2, Radio } from 'lucide-react';
+import { CategoryIcon } from '@/components/icons/CategoryIcons';
 import type { TrendingEvent } from '@/data/trending-events';
 
 interface EventCardProps {
@@ -73,8 +74,9 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
 
       {/* Header row */}
       <div className="flex items-center justify-between">
-        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
-          {event.categoryEmoji} {event.categoryLabel}
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+          <CategoryIcon category={event.category} size={13} className="text-primary opacity-70" />
+          {event.categoryLabel}
         </span>
         <span className={`inline-flex items-center gap-1 text-xs font-medium ${st.color}`}>
           <StatusIcon className="w-3 h-3" />

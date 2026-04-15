@@ -117,10 +117,20 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
             {market.traders.toLocaleString('en-IN')}
           </span>
           <span>Vol: {formatINR(market.volume)}</span>
-          <span className={`flex items-center gap-0.5 font-medium ${isPositive ? 'text-success' : 'text-destructive'}`}>
-            {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-            {formatPercent(market.change24h)}
-          </span>
+          {/* Visual state chip for big movers (|change| >= 5%) */}
+          {Math.abs(market.change24h) >= 5 ? (
+            <span className={`inline-flex items-center gap-0.5 font-bold px-1.5 py-0.5 rounded-full text-[10px] ${
+              isPositive ? 'bg-success/15 text-success' : 'bg-destructive/15 text-destructive'
+            }`}>
+              {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+              {formatPercent(market.change24h)}
+            </span>
+          ) : (
+            <span className={`flex items-center gap-0.5 font-medium ${isPositive ? 'text-success' : 'text-destructive'}`}>
+              {isPositive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+              {formatPercent(market.change24h)}
+            </span>
+          )}
         </div>
       )}
 

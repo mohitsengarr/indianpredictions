@@ -68,7 +68,7 @@ const AnimateIn = ({
   const TagAny = Tag as any;
 
   return (
-    <>
+    <TagAny className={className} style={style}>
       <style>{`
         @keyframes ${keyframeId} {
           from {
@@ -83,10 +83,8 @@ const AnimateIn = ({
           }
         }
       `}</style>
-      <TagAny className={className} style={style}>
-        {children}
-      </TagAny>
-    </>
+      {children}
+    </TagAny>
   );
 };
 

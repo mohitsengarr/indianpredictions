@@ -25,7 +25,9 @@ export function useBreakingNews(limit = 8) {
       return;
     }
 
-    fetch('/data/breaking-news.json')
+    // Cache-bust every 5 minutes so CDN can't serve stale news
+    const bust = Math.floor(Date.now() / (5 * 60 * 1000));
+    fetch(`/data/breaking-news.json?v=${bust}`, { cache: 'no-cache' })
       .then(r => r.ok ? r.json() : Promise.reject())
       .then((data: BreakingNewsItem[]) => {
         // Only show news from last 48 hours

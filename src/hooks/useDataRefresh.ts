@@ -17,7 +17,10 @@ export function useDataRefresh<T>({ url, intervalMs = 5 * 60 * 1000, enabled = t
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch(url);
+      // Cache-bust every 5 minutes so CDN / browser can't serve stale data
+      const bust = Math.floor(Date.now() / (5 * 60 * 1000));
+      const sep = url.includes('?') ? '&' : '?';
+      const res = await fetch(`${url}${sep}v=${bust}`, { cache: 'no-cache' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json);

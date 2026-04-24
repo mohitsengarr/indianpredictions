@@ -37,9 +37,11 @@ async function fetchEventsFromDB(): Promise<TrendingEvent[]> {
   return data.map((row) => row.data as TrendingEvent);
 }
 
-/** Fallback: fetch from local JSON file (written by Firecrawl cron) */
+/** Fallback: fetch from local JSON file (written by Firecrawl cron).
+ *  Cache-bust every 5 minutes so Cloudflare/CDN can't serve stale data. */
 async function fetchEventsFromJSON(): Promise<TrendingEvent[]> {
-  const res = await fetch('/data/scraped-events.json');
+  const bust = Math.floor(Date.now() / (5 * 60 * 1000));
+  const res = await fetch(`/data/scraped-events.json?v=${bust}`, { cache: 'no-cache' });
   if (!res.ok) throw new Error(`JSON fetch failed: ${res.status}`);
   const data = await res.json();
   if (!Array.isArray(data) || data.length === 0) throw new Error('Empty JSON');

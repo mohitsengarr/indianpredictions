@@ -4,6 +4,16 @@
  */
 import { TrendingUp, BarChart3, Zap } from 'lucide-react';
 
+/** Returns the next upcoming Monday (or today if today is Monday) formatted "Mon, 7 Apr 2026" */
+function getNextMondayLabel(): string {
+  const now = new Date();
+  const day = now.getDay(); // 0 = Sun, 1 = Mon
+  const daysUntilMonday = day === 1 ? 0 : (8 - day) % 7;
+  const next = new Date(now);
+  next.setDate(now.getDate() + daysUntilMonday);
+  return next.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 const NewsletterPreview = ({ className = '' }: { className?: string }) => (
   <div className={`bg-background border border-border rounded-lg p-3 shadow-sm max-w-xs ${className}`}>
     {/* Email header */}
@@ -13,7 +23,7 @@ const NewsletterPreview = ({ className = '' }: { className?: string }) => (
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-[9px] font-bold text-foreground truncate">India Predictions Weekly</p>
-        <p className="text-[7px] text-muted-foreground">Mon, 7 Apr 2026 &middot; 3 min read</p>
+        <p className="text-[7px] text-muted-foreground">{getNextMondayLabel()} &middot; 3 min read</p>
       </div>
     </div>
 

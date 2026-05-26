@@ -225,5 +225,5 @@ export const MARKET_PULSE_DATA = [
   { label: 'Nifty 50', value: '22,124', change: -1.8 },
   { label: 'Brent Crude', value: '$101.3', change: 3.2 },
   { label: 'USD/INR', value: '87.42', change: -0.3 },
-  { label: 'India VIX', value: '19.80', change: -15.0 },
+  { label: 'India VIX', value: '19.80', change: -1.5 },
 ];

@@ -22,10 +22,11 @@ const HeroDashboardMockup = ({ className = '' }: { className?: string }) => (
       <div className="bg-slate-900/80 rounded-lg p-3 space-y-2.5">
         {/* Top stat bar */}
         <div className="flex gap-2">
+          {/* Illustrative dashboard preview — labels match real metrics, values are stylized */}
           {[
-            { label: 'Live Markets', val: '157', color: 'text-emerald-400' },
+            { label: 'YES odds', val: '62%', color: 'text-emerald-400' },
             { label: 'India VIX', val: '19.8', color: 'text-amber-400' },
-            { label: 'Volume', val: '28.4Cr', color: 'text-cyan-400' },
+            { label: 'Volatility', val: 'Cautious', color: 'text-cyan-400' },
           ].map((s) => (
             <div key={s.label} className="flex-1 bg-white/5 rounded-md px-2 py-1.5">
               <p className="text-[6px] text-white/40 leading-none">{s.label}</p>

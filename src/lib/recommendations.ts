@@ -14,17 +14,38 @@ import type { Market } from './types';
 
 // ── India Relevance ──────────────────────────────────────────────
 
-/** High-confidence India keywords (strong signal) */
+/** High-confidence India keywords (strong signal).
+ *
+ * IMPORTANT: avoid plain English words that have a non-India meaning.
+ * - 'congress' alone matches US Congress → false positives. Use the
+ *   multi-word variants 'indian national congress' / 'inc party' / leader
+ *   names (rahul gandhi, sonia gandhi) instead.
+ * - 'aap' is ambiguous with 'AAP' as a generic abbreviation in non-India
+ *   contexts → use 'aam aadmi' instead.
+ * - 'reliance' is a common English noun → use 'reliance industries' / 'mukesh ambani'.
+ */
 const INDIA_KEYWORDS_STRONG: string[] = [
-  'india', 'indian', 'modi', 'bjp', 'congress', 'aap',
+  // Core nation / govt
+  'india', 'indian', 'modi', 'narendra modi', 'amit shah', 'rahul gandhi',
+  'sonia gandhi', 'yogi adityanath',
+  'bjp', 'indian national congress', 'inc party', 'aam aadmi',
+  // Markets / economy / finance
   'ipl', 'bcci', 'cricket india', 'team india',
-  'rupee', 'inr', 'rbi', 'nifty', 'sensex', 'bse',
-  'mumbai', 'delhi', 'bangalore', 'chennai', 'kolkata', 'hyderabad',
+  'rupee', 'rbi', 'nifty', 'sensex', 'bse sensex',
+  // Cities / states
+  'mumbai', 'delhi', 'bangalore', 'bengaluru', 'chennai', 'kolkata',
+  'hyderabad', 'pune', 'ahmedabad', 'jaipur',
+  // Culture
   'bollywood', 'lok sabha', 'rajya sabha',
-  'adani', 'ambani', 'reliance', 'infosys', 'tata', 'wipro',
-  'hindenburg', 'sebi',
-  'kohli', 'rohit sharma', 'bumrah', 'dhoni',
-  'csk', 'rcb', 'mumbai indians',
+  // Companies (multi-word to avoid generic noun matches)
+  'adani', 'mukesh ambani', 'reliance industries', 'reliance jio',
+  'infosys', 'tata motors', 'tata consultancy', 'tcs ltd', 'wipro', 'hindenburg adani',
+  'sebi', 'hdfc', 'icici', 'kotak mahindra',
+  // Cricketers
+  'kohli', 'rohit sharma', 'bumrah', 'dhoni', 'shubman gill',
+  // IPL teams (abbreviations safe via word boundaries)
+  'csk', 'rcb', 'mumbai indians', 'chennai super kings',
+  // National identity / govt programs
   'isro', 'upi', 'aadhaar',
 ];
 

@@ -4,10 +4,19 @@
  */
 import { Users, TrendingUp, BarChart3, Star } from 'lucide-react';
 
-const METRICS = [
+/** Build metrics from live counts; show static fallback labels when data isn't loaded yet */
+const buildMetrics = (marketsCount?: number, eventsCount?: number) => [
   { icon: Users, label: 'Active watchers', value: '2,400+' },
-  { icon: TrendingUp, label: 'Markets tracked', value: '150+' },
-  { icon: BarChart3, label: 'Events covered', value: '26+' },
+  {
+    icon: TrendingUp,
+    label: 'Markets tracked',
+    value: marketsCount && marketsCount > 0 ? `${marketsCount}+` : '—',
+  },
+  {
+    icon: BarChart3,
+    label: 'Events covered',
+    value: eventsCount && eventsCount > 0 ? `${eventsCount}+` : '—',
+  },
 ];
 
 const QUOTES = [
@@ -28,11 +37,17 @@ const QUOTES = [
   },
 ];
 
-const SocialProofStrip = ({ className = '' }: { className?: string }) => (
+interface SocialProofStripProps {
+  className?: string;
+  marketsCount?: number;
+  eventsCount?: number;
+}
+
+const SocialProofStrip = ({ className = '', marketsCount, eventsCount }: SocialProofStripProps) => (
   <section className={`space-y-4 ${className}`}>
     {/* Metrics bar */}
     <div className="flex items-center justify-center gap-6 flex-wrap">
-      {METRICS.map((m) => (
+      {buildMetrics(marketsCount, eventsCount).map((m) => (
         <div key={m.label} className="flex items-center gap-2 text-muted-foreground">
           <m.icon className="w-4 h-4 opacity-50" />
           <div>

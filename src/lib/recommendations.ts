@@ -39,43 +39,78 @@ const INDIA_KEYWORDS_MEDIUM: string[] = [
 
 /** Keywords that indicate NOT India-relevant */
 const NON_INDIA_KEYWORDS: string[] = [
+  // US sports
   'nfl', 'nba', 'mlb', 'nhl', 'super bowl', 'march madness',
+  // EU football
   'premier league', 'la liga', 'bundesliga', 'serie a', 'ligue 1',
+  // Awards & entertainment (non-India)
   'eurovision', 'oscars', 'grammy', 'emmys',
-  'elon musk twitter', 'mrbeast',
-  'fifa world cup 2026',
-  'kanye', 'kardashian', 'drake',
-  'us midterm', 'uk election', 'french election',
-  'dogecoin', 'solana meme', 'pepe coin',
+  'kanye', 'kardashian', 'drake', 'mrbeast', 'elon musk twitter',
+  // Auto racing (Formula 1, MotoGP, NASCAR — not India-relevant)
+  'f1 driver', 'f1 drivers', 'formula 1', 'formula one',
+  'motogp', 'nascar', 'indycar',
+  // Carlos Sainz, Verstappen, Hamilton & other F1 driver names
+  'sainz', 'verstappen', 'hamilton', 'leclerc', 'norris', 'piastri',
+  'colapinto', 'isack hadjar', 'gasly', 'alonso', 'russell',
+  // Non-India geopolitics specifically
+  'us forces enter iran', 'us military iran', 'us forces iran',
+  'trump out as president', 'biden re-elected',
+  // Non-India elections
+  'us midterm', 'uk election', 'french election', 'german election',
+  'mexican election', 'brazilian election',
+  // Crypto memes
+  'dogecoin', 'solana meme', 'pepe coin', 'shiba inu',
+  // Other global-only events
+  'fifa world cup 2026', 'uefa euro', 'copa america',
 ];
+
+/**
+ * Word-boundary-aware substring match.
+ *
+ * CRITICAL: plain `.includes()` causes false positives for short keywords —
+ * e.g. `'ipl'` matches inside `multiple`, `'rcb'` could match anywhere,
+ * `'inr'` inside `printer`, `'csk'` inside arbitrary identifiers, etc.
+ * This wraps the keyword in word boundaries so it only matches whole words
+ * (or hyphenated/spaced variants). Multi-word keywords like
+ * `'champions trophy'` keep working via straightforward substring fall-back
+ * (their spaces already act as boundaries on both sides).
+ */
+function wordMatch(haystack: string, needle: string): boolean {
+  // Multi-word keywords: substring match is already boundary-safe.
+  if (needle.includes(' ')) return haystack.includes(needle);
+  // Single word: require non-letter boundary (start/end of string also OK).
+  const re = new RegExp(`(^|[^a-z])${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z]|$)`, 'i');
+  return re.test(haystack);
+}
 
 /**
  * Score a market for India relevance (0.0 – 1.0).
  * - Strong keyword match: 0.8–1.0
  * - Medium keyword match: 0.5–0.7
- * - No match but not explicitly non-India: 0.2
+ * - No match but not explicitly non-India: 0.15
  * - Explicitly non-India: 0.0–0.1
  */
 export function indiaRelevanceScore(market: Market): number {
   const text = `${market.title} ${market.description} ${market.category}`.toLowerCase();
 
-  // Check for explicit non-India content
+  // Check for explicit non-India content (substring is fine here — non-India keywords
+  // are descriptive multi-word phrases or distinctive proper nouns)
   const nonIndiaHits = NON_INDIA_KEYWORDS.filter(kw => text.includes(kw)).length;
   if (nonIndiaHits >= 2) return 0.0;
   if (nonIndiaHits === 1) {
     // Could still be India-adjacent (e.g., "India vs Pakistan cricket World Cup")
-    const strongHits = INDIA_KEYWORDS_STRONG.filter(kw => text.includes(kw)).length;
+    const strongHits = INDIA_KEYWORDS_STRONG.filter(kw => wordMatch(text, kw)).length;
     if (strongHits === 0) return 0.05;
   }
 
-  // Score strong matches
-  const strongHits = INDIA_KEYWORDS_STRONG.filter(kw => text.includes(kw)).length;
+  // Score strong matches (word-boundary-aware to avoid e.g. "ipl" inside "multiple")
+  const strongHits = INDIA_KEYWORDS_STRONG.filter(kw => wordMatch(text, kw)).length;
   if (strongHits >= 3) return 1.0;
   if (strongHits >= 2) return 0.9;
   if (strongHits >= 1) return 0.8;
 
   // Score medium matches
-  const mediumHits = INDIA_KEYWORDS_MEDIUM.filter(kw => text.includes(kw)).length;
+  const mediumHits = INDIA_KEYWORDS_MEDIUM.filter(kw => wordMatch(text, kw)).length;
   if (mediumHits >= 2) return 0.7;
   if (mediumHits >= 1) return 0.5;
 
@@ -278,10 +313,24 @@ export function sortByTrending(markets: Market[], userRegion = ''): Market[] {
 
 /**
  * Get markets with the largest absolute probability change in 24h.
+ *
+ * Defense in depth: filters to India-relevant markets that are STILL OPEN
+ * (status === 'live' AND closesAt > now), have meaningful movement
+ * (|change24h| >= 1%), and pass quality. The upstream `useIndiaMarkets`
+ * should already filter to India, but we re-apply here so this function
+ * is correct in isolation and resilient to upstream regressions.
  */
 export function getBiggestMovers(markets: Market[], limit = 6): Market[] {
+  const now = Date.now();
   return [...markets]
-    .filter(m => m.status === 'live' && qualityScore(m) >= 0.3)
+    .filter(m => {
+      if (m.status !== 'live') return false;
+      if (qualityScore(m) < 0.3) return false;
+      if (!isIndiaRelevant(m)) return false;
+      if (new Date(m.closesAt).getTime() <= now) return false;
+      if (Math.abs(m.change24h) < 1) return false;
+      return true;
+    })
     .sort((a, b) => Math.abs(b.change24h) - Math.abs(a.change24h))
     .slice(0, limit);
 }
@@ -289,7 +338,7 @@ export function getBiggestMovers(markets: Market[], limit = 6): Market[] {
 // ── Closing Soon ─────────────────────────────────────────────────
 
 /**
- * Get active markets sorted by resolution date (soonest first).
+ * Get active India-relevant markets sorted by resolution date (soonest first).
  * Only includes markets closing within `withinDays` days.
  */
 export function getClosingSoon(markets: Market[], limit = 6, withinDays = 30): Market[] {
@@ -300,6 +349,7 @@ export function getClosingSoon(markets: Market[], limit = 6, withinDays = 30): M
     .filter(m => {
       if (m.status !== 'live') return false;
       if (qualityScore(m) < 0.3) return false;
+      if (!isIndiaRelevant(m)) return false;
       const closes = new Date(m.closesAt).getTime();
       return closes > now && closes <= cutoff;
     })

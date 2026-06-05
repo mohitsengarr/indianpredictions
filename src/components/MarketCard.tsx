@@ -134,8 +134,17 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
         </div>
       )}
 
+              {/* Polymarket numeric IDs don't resolve to event pages; some markets
+                  store a resolutionSourceUrl pointing to the actual Polymarket event
+                  page (slug-based). Prefer that; otherwise fall back to a Polymarket
+                  search query on the market title so the user always lands somewhere
+                  meaningful instead of a 404. */}
               <a
-                href={`https://polymarket.com/event/${market.id}`}
+                href={
+                  (market as { resolutionSourceUrl?: string }).resolutionSourceUrl?.startsWith('https://polymarket.com')
+                    ? (market as { resolutionSourceUrl: string }).resolutionSourceUrl
+                    : `https://polymarket.com/markets?_q=${encodeURIComponent(market.title)}`
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-muted-foreground hover:text-primary transition-colors mt-2 inline-flex items-center gap-0.5"

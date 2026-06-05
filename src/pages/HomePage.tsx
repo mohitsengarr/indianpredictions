@@ -137,8 +137,11 @@ const HomePage = () => {
 
   const { markets: allMarkets, loading: allLoading, refetch: refetchAll, lastUpdated: allUpdated } = useMarkets();
   const { markets: indiaOnly, loading: indiaLoading, refetch: refetchIndia, lastUpdated } = useIndiaMarkets();
-  // Fall back to all markets when India-specific markets are too few
-  const indiaMarkets = indiaOnly.length >= 3 ? indiaOnly : allMarkets;
+  // Only show currently-open markets — exclude markets whose closesAt has passed
+  // (even if status === 'live' upstream). Don't fall back to allMarkets here:
+  // showing non-India content under "All India Markets" is worse than showing fewer cards.
+  const now = Date.now();
+  const indiaMarkets = indiaOnly.filter(m => new Date(m.closesAt).getTime() > now);
   const { markets: biggestMovers, loading: moversLoading } = useBiggestMovers(6);
   const { markets: closingSoon, loading: closingLoading } = useClosingSoon(6);
   const { data: liveEvents, lastUpdated: liveUpdated, loading: liveLoading } = useDataRefresh<{ events: unknown[] }>({ url: '/data/live-events.json' });
@@ -731,7 +734,7 @@ const HomePage = () => {
 
             {/* ── Social Proof ── */}
             <AnimateIn delay={0.1}>
-              <SocialProofStrip />
+              <SocialProofStrip marketsCount={indiaMarkets.length} eventsCount={trendingEvents.length} />
             </AnimateIn>
 
             {/* ── Analytics & Insights (with dashboard preview) ── */}

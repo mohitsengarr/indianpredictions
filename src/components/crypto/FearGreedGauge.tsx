@@ -4,8 +4,8 @@ interface FearGreedGaugeProps {
 }
 
 const FearGreedGauge = ({ value, label }: FearGreedGaugeProps) => {
-  // Map 0-100 to angle: -90 (left/extreme fear) to 90 (right/extreme greed)
-  const angle = (value / 100) * 180 - 90;
+  // Map 0-100 to angle: 180° (left/extreme fear) → 90° (up) → 0° (right/extreme greed)
+  const angle = 180 - (value / 100) * 180;
 
   const getColor = (v: number) => {
     if (v <= 25) return '#EA3943';

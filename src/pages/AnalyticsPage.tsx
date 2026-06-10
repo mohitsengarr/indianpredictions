@@ -4,8 +4,10 @@ import { useSEO } from '@/hooks/useSEO';
 import { formatINR, formatPercent, formatProbability } from '@/lib/formatters';
 import { CATEGORY_LABELS } from '@/lib/mock-data';
 import { Market, MarketCategory } from '@/lib/types';
+import { isIndiaRelevant } from '@/lib/recommendations';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
+import EmptyState from '@/components/EmptyState';
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, LineChart, Line, CartesianGrid,
@@ -70,6 +72,13 @@ const SectionHeader = ({ icon: Icon, title, subtitle }: {
   </div>
 );
 
+// India bucket: the always-India categories plus politics/crypto markets that
+// pass the India-relevance check (previously these were excluded entirely,
+// systematically undercounting the India split).
+const isIndiaBucket = (m: Market) =>
+  ['cricket', 'economy', 'entertainment'].includes(m.category) ||
+  (['politics', 'crypto'].includes(m.category) && isIndiaRelevant(m));
+
 const CustomTooltipBox = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
@@ -99,9 +108,7 @@ export default function AnalyticsPage() {
     const totalLiquidity = markets.reduce((s, m) => s + m.liquidity, 0);
     const totalTraders = markets.reduce((s, m) => s + m.traders, 0);
     const liveCount = markets.filter((m) => m.status === 'live').length;
-    const indiaCount = markets.filter((m) =>
-      ['cricket', 'economy', 'entertainment'].includes(m.category)
-    ).length;
+    const indiaCount = markets.filter(isIndiaBucket).length;
 
     // avg probability distribution
     const avgYes = markets.reduce((s, m) => s + m.yesPrice, 0) / markets.length;
@@ -170,12 +177,8 @@ export default function AnalyticsPage() {
     });
 
     // India vs Global split
-    const indiaMarkets = markets.filter((m) =>
-      ['cricket', 'economy', 'entertainment'].includes(m.category)
-    );
-    const globalMarkets = markets.filter((m) =>
-      !['cricket', 'economy', 'entertainment'].includes(m.category)
-    );
+    const indiaMarkets = markets.filter(isIndiaBucket);
+    const globalMarkets = markets.filter((m) => !isIndiaBucket(m));
     const indiaVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
     const globalVol = globalMarkets.reduce((s, m) => s + m.volume, 0);
 
@@ -199,7 +202,9 @@ export default function AnalyticsPage() {
     };
   }, [markets]);
 
-  if (loading || !stats) {
+  if (!stats) {
+    // Fetch succeeded but returned 0 markets → show an empty state, not an
+    // infinite skeleton. Skeleton only while a fetch is actually in flight.
     return (
       <div className="pb-24 lg:pb-8">
         <div className="paytm-header px-4 lg:px-8 pt-12 lg:pt-6 pb-6">
@@ -209,11 +214,15 @@ export default function AnalyticsPage() {
           </div>
         </div>
         <div className="max-w-5xl mx-auto px-4 lg:px-8 mt-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="bg-card rounded-xl border border-border h-24 animate-pulse" />
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="bg-card rounded-xl border border-border h-24 animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <EmptyState type="no-markets" actionLabel="Refresh" onAction={refetch} />
+          )}
         </div>
       </div>
     );

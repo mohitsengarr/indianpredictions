@@ -47,9 +47,10 @@ async function exaSearch(query, numResults = 5) {
       query,
       type: 'auto',
       category: 'news',
-      num_results: numResults,
+      // Exa REST API expects camelCase parameter names
+      numResults,
       contents: {
-        text: { max_characters: 3000 },
+        text: { maxCharacters: 3000 },
       },
     }),
   });
@@ -120,6 +121,16 @@ async function main() {
 
   const unique = dedup(allArticles);
   console.log(`\nTotal: ${allArticles.length} raw → ${unique.length} unique articles`);
+
+  // Guard against a broken API key / outage silently draining the news file:
+  // each run only keeps existing items < 48h old, so two consecutive failed
+  // runs would empty the list while the workflow stays green. Fail loudly
+  // instead when a fetch round produces almost nothing new.
+  const MIN_FRESH_ARTICLES = 5;
+  if (unique.length < MIN_FRESH_ARTICLES) {
+    console.error(`❌ Only ${unique.length} fresh articles fetched (minimum ${MIN_FRESH_ARTICLES}). Keeping previous data file.`);
+    process.exit(1);
+  }
 
   // Load existing and merge (keep last 48 hours)
   const outPath = join(ROOT, 'public', 'data', 'breaking-news.json');

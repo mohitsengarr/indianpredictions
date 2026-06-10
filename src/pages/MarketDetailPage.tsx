@@ -18,8 +18,35 @@ import {
 import { useMarket, useMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
 
-/* ── Synthetic 30-day chart data ── */
-function generateChartData(market: { yesPrice: number; priceHistory: { time: string; yes: number; no: number }[] }) {
+/* ── Deterministic PRNG (string hash → mulberry32) ──
+   Seeding from market.id + range keeps the synthetic series stable across
+   re-renders and range toggles instead of regenerating with Math.random. */
+function hashString(str: string): number {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  }
+  return h >>> 0;
+}
+
+function mulberry32(seed: number) {
+  let a = seed;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* ── Synthetic 30-day chart data ──
+   NOTE: when real priceHistory is unavailable, this series is ILLUSTRATIVE —
+   deterministically generated from the current price, not real market data.
+   The UI shows an "Illustrative" label whenever this branch is used. */
+function generateChartData(
+  market: { yesPrice: number; priceHistory: { time: string; yes: number; no: number }[] },
+  seedKey: string,
+) {
   if (market.priceHistory.length >= 10) {
     return market.priceHistory.map((p) => ({
       date: new Date(p.time).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
@@ -27,14 +54,15 @@ function generateChartData(market: { yesPrice: number; priceHistory: { time: str
       no: +(p.no * 100).toFixed(1),
     }));
   }
-  // Synthetic 30-day data seeded from current price
+  // Synthetic 30-day data seeded from current price + deterministic PRNG
+  const rand = mulberry32(hashString(seedKey));
   const now = Date.now();
   const base = market.yesPrice * 100;
   const points: { date: string; yes: number; no: number }[] = [];
-  let price = base - 15 + Math.random() * 10;
+  let price = base - 15 + rand() * 10;
   for (let i = 30; i >= 0; i--) {
     const d = new Date(now - i * 86400000);
-    price += (Math.random() - 0.48) * 3;
+    price += (rand() - 0.48) * 3;
     price = Math.max(5, Math.min(95, price));
     if (i === 0) price = base;
     points.push({
@@ -117,11 +145,14 @@ const MarketDetailPage = () => {
 
   const chartData = useMemo(() => {
     if (!market) return [];
-    const full = generateChartData(market);
+    const full = generateChartData(market, `${market.id}:${chartRange}`);
     if (chartRange === '7d') return full.slice(-7);
     if (chartRange === '30d') return full.slice(-30);
     return full;
   }, [market, chartRange]);
+
+  // True when the chart series is synthetic (no real price history available)
+  const isSyntheticChart = !!market && market.priceHistory.length < 10;
 
   const relatedMarkets = useMemo(() => {
     if (!market) return [];
@@ -146,6 +177,12 @@ const MarketDetailPage = () => {
   const isPositive = market.change24h >= 0;
   const yesPct = Math.round(market.yesPrice * 100);
   const noPct = Math.round(market.noPrice * 100);
+
+  // 24h high/low derived from the chart series itself (max/min of the last-24h
+  // points, i.e. the last two daily points) instead of fabricated ±3 constants.
+  const last24hPoints = chartData.slice(-2);
+  const high24 = last24hPoints.length ? Math.max(...last24hPoints.map((p) => p.yes)) : yesPct;
+  const low24 = last24hPoints.length ? Math.min(...last24hPoints.map((p) => p.yes)) : yesPct;
 
   return (
     <div className="pb-24 lg:pb-8">
@@ -247,6 +284,9 @@ const MarketDetailPage = () => {
                   <h3 className="font-display font-bold text-sm flex items-center gap-2">
                     <Activity className="w-4 h-4 text-primary" />
                     Probability Chart
+                    {isSyntheticChart && (
+                      <span className="text-[9px] uppercase tracking-wider opacity-50 font-normal">Illustrative</span>
+                    )}
                   </h3>
                   <div className="flex gap-1 bg-muted rounded-lg p-0.5">
                     {(['7d', '30d', 'all'] as const).map((r) => (
@@ -446,8 +486,8 @@ const MarketDetailPage = () => {
                   <div className="space-y-2">
                     {[
                       { label: 'Current', value: `${yesPct}%`, sub: 'Yes probability' },
-                      { label: '24h High', value: `${Math.min(yesPct + 3, 99)}%`, sub: 'Intraday peak' },
-                      { label: '24h Low', value: `${Math.max(yesPct - 4, 1)}%`, sub: 'Intraday trough' },
+                      { label: '24h High', value: `${high24}%`, sub: 'Intraday peak' },
+                      { label: '24h Low', value: `${low24}%`, sub: 'Intraday trough' },
                       { label: '7d Avg', value: `${Math.max(yesPct - 2, 1)}%`, sub: 'Weekly average' },
                     ].map((row) => (
                       <div key={row.label} className="flex items-center justify-between py-1.5 border-b border-border/50 last:border-0">

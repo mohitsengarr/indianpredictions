@@ -6,6 +6,12 @@ on:
     - cron: '15 */6 * * *'
   workflow_dispatch: # Allow manual trigger
 
+# Serialize with the Firecrawl scraper — both commit to main; overlapping
+# runs race on push and one run's data gets lost.
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
 jobs:
   fetch-news:
     runs-on: ubuntu-latest
@@ -20,6 +26,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      # Required for the optional Supabase upsert inside the fetcher.
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Exa news fetcher
         env:
@@ -35,4 +46,6 @@ jobs:
           git add public/data/breaking-news.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: update breaking news [automated]"
+          # Rebase before push in case another workflow/dev pushed meanwhile
+          git pull --rebase origin main
           git push

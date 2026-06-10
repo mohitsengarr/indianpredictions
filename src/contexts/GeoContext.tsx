@@ -72,7 +72,10 @@ export function GeoProvider({ children }: { children: ReactNode }) {
         setGeo(resolved);
         try { sessionStorage.setItem(CACHE_KEY, JSON.stringify(resolved)); } catch { /* ignore */ }
       })
-      .catch(() => {
+      .catch((err: unknown) => {
+        // Aborted fetch (unmount / StrictMode double-invoke) is not a failure —
+        // don't write the timezone-guess fallback into sessionStorage.
+        if ((err as { name?: string } | null)?.name === 'AbortError') return;
         // Fallback: detect India from timezone
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const likelyIndia = tz === 'Asia/Kolkata' || tz === 'Asia/Calcutta';

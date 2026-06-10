@@ -34,7 +34,7 @@ const CategoryTabs = ({ selected, onSelect }: CategoryTabsProps) => {
                 : 'bg-white text-muted-foreground border-border hover:border-primary/40 hover:text-primary'
             }`}
           >
-            {info.emoji} {info.label}
+            {info?.emoji} {info?.label ?? cat}
           </button>
         );
       })}

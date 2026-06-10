@@ -96,6 +96,14 @@ const InsightsPage = () => {
 
   const sentimentAngle = (MARKET_SENTIMENT.overall / 100) * 180;
 
+  // Upcoming Events timeline: the static TIMELINE_EVENTS data includes past
+  // dates — only show events dated today or later. Filter BEFORE slicing.
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const upcomingTimelineEvents = TIMELINE_EVENTS
+    .filter((item) => new Date(item.date) >= startOfToday)
+    .slice(0, 6);
+
   return (
     <div className="pb-24 lg:pb-8">
       {/* Header */}
@@ -391,13 +399,14 @@ const InsightsPage = () => {
           </ChartSection>
         </div>
 
-        {/* ── 6. Trending Events Timeline ── */}
+        {/* ── 6. Trending Events Timeline (hidden when fewer than 2 future events remain) ── */}
+        {upcomingTimelineEvents.length >= 2 && (
         <ChartSection title="Upcoming Events Timeline" subtitle="Key events on the horizon with importance ratings" index={8}>
           <div className="relative">
             {/* Timeline line */}
             <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border" />
             <div className="space-y-4">
-              {TIMELINE_EVENTS.map((item, i) => {
+              {upcomingTimelineEvents.map((item, i) => {
                 const impColor = item.importance === 'high' ? 'bg-destructive' : item.importance === 'medium' ? 'bg-warning' : 'bg-muted-foreground';
                 const d = new Date(item.date);
                 return (
@@ -436,6 +445,7 @@ const InsightsPage = () => {
             </div>
           </div>
         </ChartSection>
+        )}
 
         {/* ── 10. Volatility Index ── */}
         <ChartSection title="India Prediction Market Volatility" subtitle="India VIX and prediction market volatility index over time" index={9}>

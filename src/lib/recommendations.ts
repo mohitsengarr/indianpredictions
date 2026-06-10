@@ -93,14 +93,17 @@ const NON_INDIA_KEYWORDS: string[] = [
  * `'inr'` inside `printer`, `'csk'` inside arbitrary identifiers, etc.
  * This wraps the keyword in word boundaries so it only matches whole words
  * (or hyphenated/spaced variants). Multi-word keywords like
- * `'champions trophy'` keep working via straightforward substring fall-back
- * (their spaces already act as boundaries on both sides).
+ * `'champions trophy'` get the same boundary treatment around the whole
+ * phrase (with flexible whitespace between words), so e.g. `'inc party'`
+ * no longer matches inside `'zinc party'`.
  */
 function wordMatch(haystack: string, needle: string): boolean {
-  // Multi-word keywords: substring match is already boundary-safe.
-  if (needle.includes(' ')) return haystack.includes(needle);
-  // Single word: require non-letter boundary (start/end of string also OK).
-  const re = new RegExp(`(^|[^a-z])${needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z]|$)`, 'i');
+  // Escape regex metacharacters, then allow flexible whitespace between
+  // words of multi-word phrases. Boundary check applies to the whole phrase.
+  const escaped = needle
+    .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    .replace(/ +/g, '\\s+');
+  const re = new RegExp(`(^|[^a-z])${escaped}([^a-z]|$)`, 'i');
   return re.test(haystack);
 }
 
@@ -114,9 +117,9 @@ function wordMatch(haystack: string, needle: string): boolean {
 export function indiaRelevanceScore(market: Market): number {
   const text = `${market.title} ${market.description} ${market.category}`.toLowerCase();
 
-  // Check for explicit non-India content (substring is fine here — non-India keywords
-  // are descriptive multi-word phrases or distinctive proper nouns)
-  const nonIndiaHits = NON_INDIA_KEYWORDS.filter(kw => text.includes(kw)).length;
+  // Check for explicit non-India content (word-boundary-aware: plain substring
+  // matching caused false positives, e.g. 'nfl' inside "inflation")
+  const nonIndiaHits = NON_INDIA_KEYWORDS.filter(kw => wordMatch(text, kw)).length;
   if (nonIndiaHits >= 2) return 0.0;
   if (nonIndiaHits === 1) {
     // Could still be India-adjacent (e.g., "India vs Pakistan cricket World Cup")
@@ -162,8 +165,9 @@ const GARBAGE_KEYWORDS = [
 export function qualityScore(market: Market): number {
   const text = `${market.title} ${market.description}`.toLowerCase();
 
-  // Garbage content
-  const garbageHits = GARBAGE_KEYWORDS.filter(kw => text.includes(kw)).length;
+  // Garbage content (word-boundary-aware: plain substring matching caused
+  // false positives, e.g. 'error' inside "terrorism", 'nan' inside "finance")
+  const garbageHits = GARBAGE_KEYWORDS.filter(kw => wordMatch(text, kw)).length;
   if (garbageHits >= 2) return 0.0;
   if (garbageHits >= 1) return 0.2;
 
@@ -221,9 +225,10 @@ export function detectMarketRegions(market: Market): string[] {
   const text = `${market.title} ${market.description}`.toLowerCase();
   const regions = new Set<string>();
 
-  // Check IPL teams
+  // Check IPL teams (word-boundary-aware: short codes like 'mi' would
+  // otherwise match inside words like "premier")
   for (const [team, states] of Object.entries(IPL_TEAM_REGIONS)) {
-    if (text.includes(team)) states.forEach(s => regions.add(s));
+    if (wordMatch(text, team)) states.forEach(s => regions.add(s));
   }
   // Also check full team names
   if (text.includes('chennai') || text.includes('super kings')) regions.add('TN');
@@ -308,8 +313,11 @@ export function trendingScore(market: Market, allMarkets: Market[], userRegion =
   // Markets closing within 30 days are freshest
   const freshnessScore = daysUntilClose <= 0 ? 0 : daysUntilClose <= 30 ? 15 : Math.max(0, 15 - (daysUntilClose - 30) / 10);
 
-  // Closing soon boost (0–10)
-  const closingSoonBoost = daysUntilClose > 0 && daysUntilClose <= 7 ? 10 : daysUntilClose <= 14 ? 5 : 0;
+  // Closing soon boost (0–10) — both tiers require daysUntilClose > 0 so
+  // already-closed markets (clamped to 0) don't get the boost
+  const closingSoonBoost =
+    daysUntilClose > 0 && daysUntilClose <= 7 ? 10 :
+    daysUntilClose > 0 && daysUntilClose <= 14 ? 5 : 0;
 
   // Quality (0–5)
   const quality = qualityScore(market) * 5;

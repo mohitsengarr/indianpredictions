@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import { TRENDING_EVENTS, TrendingEvent } from '@/data/trending-events';
 
@@ -83,9 +83,14 @@ export function useTrendingEvents(): UseTrendingEventsResult {
   const [error, setError] = useState<string | null>(null);
   const [lastScraped, setLastScraped] = useState<string | null>(null);
   const [tick, setTick] = useState(0);
+  const lastTickRef = useRef(tick);
 
   useEffect(() => {
-    if (cachedEvents && Date.now() - cacheTimestamp < CACHE_TTL) {
+    // A tick change means refetch() was called — bypass the TTL check.
+    const forced = tick !== lastTickRef.current;
+    lastTickRef.current = tick;
+
+    if (!forced && cachedEvents && Date.now() - cacheTimestamp < CACHE_TTL) {
       setEvents(cachedEvents);
       setLoading(false);
       return;

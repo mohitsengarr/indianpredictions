@@ -51,11 +51,17 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
   }, [yesPrice]);
 
   const yesPct = Math.round(yesPrice * 100);
-  const noPct  = Math.round(noPrice * 100);
+  // When prices are complementary, derive noPct from yesPct so widths always sum to 100%
+  const noPct  = Math.abs(yesPrice + noPrice - 1) <= 0.02 ? 100 - yesPct : Math.round(noPrice * 100);
+
+  const openMarket = () => { trackMarketClick(market.id, market.category); navigate(`/market/${market.id}`); };
 
   return (
-    <button
-      onClick={() => { trackMarketClick(market.id, market.category); navigate(`/market/${market.id}`); }}
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={openMarket}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMarket(); } }}
       className={`group w-full text-left bg-white rounded-xl border border-border shadow-card p-4 transition-all duration-200 ease-out
         hover:shadow-card-hover hover:border-primary/25 hover:-translate-y-0.5 active:scale-[0.98]
         overflow-hidden relative
@@ -152,7 +158,7 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
               >
                 View on Polymarket <ExternalLink className="w-2.5 h-2.5" />
               </a>
-    </button>
+    </div>
   );
 };
 

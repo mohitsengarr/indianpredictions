@@ -19,7 +19,7 @@ const TrendingEvents = ({ limit, showFilter = true }: TrendingEventsProps) => {
       ? events
       : events.filter((e) => e.category === category);
 
-  const display = limit ? filtered.slice(0, limit) : filtered;
+  const display = limit != null ? filtered.slice(0, limit) : filtered;
 
   return (
     <section>

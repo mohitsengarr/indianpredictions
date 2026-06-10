@@ -76,8 +76,42 @@ const ChangeCell = ({ value }: { value: number }) => {
   );
 };
 
+const SortHeader = ({
+  label,
+  sKey,
+  tooltip,
+  badge,
+  sortKey,
+  sortDir,
+  onSort,
+}: {
+  label: string;
+  sKey: SortKey;
+  tooltip?: string;
+  badge?: string;
+  sortKey: SortKey | null;
+  sortDir: SortDir;
+  onSort: (key: SortKey) => void;
+}) => (
+  <th
+    className="px-3 py-3 text-left text-xs font-semibold text-gray-500 cursor-pointer select-none hover:text-gray-800 transition-colors whitespace-nowrap"
+    onClick={() => onSort(sKey)}
+  >
+    <div className="flex items-center gap-1">
+      {label}
+      {badge && (
+        <span className="px-1.5 py-0.5 text-[10px] font-bold bg-[#16C784] text-white rounded-sm leading-none">
+          {badge}
+        </span>
+      )}
+      {tooltip && <Info className="w-3 h-3 text-gray-400" />}
+      {sortKey === sKey && (sortDir === 'asc' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />)}
+    </div>
+  </th>
+);
+
 const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdate = null }: CryptoTableProps) => {
-  const [sortKey, setSortKey] = useState<SortKey>('rank');
+  const [sortKey, setSortKey] = useState<SortKey | null>('rank');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
   const [watchlist, setWatchlist] = useState<Set<string>>(new Set());
   const [tab, setTab] = useState<Tab>('top');
@@ -126,6 +160,8 @@ const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdat
   }, [mergedData, tab]);
 
   const sorted = useMemo(() => {
+    // No explicit column sort since the last tab change — preserve the tab's ordering
+    if (sortKey === null) return tabData;
     const arr = [...tabData];
     arr.sort((a, b) => {
       let va: number, vb: number;
@@ -148,24 +184,6 @@ const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdat
     { key: 'losers', label: 'Losers' },
   ];
 
-  const SortHeader = ({ label, sKey, tooltip, badge }: { label: string; sKey: SortKey; tooltip?: string; badge?: string }) => (
-    <th
-      className="px-3 py-3 text-left text-xs font-semibold text-gray-500 cursor-pointer select-none hover:text-gray-800 transition-colors whitespace-nowrap"
-      onClick={() => handleSort(sKey)}
-    >
-      <div className="flex items-center gap-1">
-        {label}
-        {badge && (
-          <span className="px-1.5 py-0.5 text-[10px] font-bold bg-[#16C784] text-white rounded-sm leading-none">
-            {badge}
-          </span>
-        )}
-        {tooltip && <Info className="w-3 h-3 text-gray-400" />}
-        {sortKey === sKey && (sortDir === 'asc' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />)}
-      </div>
-    </th>
-  );
-
   return (
     <div>
       {/* Connection Status + Tabs row */}
@@ -174,7 +192,7 @@ const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdat
           {tabs.map((t) => (
             <button
               key={t.key}
-              onClick={() => { setTab(t.key); setPage(1); }}
+              onClick={() => { setTab(t.key); setPage(1); setSortKey(t.key === 'top' ? 'rank' : null); setSortDir('asc'); }}
               className={`px-4 py-2.5 text-sm font-semibold transition-colors relative ${
                 tab === t.key
                   ? 'text-blue-600'
@@ -194,16 +212,16 @@ const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdat
         <table className="w-full min-w-[1000px]">
           <thead>
             <tr className="border-b border-gray-200">
-              <SortHeader label="#" sKey="rank" />
+              <SortHeader label="#" sKey="rank" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
               <th className="px-1 py-3 w-8" />
-              <SortHeader label="Name" sKey="name" />
-              <SortHeader label="Price" sKey="price" badge={hasLiveData ? 'LIVE' : undefined} />
-              <SortHeader label="1h %" sKey="change1h" />
-              <SortHeader label="24h %" sKey="change24h" />
-              <SortHeader label="7d %" sKey="change7d" />
-              <SortHeader label="Market Cap" sKey="marketCap" tooltip="Total value of circulating supply" />
-              <SortHeader label="Volume (24h)" sKey="volume24h" tooltip="24 hour trading volume" />
-              <SortHeader label="Circulating Supply" sKey="circulatingSupply" tooltip="Coins currently in circulation" />
+              <SortHeader label="Name" sKey="name" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="Price" sKey="price" badge={hasLiveData ? 'LIVE' : undefined} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="1h %" sKey="change1h" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="24h %" sKey="change24h" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="7d %" sKey="change7d" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="Market Cap" sKey="marketCap" tooltip="Total value of circulating supply" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="Volume (24h)" sKey="volume24h" tooltip="24 hour trading volume" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
+              <SortHeader label="Circulating Supply" sKey="circulatingSupply" tooltip="Coins currently in circulation" sortKey={sortKey} sortDir={sortDir} onSort={handleSort} />
               <th className="px-3 py-3 text-left text-xs font-semibold text-gray-500 whitespace-nowrap">Last 7 Days</th>
             </tr>
           </thead>
@@ -255,7 +273,7 @@ const CryptoTable = ({ data, showINR, livePrices, isConnected = false, lastUpdat
                   </td>
                   <td className="px-3 py-4 text-right">
                     <div className="text-sm text-gray-900 font-medium">{fmtCap(c.volume24h, showINR)}</div>
-                    <div className="text-xs text-gray-400">{fmtSupply(c.volume24h / c.price)} {c.ticker}</div>
+                    <div className="text-xs text-gray-400">{fmtSupply(c.price > 0 ? c.volume24h / c.price : 0)} {c.ticker}</div>
                   </td>
                   <td className="px-3 py-4">
                     <div className="text-sm text-gray-900">{fmtSupply(c.circulatingSupply)} {c.ticker}</div>

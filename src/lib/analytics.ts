@@ -22,14 +22,27 @@ function generateId(): string {
   return 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 9);
 }
 
+// In-memory fallbacks for when localStorage/sessionStorage throw
+// (e.g. Safari private mode, storage disabled). Analytics must never
+// break the calling code path (it runs inside onClick handlers).
+let memoryVisitorId: string | null = null;
+let memorySessionId: string | null = null;
+let memorySessionTs = 0;
+
 function getVisitorId(): string {
   const key = 'ip_visitor_id';
-  let id = localStorage.getItem(key);
-  if (!id) {
-    id = generateId();
-    localStorage.setItem(key, id);
+  try {
+    let id = localStorage.getItem(key);
+    if (!id) {
+      id = memoryVisitorId ?? generateId();
+      localStorage.setItem(key, id);
+    }
+    memoryVisitorId = id;
+    return id;
+  } catch {
+    if (!memoryVisitorId) memoryVisitorId = generateId();
+    return memoryVisitorId;
   }
-  return id;
 }
 
 function getSessionId(): string {
@@ -37,18 +50,31 @@ function getSessionId(): string {
   const tsKey = 'ip_session_ts';
   const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
-  const existingId = sessionStorage.getItem(key);
-  const lastTs = parseInt(sessionStorage.getItem(tsKey) ?? '0', 10);
+  try {
+    const existingId = sessionStorage.getItem(key);
+    const lastTs = parseInt(sessionStorage.getItem(tsKey) ?? '0', 10);
 
-  if (existingId && Date.now() - lastTs < SESSION_TIMEOUT) {
+    if (existingId && Date.now() - lastTs < SESSION_TIMEOUT) {
+      sessionStorage.setItem(tsKey, String(Date.now()));
+      memorySessionId = existingId;
+      memorySessionTs = Date.now();
+      return existingId;
+    }
+
+    const newId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+    sessionStorage.setItem(key, newId);
     sessionStorage.setItem(tsKey, String(Date.now()));
-    return existingId;
+    memorySessionId = newId;
+    memorySessionTs = Date.now();
+    return newId;
+  } catch {
+    const now = Date.now();
+    if (!memorySessionId || now - memorySessionTs >= SESSION_TIMEOUT) {
+      memorySessionId = 's_' + now.toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+    }
+    memorySessionTs = now;
+    return memorySessionId;
   }
-
-  const newId = 's_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
-  sessionStorage.setItem(key, newId);
-  sessionStorage.setItem(tsKey, String(Date.now()));
-  return newId;
 }
 
 // ── Event Types ──────────────────────────────────────────────────
@@ -106,12 +132,57 @@ async function flushEvents() {
   }
 }
 
-// Flush on page unload
+/**
+ * Synchronous flush for page-hide scenarios (tab close, navigation away).
+ * The async supabase-js insert is unreliable here because the browser may
+ * kill the request. Use navigator.sendBeacon when available (survives page
+ * unload), else fetch with keepalive: true.
+ */
+function flushEventsOnHide() {
+  if (eventBuffer.length === 0) return;
+
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+  if (!supabaseUrl || !supabaseKey) {
+    // Can't build the REST request — fall back to the async path
+    flushEvents();
+    return;
+  }
+
+  const batch = [...eventBuffer];
+  eventBuffer = [];
+  const body = JSON.stringify(batch);
+  // sendBeacon can't set headers, so pass the key as a query param
+  const url = `${supabaseUrl}/rest/v1/analytics_events?apikey=${encodeURIComponent(supabaseKey)}`;
+
+  try {
+    if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+      const blob = new Blob([body], { type: 'application/json' });
+      if (navigator.sendBeacon(url, blob)) return;
+    }
+    // keepalive lets the request outlive the page
+    fetch(url, {
+      method: 'POST',
+      keepalive: true,
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: supabaseKey,
+        Authorization: `Bearer ${supabaseKey}`,
+        Prefer: 'return=minimal',
+      },
+      body,
+    }).catch(() => {});
+  } catch {
+    // Never let analytics break unload handling
+  }
+}
+
+// Flush on page hide / unload
 if (typeof window !== 'undefined') {
   window.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') flushEvents();
+    if (document.visibilityState === 'hidden') flushEventsOnHide();
   });
-  window.addEventListener('beforeunload', () => flushEvents());
+  window.addEventListener('pagehide', () => flushEventsOnHide());
 }
 
 // ── Public API ───────────────────────────────────────────────────

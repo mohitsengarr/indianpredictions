@@ -8,9 +8,34 @@ const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
+/**
+ * Resolve a storage backend for Supabase auth. Accessing localStorage can
+ * throw at module load (Safari private mode, storage disabled, SSR), which
+ * would kill the whole bundle — so probe it and fall back to an in-memory shim.
+ */
+function getAuthStorage() {
+  try {
+    const testKey = '__supabase_storage_test__';
+    window.localStorage.setItem(testKey, '1');
+    window.localStorage.removeItem(testKey);
+    return window.localStorage;
+  } catch {
+    const memoryStore = new Map<string, string>();
+    return {
+      getItem: (key: string) => memoryStore.get(key) ?? null,
+      setItem: (key: string, value: string) => {
+        memoryStore.set(key, value);
+      },
+      removeItem: (key: string) => {
+        memoryStore.delete(key);
+      },
+    };
+  }
+}
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    storage: localStorage,
+    storage: getAuthStorage(),
     persistSession: true,
     autoRefreshToken: true,
   }

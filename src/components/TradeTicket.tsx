@@ -15,17 +15,21 @@ const TradeTicket = ({ market }: TradeTicketProps) => {
 
   const price = side === 'yes' ? market.yesPrice : market.noPrice;
   const amountNum = parseFloat(amount) || 0;
-  const shares = amountNum > 0 ? Math.floor(amountNum / price) : 0;
+  const shares = amountNum > 0 && price > 0 ? Math.floor(amountNum / price) : 0;
   const fee = amountNum * (APP_CONFIG.platformFeePercent / 100);
   const total = amountNum + fee;
   const potentialPayout = shares * 1;
-  const potentialProfit = potentialPayout - amountNum;
+  const potentialProfit = potentialPayout - total;
 
   const quickAmounts = [100, 250, 500, 1000];
 
   const handleTrade = () => {
     if (amountNum <= 0) {
       toast.error('Enter a valid amount');
+      return;
+    }
+    if (shares < 1) {
+      toast.error(`Amount too low — minimum ₹${price.toFixed(2)} needed for 1 share`);
       return;
     }
     if (total > USER.balance) {

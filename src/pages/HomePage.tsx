@@ -73,9 +73,11 @@ const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: numbe
   return <span ref={ref}>{prefix}{count.toLocaleString('en-IN')}{suffix}</span>;
 };
 
-/* ── Macro Ticker Strip (simplified: 5 key India indicators, no duplication) ── */
+/* ── Macro Ticker Strip (simplified: 5 key India indicators, no duplication) ──
+   Values are static/indicative snapshots, not a live feed — labelled as such. */
 const MacroTicker = () => (
   <div className="bg-muted/60 border-b border-border py-1.5 flex items-center justify-center gap-6 overflow-x-auto scrollbar-hide px-3">
+    <span className="text-[9px] uppercase tracking-wider opacity-50 whitespace-nowrap">Indicative</span>
     {MARKET_PULSE_DATA.map((d, i) => (
       <span key={i} className="inline-flex items-center gap-1.5 text-[11px] font-medium whitespace-nowrap">
         <span className="text-muted-foreground">{d.label}</span>
@@ -179,6 +181,14 @@ const HomePage = () => {
 
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
 
+  // Upcoming Events timeline: only show events dated today or later (the static
+  // TIMELINE_EVENTS data spans past dates too). Filter BEFORE slicing.
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const upcomingTimelineEvents = TIMELINE_EVENTS
+    .filter((item) => new Date(item.date) >= startOfToday)
+    .slice(0, 6);
+
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const handleCategoryClick = (key: string) => {
@@ -273,24 +283,29 @@ const HomePage = () => {
 
                 {/* Stats row */}
                 <div className="flex items-center gap-3 flex-wrap pt-2">
-                  <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                    <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
-                    <span className="text-xs font-semibold text-white">
-                      <CountUp end={indiaMarkets.length > 0 ? indiaMarkets.length : 150} duration={1} />+ Live Markets
-                    </span>
-                  </div>
+                  {/* Show real counts only — hide chips entirely when 0 instead of fabricating numbers */}
+                  {indiaMarkets.length > 0 && (
+                    <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                      <span className="w-2 h-2 rounded-full bg-success animate-pulse" />
+                      <span className="text-xs font-semibold text-white">
+                        <CountUp end={indiaMarkets.length} duration={1} />+ Live Markets
+                      </span>
+                    </div>
+                  )}
                   {indiaTotalVol > 0 && (
                     <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
                       <TrendingUp className="w-3 h-3 text-secondary" />
                       <span className="text-xs font-semibold text-white">{formatINR(indiaTotalVol)} Volume</span>
                     </div>
                   )}
-                  <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
-                    <Zap className="w-3 h-3 text-warning" />
-                    <span className="text-xs font-semibold text-white">
-                      <CountUp end={trendingEvents.length > 0 ? trendingEvents.length : 26} duration={0.8} /> Events
-                    </span>
-                  </div>
+                  {trendingEvents.length > 0 && (
+                    <div className="flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1.5">
+                      <Zap className="w-3 h-3 text-warning" />
+                      <span className="text-xs font-semibold text-white">
+                        <CountUp end={trendingEvents.length} duration={0.8} /> Events
+                      </span>
+                    </div>
+                  )}
                 </div>
               </motion.div>
 
@@ -799,7 +814,8 @@ const HomePage = () => {
               </div>
             </section>
 
-            {/* ── Upcoming Events Timeline ── */}
+            {/* ── Upcoming Events Timeline (hidden when fewer than 2 future events remain) ── */}
+            {upcomingTimelineEvents.length >= 2 && (
             <section>
               <AnimateIn delay={0.1}>
                 <div className="flex items-center justify-between mb-4">
@@ -820,7 +836,7 @@ const HomePage = () => {
               <div className="relative">
                 <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border" />
                 <div className="space-y-3">
-                  {TIMELINE_EVENTS.slice(0, 6).map((item, i) => {
+                  {upcomingTimelineEvents.map((item, i) => {
                     const impColor = item.importance === 'high' ? 'bg-destructive' : item.importance === 'medium' ? 'bg-warning' : 'bg-muted-foreground';
                     const d = new Date(item.date);
                     return (
@@ -859,6 +875,7 @@ const HomePage = () => {
                 </div>
               </div>
             </section>
+            )}
 
             {/* ── FAQ Section ── */}
             <AnimateIn delay={0.1}>
@@ -912,7 +929,7 @@ const HomePage = () => {
                     {subscribed ? (
                       <div className="flex items-center gap-2 mt-3 text-success text-sm font-semibold">
                         <CheckCircle className="w-4 h-4" />
-                        You're subscribed. Check your inbox for a confirmation email.
+                        Thanks — you're on the list. The weekly briefing launches soon.
                       </div>
                     ) : (
                       <>

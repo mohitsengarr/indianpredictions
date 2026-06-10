@@ -4,7 +4,7 @@ import {
   ArrowLeft, Calendar, Share2, ExternalLink, TrendingUp, TrendingDown,
   AlertTriangle, Shield, Globe, Zap, BarChart3, Users, Building2, Gauge,
   Clock, Target, Lightbulb, History, ArrowUpRight, ArrowDownRight, Minus,
-  GitBranch,
+  GitBranch, Loader2,
 } from 'lucide-react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -46,6 +46,16 @@ const IMPACT_CATEGORIES = [
   { key: 'consumer', label: 'Consumer', icon: Users },
 ];
 
+/* impactProbability is free text like "High – sustained geopolitical uncertainty".
+   Map known prefixes to a numeric bar width so the progress bar actually renders. */
+const probabilityToWidth = (probability?: string): number => {
+  const lower = (probability ?? '').toLowerCase().trim();
+  if (lower.startsWith('high')) return 85;
+  if (lower.startsWith('medium')) return 55;
+  if (lower.startsWith('low')) return 25;
+  return 50;
+};
+
 const getImpactLevel = (status: string, category?: string): Record<string, { score: number; label: string }> => {
   // For critical events, impact is always negative/severe
   if (status === 'critical') {
@@ -77,12 +87,12 @@ const getImpactLevel = (status: string, category?: string): Record<string, { sco
 const EventDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { events: TRENDING_EVENTS } = useTrendingEvents();
+  const { events: TRENDING_EVENTS, loading } = useTrendingEvents();
   const { markets: allMarkets } = useIndiaMarkets();
   const event = TRENDING_EVENTS.find((e) => e.slug === slug);
 
   useSEO({
-    title: event ? event.title : 'Event Not Found',
+    title: event ? event.title : loading ? 'Loading Event…' : 'Event Not Found',
     description: event ? event.summary : 'This event could not be found.',
     canonical: event ? `/events/${event.slug}` : undefined,
     schema: event ? {
@@ -94,6 +104,19 @@ const EventDetailPage = () => {
       publisher: { '@type': 'Organization', name: 'India Predictions', url: 'https://indiapredictions.com' },
     } : undefined,
   });
+
+  // While events are still loading, show a spinner instead of flashing a 404
+  // for direct visits — only declare "Not Found" once loading has finished.
+  if (loading && !event) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3 text-muted-foreground">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <p className="text-sm">Loading event…</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!event) {
     return (
@@ -225,7 +248,7 @@ const EventDetailPage = () => {
               <div className="flex-1 bg-muted rounded-full h-2.5 overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: event.impactProbability }}
+                  animate={{ width: `${probabilityToWidth(event.impactProbability)}%` }}
                   transition={{ duration: 1, delay: 0.5 }}
                   className="h-full bg-secondary rounded-full"
                 />

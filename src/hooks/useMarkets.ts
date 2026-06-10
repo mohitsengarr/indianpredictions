@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Market } from '@/lib/types';
 import { MARKETS as FALLBACK_MARKETS } from '@/lib/mock-data';
 import { supabase } from '@/lib/supabase';
@@ -64,9 +64,14 @@ export function useMarkets(): UseMarketsResult {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [tick, setTick] = useState(0);
+  const lastTickRef = useRef(tick);
 
   useEffect(() => {
-    if (cachedAll && Date.now() - cacheTimestamp < CACHE_TTL) {
+    // A tick change means refetch() was called — bypass the TTL check.
+    const forced = tick !== lastTickRef.current;
+    lastTickRef.current = tick;
+
+    if (!forced && cachedAll && Date.now() - cacheTimestamp < CACHE_TTL) {
       setMarkets(cachedAll);
       setLoading(false);
       return;
@@ -115,9 +120,14 @@ export function useIndiaMarkets(): {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
   const [tick, setTick] = useState(0);
+  const lastTickRef = useRef(tick);
 
   useEffect(() => {
-    if (cachedIndia && Date.now() - cacheTimestamp < CACHE_TTL) {
+    // A tick change means refetch() was called — bypass the TTL check.
+    const forced = tick !== lastTickRef.current;
+    lastTickRef.current = tick;
+
+    if (!forced && cachedIndia && Date.now() - cacheTimestamp < CACHE_TTL) {
       setMarkets(cachedIndia);
       setLoading(false);
       return;

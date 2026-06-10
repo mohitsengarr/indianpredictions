@@ -6,6 +6,12 @@ on:
     - cron: '30 0 * * *'
   workflow_dispatch: # Allow manual trigger from GitHub UI
 
+# Serialize with the news fetcher — both commit to main; overlapping runs
+# race on push and one run's data gets lost to a non-fast-forward rejection.
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
@@ -20,6 +26,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      # Required for the optional Supabase upsert inside the scraper —
+      # without dependencies the dynamic import('@supabase/supabase-js')
+      # throws and the DB silently serves stale data forever.
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run Firecrawl scraper
         env:
@@ -35,4 +48,6 @@ jobs:
           git add public/data/scraped-events.json
           git diff --cached --quiet && echo "No changes to commit" && exit 0
           git commit -m "chore: update scraped events [automated]"
+          # Rebase before push in case another workflow/dev pushed meanwhile
+          git pull --rebase origin main
           git push

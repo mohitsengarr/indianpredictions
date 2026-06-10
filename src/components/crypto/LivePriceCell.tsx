@@ -10,12 +10,14 @@ interface LivePriceCellProps {
 const LivePriceCell = ({ formattedPrice, rawPrice, isLive }: LivePriceCellProps) => {
   const prevPriceRef = useRef(rawPrice);
   const [flash, setFlash] = useState<'up' | 'down' | null>(null);
+  const [flashKey, setFlashKey] = useState(0);
 
   useEffect(() => {
     if (!isLive) return;
     const prev = prevPriceRef.current;
     if (prev !== rawPrice && prev !== 0) {
       setFlash(rawPrice > prev ? 'up' : 'down');
+      setFlashKey((k) => k + 1);
       const timer = setTimeout(() => setFlash(null), 800);
       return () => clearTimeout(timer);
     }
@@ -32,7 +34,7 @@ const LivePriceCell = ({ formattedPrice, rawPrice, isLive }: LivePriceCellProps)
       <AnimatePresence>
         {flash && (
           <motion.span
-            key={`flash-${Date.now()}`}
+            key={`flash-${flashKey}`}
             initial={{ opacity: 0.6 }}
             animate={{ opacity: 0 }}
             exit={{ opacity: 0 }}

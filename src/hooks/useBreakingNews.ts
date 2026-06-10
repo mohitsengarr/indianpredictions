@@ -37,7 +37,10 @@ export function useBreakingNews(limit = 8) {
         cacheTs = Date.now();
         setNews(fresh.slice(0, limit));
       })
-      .catch(() => setNews([]))
+      .catch(() => {
+        // Keep previously loaded items on failure; only blank when nothing was ever loaded.
+        if (!cached) setNews([]);
+      })
       .finally(() => setLoading(false));
   }, [limit]);
 

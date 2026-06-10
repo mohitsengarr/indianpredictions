@@ -174,6 +174,16 @@ async function main() {
 
   console.log(`\n📊 Total events scraped: ${allEvents.length}`);
 
+  // Guard against partial/empty scrapes wiping good data: a healthy run
+  // across 9 categories yields ~25+ events. If we got too few, keep the
+  // previous file and exit non-zero so the workflow shows red instead of
+  // silently committing a regression.
+  const MIN_EVENTS = 12;
+  if (allEvents.length < MIN_EVENTS) {
+    console.error(`❌ Only ${allEvents.length} events scraped (minimum ${MIN_EVENTS}). Keeping previous data file.`);
+    process.exit(1);
+  }
+
   // Write JSON file
   const jsonPath = join(__dirname, '..', 'public', 'data', 'scraped-events.json');
   writeFileSync(jsonPath, JSON.stringify(allEvents, null, 2));

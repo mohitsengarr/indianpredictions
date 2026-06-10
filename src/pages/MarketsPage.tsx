@@ -27,24 +27,28 @@ const MarketsPage = () => {
     canonical: "/markets",
   });
 
-  const enabledMarkets = markets.filter((m) =>
-    APP_CONFIG.enabledCategories.includes(m.category)
+  // Memo the filtered list separately from the sorted list so sorting only
+  // re-runs when the underlying markets, filters, or sort key actually change
+  // (previously `filtered` was a new array every render, so every keystroke
+  // invalidated the sort memo and re-sorted on each render).
+  const filteredUnsorted = useMemo(
+    () =>
+      markets.filter(
+        (m) =>
+          APP_CONFIG.enabledCategories.includes(m.category) &&
+          (category === 'all' || m.category === category) &&
+          m.title.toLowerCase().includes(search.toLowerCase())
+      ),
+    [markets, category, search]
   );
 
-  let filtered = enabledMarkets.filter((m) => {
-    const matchCat = category === 'all' || m.category === category;
-    const matchSearch = m.title.toLowerCase().includes(search.toLowerCase());
-    return matchCat && matchSearch;
-  });
-
-  const sorted = useMemo(() => {
-    const arr = [...filtered];
+  const filtered = useMemo(() => {
+    const arr = [...filteredUnsorted];
     if (sort === 'trending') return sortByTrending(arr);
     if (sort === 'volume') return arr.sort((a, b) => b.volume - a.volume);
     if (sort === 'change') return arr.sort((a, b) => Math.abs(b.change24h) - Math.abs(a.change24h));
     return arr.sort((a, b) => new Date(a.closesAt).getTime() - new Date(b.closesAt).getTime());
-  }, [filtered, sort]);
-  filtered = sorted;
+  }, [filteredUnsorted, sort]);
 
   return (
     <div className="pb-24 lg:pb-8">

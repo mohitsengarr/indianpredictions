@@ -22,7 +22,8 @@ export const MARKETS: Market[] = [
     title: 'Will India win the ICC Champions Trophy 2025?',
     description: 'Resolves YES if India wins the ICC Champions Trophy 2025 final.',
     category: 'cricket',
-    status: 'live',
+    // Title is tied to a past event (Champions Trophy 2025) — market is closed.
+    status: 'closed',
     yesPrice: 0.62,
     noPrice: 0.38,
     volume: 2450000,
@@ -43,7 +44,8 @@ export const MARKETS: Market[] = [
     title: 'Will RBI cut the repo rate in April 2026 policy meeting?',
     description: 'Resolves YES if the Reserve Bank of India announces a repo rate cut at its April 2026 MPC meeting.',
     category: 'economy',
-    status: 'live',
+    // Title is tied to the (past) April 2026 MPC meeting — market is closed.
+    status: 'closed',
     yesPrice: 0.45,
     noPrice: 0.55,
     volume: 890000,
@@ -64,7 +66,8 @@ export const MARKETS: Market[] = [
     title: 'Will Mumbai Indians reach IPL 2026 playoffs?',
     description: 'Resolves YES if Mumbai Indians qualify for the IPL 2026 playoff stage.',
     category: 'cricket',
-    status: 'live',
+    // IPL 2026 playoff qualification is decided (season ended May 2026) — closed.
+    status: 'closed',
     yesPrice: 0.71,
     noPrice: 0.29,
     volume: 3200000,
@@ -125,7 +128,8 @@ export const MARKETS: Market[] = [
     title: 'Will India\'s CPI inflation stay below 5% in March 2026?',
     description: 'Resolves YES if India\'s Consumer Price Index inflation for March 2026 is reported below 5%.',
     category: 'economy',
-    status: 'live',
+    // Title is tied to the (past) March 2026 CPI print — market is closed.
+    status: 'closed',
     yesPrice: 0.58,
     noPrice: 0.42,
     volume: 670000,
@@ -166,7 +170,8 @@ export const MARKETS: Market[] = [
     title: 'Will Nifty 50 close above 25,000 on Budget Day 2026?',
     description: 'Resolves YES if Nifty 50 index closes above 25,000 on the day Union Budget 2026 is presented.',
     category: 'economy',
-    status: 'live',
+    // Budget Day 2026 (Feb 1) has passed — market is closed (position settled below).
+    status: 'closed',
     yesPrice: 0.48,
     noPrice: 0.52,
     volume: 1340000,

@@ -29,7 +29,7 @@ const getProbability = (event: TrendingEvent): number => {
   for (let i = 0; i < str.length; i++) {
     hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
   }
-  const base = Math.abs(hash % 60) + 20; // 20-80 range
+  const base = Math.abs(hash % 60) + 20; // 20-79 range
   if (event.status === 'critical') return Math.min(base + 15, 92);
   if (event.status === 'completed') return base > 50 ? 85 : 15;
   return base;
@@ -67,7 +67,7 @@ const EventCard = ({ event, index = 0 }: EventCardProps) => {
       <div className="p-5 flex flex-col gap-3">
       {/* Trending/Hot/Breaking Badge */}
       {badge && (
-        <div className={`absolute ${event.imageUrl ? 'top-2 right-2' : '-top-2 -right-1'} z-10 text-[10px] font-bold px-2 py-0.5 rounded-full shadow ${badge.className}`}>
+        <div className={`absolute top-2 right-2 z-10 text-[10px] font-bold px-2 py-0.5 rounded-full shadow ${badge.className}`}>
           {badge.label}
         </div>
       )}

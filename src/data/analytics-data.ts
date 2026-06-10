@@ -174,7 +174,7 @@ export const ECONOMIC_METRICS: EconomicMetric[] = [
   { label: 'GDP Growth', value: '7.4%', numValue: 7.4, change: 0.1, unit: '%', sparkline: [6.8, 7.0, 7.1, 7.2, 7.3, 7.4] },
   { label: 'CPI Inflation', value: '2.1%', numValue: 2.1, change: -0.4, unit: '%', sparkline: [4.2, 3.8, 3.2, 2.8, 2.5, 2.1] },
   { label: 'Repo Rate', value: '5.25%', numValue: 5.25, change: 0, unit: '%', sparkline: [6.5, 6.25, 6.0, 5.75, 5.5, 5.25] },
-  { label: 'Sensex', value: '72,450', numValue: 72450, change: -5.2, unit: 'pts', sparkline: [78200, 77100, 76000, 74800, 73200, 72450] },
+  { label: 'Sensex', value: '72,450', numValue: 72450, change: -2.1, unit: 'pts', sparkline: [78200, 77100, 76000, 74800, 73200, 72450] },
   { label: 'Rupee/USD', value: '87.42', numValue: 87.42, change: -2.1, unit: 'INR', sparkline: [84.5, 85.1, 85.8, 86.3, 86.9, 87.42] },
   { label: 'Brent Crude', value: '$101.3', numValue: 101.3, change: 14.8, unit: 'USD', sparkline: [82, 85, 88, 92, 97, 101.3] },
   { label: 'Gold (INR/10g)', value: '1,64,500', numValue: 164500, change: 8.2, unit: 'INR', sparkline: [148000, 152000, 155000, 158000, 161000, 164500] },

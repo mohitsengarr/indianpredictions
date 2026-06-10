@@ -53,7 +53,7 @@ const AnimateIn = ({
   if (scale) transforms.push('scale(0.96)');
   const fromTransform = transforms.length ? transforms.join(' ') : 'none';
 
-  const keyframeId = `anim-in-${direction}-${distance}-${scale ? 's' : ''}-${blur ? 'b' : ''}`;
+  const keyframeId = `anim-in-${direction}-${String(distance).replace('.', '_')}-${scale ? 's' : ''}-${blur ? 'b' : ''}`;
 
   const style: CSSProperties = {
     animationName: keyframeId,

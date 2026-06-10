@@ -1,10 +1,12 @@
 export const formatINR = (amount: number): string => {
+  // Guard against NaN/undefined/Infinity so the UI never shows "NaN Cr"
+  if (!Number.isFinite(amount)) return '₹0';
   const absAmount = Math.abs(amount);
   if (absAmount >= 10000000) {
-    return `${(amount / 10000000).toFixed(2)} Cr`;
+    return `₹${(amount / 10000000).toFixed(2)} Cr`;
   }
   if (absAmount >= 100000) {
-    return `${(amount / 100000).toFixed(2)} L`;
+    return `₹${(amount / 100000).toFixed(2)} L`;
   }
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -21,6 +23,24 @@ export const formatPercent = (value: number): string => {
 
 export const formatProbability = (price: number): string => {
   return `${Math.round(price * 100)}%`;
+};
+
+/**
+ * Round a yes/no price pair to whole percentages that stay consistent.
+ *
+ * When the two prices are complementary (sum within 0.02 of 1), independent
+ * rounding can show e.g. 64% / 37% (sums to 101). In that case we round yes
+ * and derive no = 100 - yes. Otherwise both are rounded independently.
+ */
+export const complementaryPercents = (
+  yesPrice: number,
+  noPrice: number
+): { yes: number; no: number } => {
+  const yes = Math.round(yesPrice * 100);
+  if (Math.abs(yesPrice + noPrice - 1) <= 0.02) {
+    return { yes, no: 100 - yes };
+  }
+  return { yes, no: Math.round(noPrice * 100) };
 };
 
 export const timeUntil = (dateStr: string): string => {

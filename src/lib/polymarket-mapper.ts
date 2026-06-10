@@ -29,12 +29,40 @@ function inferCategory(market: PolymarketMarket): MarketCategory {
   return 'crypto';
 }
 
-/** Generate a synthetic price history from the current price */
-function syntheticPriceHistory(yesPrice: number) {
+/** Simple string hash → 32-bit unsigned seed */
+function hashStringToSeed(str: string): number {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  }
+  return h >>> 0;
+}
+
+/** mulberry32 PRNG — deterministic sequence in [0, 1) from a 32-bit seed */
+function mulberry32(seed: number): () => number {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/**
+ * Generate a synthetic price history from the current price.
+ *
+ * NOTE: this series is synthetic/illustrative pending real history data from
+ * the Polymarket API. It is seeded deterministically from the market id so
+ * the same market always renders the same series instead of reshuffling on
+ * every fetch.
+ */
+function syntheticPriceHistory(yesPrice: number, marketId: string) {
+  const rand = mulberry32(hashStringToSeed(marketId));
   const points: { time: string; yes: number; no: number }[] = [];
-  let price = Math.max(0.05, Math.min(0.95, yesPrice - 0.1 + Math.random() * 0.05));
+  let price = Math.max(0.05, Math.min(0.95, yesPrice - 0.1 + rand() * 0.05));
   for (let i = 30; i >= 0; i--) {
-    price = Math.max(0.05, Math.min(0.95, price + (Math.random() - 0.48) * 0.035));
+    price = Math.max(0.05, Math.min(0.95, price + (rand() - 0.48) * 0.035));
     points.push({
       time: new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString(),
       yes: parseFloat(price.toFixed(2)),
@@ -64,9 +92,21 @@ export function mapPolymarketToMarket(pm: PolymarketMarket): Market | null {
   const endDate = pm.endDate ?? '';
   const startDate = pm.startDate ?? new Date().toISOString();
 
-  // Derive 24h change: we don't have historical OHLC from this endpoint,
-  // so we synthesise a small random change capped at ±10%
-  const change24h = parseFloat(((Math.random() * 10 - 5)).toFixed(1));
+  // Price history (synthetic/illustrative — see syntheticPriceHistory)
+  const priceHistory = syntheticPriceHistory(yesPrice, pm.id);
+
+  // Derive 24h change deterministically from the price history: last point's
+  // yes% minus the point ~24h earlier, in percentage points. The series has
+  // one point per day, so the previous point is ~24h before the last one.
+  const change24h =
+    priceHistory.length >= 2
+      ? parseFloat(
+          (
+            (priceHistory[priceHistory.length - 1].yes -
+              priceHistory[priceHistory.length - 2].yes) * 100
+          ).toFixed(1)
+        )
+      : 0;
 
   // Volume: Polymarket uses USD. We display as-is, formatter will label USD.
   const volume = parseFloat(String(pm.volume ?? pm.volume24hr ?? 0));
@@ -94,7 +134,7 @@ export function mapPolymarketToMarket(pm: PolymarketMarket): Market | null {
     resolutionSourceUrl: `https://polymarket.com/event/${pm.slug ?? pm.id}`,
     contextNote: undefined,
     createdAt: startDate,
-    priceHistory: syntheticPriceHistory(yesPrice),
+    priceHistory,
   };
 }
 

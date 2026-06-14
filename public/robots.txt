@@ -82,4 +82,4 @@ User-agent: *
 Allow: /
 
 # ── Sitemap ──────────────────────────────────────────────────────────
-Sitemap: https://indiapredictions.com/sitemap.xml
+Sitemap: https://www.indiapredictions.com/sitemap.xml

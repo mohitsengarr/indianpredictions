@@ -41,13 +41,16 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node scripts/scrape-firecrawl.mjs
 
+      - name: Regenerate sitemap from current events
+        run: node scripts/generate-sitemap.mjs
+
       - name: Commit and push updated events
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/scraped-events.json
+          git add public/data/scraped-events.json public/sitemap.xml
           git diff --cached --quiet && echo "No changes to commit" && exit 0
-          git commit -m "chore: update scraped events [automated]"
+          git commit -m "chore: update scraped events + sitemap [automated]"
           # Rebase before push in case another workflow/dev pushed meanwhile
           git pull --rebase origin main
           git push

@@ -10,6 +10,7 @@ const NotFound = () => {
     title: "Page Not Found – India Predictions",
     description: "The page you're looking for doesn't exist. Browse live India prediction markets, analytics, and insights instead.",
     canonical: location.pathname,
+    noindex: true,
   });
 
   useEffect(() => {

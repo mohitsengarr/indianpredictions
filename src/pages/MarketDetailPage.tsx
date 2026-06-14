@@ -137,8 +137,8 @@ const MarketDetailPage = () => {
           startDate: market.createdAt,
           endDate: market.closesAt,
           eventStatus: 'https://schema.org/EventScheduled',
-          location: { '@type': 'VirtualLocation', url: `https://indiapredictions.com/market/${market.id}` },
-          organizer: { '@type': 'Organization', name: 'India Predictions', url: 'https://indiapredictions.com' },
+          location: { '@type': 'VirtualLocation', url: `https://www.indiapredictions.com/market/${market.id}` },
+          organizer: { '@type': 'Organization', name: 'India Predictions', url: 'https://www.indiapredictions.com' },
         }
       : undefined,
   });

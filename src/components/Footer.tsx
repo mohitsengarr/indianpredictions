@@ -21,6 +21,7 @@ const footerSections = [
   {
     title: 'Resources',
     links: [
+      { label: 'About', href: '/about' },
       { label: 'Blog', href: '/blog' },
       { label: 'How It Works', href: '/blog/what-are-prediction-markets-guide-india' },
     ],

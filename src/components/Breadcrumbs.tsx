@@ -19,7 +19,7 @@ const Breadcrumbs = ({ items, dark = false }: BreadcrumbsProps) => {
       '@type': 'ListItem',
       position: i + 1,
       name: item.label,
-      ...(item.href ? { item: `https://indiapredictions.com${item.href}` } : {}),
+      ...(item.href ? { item: `https://www.indiapredictions.com${item.href}` } : {}),
     })),
   };
 

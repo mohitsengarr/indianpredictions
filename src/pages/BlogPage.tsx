@@ -17,7 +17,7 @@ const BlogPage = () => {
       '@type': 'Blog',
       name: 'India Predictions Blog',
       description: 'Expert analysis on Indian prediction markets',
-      url: 'https://indiapredictions.com/blog',
+      url: 'https://www.indiapredictions.com/blog',
     },
   });
 

@@ -8,9 +8,11 @@ interface SEOMeta {
   ogImage?: string;
   /** JSON-LD schema object(s) */
   schema?: object | object[];
+  /** When true, emit <meta name="robots" content="noindex,follow"> */
+  noindex?: boolean;
 }
 
-const BASE_URL = 'https://indiapredictions.com';
+const BASE_URL = 'https://www.indiapredictions.com';
 const DEFAULT_IMAGE = 'https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/07c14fad-e803-4809-8654-86579cab78d8/id-preview-a8d4ee2e--5fc81140-cec5-43a7-b277-b2d8ba92190f.lovable.app-1771895603345.png';
 const SEO_ATTR = 'data-seo-managed';
 
@@ -80,7 +82,7 @@ function cleanupSEOMeta() {
   if (schemaEl) schemaEl.remove();
 }
 
-export function useSEO({ title, description, keywords, canonical, ogImage, schema }: SEOMeta) {
+export function useSEO({ title, description, keywords, canonical, ogImage, schema, noindex }: SEOMeta) {
   const schemaStr = useMemo(() => (schema ? JSON.stringify(schema) : ''), [schema]);
 
   useEffect(() => {
@@ -91,6 +93,7 @@ export function useSEO({ title, description, keywords, canonical, ogImage, schem
 
     restores.push(setMeta('description', description));
     if (keywords) restores.push(setMeta('keywords', keywords));
+    if (noindex) restores.push(setMeta('robots', 'noindex,follow'));
 
     const url = canonical ? `${BASE_URL}${canonical}` : `${BASE_URL}${window.location.pathname}`;
     restores.push(setLink('canonical', url));
@@ -112,10 +115,10 @@ export function useSEO({ title, description, keywords, canonical, ogImage, schem
     if (schemaStr) setSchema(JSON.parse(schemaStr));
 
     return () => {
-      document.title = "India Predictions – India's Prediction Trading Platform";
+      document.title = "India Predictions – Live Prediction Market Odds";
       // Remove tags this run created and restore previous values on tags it mutated.
       restores.forEach((restore) => restore());
       cleanupSEOMeta();
     };
-  }, [title, description, keywords, canonical, ogImage, schemaStr]);
+  }, [title, description, keywords, canonical, ogImage, schemaStr, noindex]);
 }

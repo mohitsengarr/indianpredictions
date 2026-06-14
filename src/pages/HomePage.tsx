@@ -125,7 +125,7 @@ const HomePage = () => {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'India Predictions',
-      url: 'https://indiapredictions.com',
+      url: 'https://www.indiapredictions.com',
       description: "India's #1 prediction market hub",
     },
   });

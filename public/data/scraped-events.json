@@ -5,333 +5,404 @@
     "title": "Taking Stock: Nifty above 23,600, Sensex gains 1,695 pts on Middle East peace hopes",
     "category": "markets",
     "status": "active",
-    "summary": "The Indian stock market saw significant gains today as the Nifty crossed the 23,600 mark and the Sensex rose by 1,695 points, driven by optimism surrounding a potential peace deal in the Middle East. Analysts attribute this rally to easing global tensions and positive investor sentiments.",
+    "summary": "Indian equity markets surged today, driven by hopes for a peace deal in the Middle East. The Nifty crossed 23,600, while the Sensex rose by 1,695 points, reflecting a positive investor sentiment amid global market trends.",
     "imageUrl": "https://images.moneycontrol.com/static-mcnews/2026/06/20260612090730_up.jpeg",
     "keyDrivers": [
       "Middle East peace hopes",
-      "Market recovery",
-      "Increased investor sentiment"
+      "Easing global tensions",
+      "Positive investor sentiment"
     ],
     "mckinseyAnalysis": [
-      "Optimism surrounding international relations boosts investor confidence.",
-      "Strong performance in banking and oil-sensitive stocks contributes to market growth.",
-      "Technicals indicate potential for further gains if key levels are maintained."
+      "Strengthening market indices",
+      "Increased foreign investments",
+      "Sectoral gains in banking and energy"
     ],
-    "predictionMarketAngle": "Will the Sensex hit 80,000 by the end of the year? Yes",
+    "predictionMarketAngle": "Will the Nifty sustain above 23,600 next week?",
     "categoryLabel": "Markets",
     "categoryEmoji": "📉",
-    "updatedAt": "2026-06-13T01:29:21.008Z"
+    "updatedAt": "2026-06-14T01:33:44.424Z"
   },
   {
     "id": "evt-scrape-markets-2",
-    "slug": "sensex-zoos-1695-points-97-lakh-cr-added-to-market-cap",
-    "title": "Sensex Zoos 1,695 Points; ₹9.7 Lakh Cr Added to Market Cap",
+    "slug": "us-realty-firm-opendoor-winds-down-india-operations-nearly-250-employees-impacte",
+    "title": "US Realty Firm Opendoor Winds Down India Operations, Nearly 250 Employees Impacted",
     "category": "markets",
-    "status": "active",
-    "summary": "The Sensex experienced a significant surge, rising 1,695 points, which translated into a massive addition of ₹9.7 lakh crore to the market capitalization. This surge is attributed to positive investor sentiment amid hopes for peace in the Middle East, leading to eased inflation concerns.",
-    "imageUrl": "https://www.livemint.com/lm-img/img/2024/06/04/382x214/The-30-share-BSE-Sensex-jumped-494-28-points---REU_1717525440809_1717525469303.jpg",
+    "status": "critical",
+    "summary": "US-based Opendoor is winding down its operations in India, impacting around 250 employees. The decision reflects ongoing challenges in the Indian real estate market and internal business adjustments.",
+    "imageUrl": "https://img.etimg.com/thumb/width-87,height-65,imgsize-12686,resizemode-75,msid-131684463/markets/digital-real-estate/realty-news/us-realty-firm-opendoor-winds-down-india-operations-nearly-250-employees-impacted.jpg",
     "keyDrivers": [
-      "Positive investor sentiment",
-      "Middle East peace hopes",
-      "Surge in tech stock performance"
+      "Operational challenges in India",
+      "Economic conditions affecting real estate",
+      "Restructuring within the company"
     ],
     "mckinseyAnalysis": [
-      "The Indian stock market witnessed a bullish trend today.",
-      "Investor confidence is generally high due to geopolitical stability.",
-      "Strong performance of large-cap stocks boosted sentiment."
+      "Market conditions in the Indian real estate sector appear challenging for foreign firms",
+      "Local competition and economic factors influence operational viability",
+      "Opendoor's exit signals a cautious approach by foreign investors"
     ],
-    "predictionMarketAngle": "Will the Sensex maintain its upward momentum next week?",
+    "predictionMarketAngle": "Will more foreign firms exit the Indian market in the next year? Yes",
     "categoryLabel": "Markets",
     "categoryEmoji": "📉",
-    "updatedAt": "2026-06-13T01:29:21.008Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-markets-3",
-    "slug": "nifty-50-updates-market-performance-on-june-12-2026",
-    "title": "NIFTY 50 Updates: Market Performance on June 12, 2026",
+    "slug": "indias-market-sees-significant-gains",
+    "title": "India's Market Sees Significant Gains",
     "category": "markets",
     "status": "active",
-    "summary": "The NIFTY 50 index experienced a significant rise on June 12, 2026, closing at 23,622.90 with a gain of 461.30 points (1.99%). This upward movement reflects a positive trend in the Indian stock market amidst continuing volatility in global markets.",
-    "imageUrl": "https://www.nseindia.com/next-assets/images/tree-map-1.png",
+    "summary": "The NIFTY 50 index has surged by 461.30 points, closing at 23,622.90, marking a 1.99% increase in the market today. This uplift follows strong performance across key sectors and stock indices including NIFTY Next 50 and NIFTY Bank, showcasing a positive sentiment among investors.",
+    "imageUrl": "https://nsearchives.nseindia.com//web/banner/2026-03/Electricity_Static_-_636x555_2.jpg_20260327160628.jpeg?w=3840",
     "keyDrivers": [
-      "NIFTY gains significant traction",
-      "Positive sentiment in Indian markets",
-      "Continued interest from institutional investors"
+      "Growth in major sectors",
+      "Rise in foreign investment",
+      "Positive economic indicators"
     ],
     "mckinseyAnalysis": [
-      "Market resilience reflects investor confidence",
-      "Sector performance shows varied responses",
-      "Banks and financial services seeing strong growth"
+      "Increase in investor confidence boosts the market",
+      "Technological advancements in trading platforms",
+      "Higher liquidity due to improved economic policies"
     ],
-    "predictionMarketAngle": "Will NIFTY continue to rise in the upcoming week?",
+    "predictionMarketAngle": "Will the NIFTY 50 maintain its upward trend in the next week?",
     "categoryLabel": "Markets",
     "categoryEmoji": "📉",
-    "updatedAt": "2026-06-13T01:29:21.008Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-economy-1",
-    "slug": "rbi-keeps-repo-rate-unchanged-amid-inflation-concerns",
-    "title": "RBI Keeps Repo Rate Unchanged Amid Inflation Concerns",
+    "slug": "rbi-keeps-repo-rate-unchanged-at-525-amid-economic-uncertainty",
+    "title": "RBI Keeps Repo Rate Unchanged at 5.25% Amid Economic Uncertainty",
     "category": "economy",
     "status": "active",
-    "summary": "The Reserve Bank of India’s Monetary Policy Committee has decided to maintain the repo rate at 5.25%, reflecting concerns over inflation and economic growth amidst rising geopolitical tensions. The MPC anticipates continued challenges from elevated energy prices and uncertain economic conditions.",
+    "summary": "The Reserve Bank of India's Monetary Policy Committee has decided to maintain the repo rate at 5.25% following a recent three-day meeting. The decision comes in light of rising inflation risks, a weakening rupee, and ongoing geopolitical tensions, marking a cautious stance amid uncertain economic conditions.",
     "imageUrl": "https://i.ytimg.com/vi/Vav7W06wr5k/maxresdefault.jpg",
     "keyDrivers": [
-      "Repo rate held at 5.25%",
-      "Rising inflation concerns",
-      "Geopolitical tensions affecting energy prices"
+      "Repo rate decision",
+      "Inflation risks",
+      "Global economic conditions",
+      "Geopolitical tensions",
+      "Rupee performance"
     ],
     "mckinseyAnalysis": [
-      "The RBI's decision reflects caution amid rising inflation risks.",
-      "The impact of global supply chain disruptions remains significant.",
-      "Future economic growth projections are clouded by uncertainty."
+      "MPC's unanimous decision reflects confidence in current economic resilience.",
+      "Ongoing geopolitical uncertainties contribute to a cautious monetary policy stance.",
+      "Inflation projections indicate varied impacts on growth and consumer prices."
     ],
-    "predictionMarketAngle": "Will the RBI change the repo rate in the next quarter? Yes/No",
+    "predictionMarketAngle": "Will the RBI need to raise interest rates in the next quarter? Yes/No",
     "categoryLabel": "Economy",
     "categoryEmoji": "💰",
-    "updatedAt": "2026-06-13T01:29:21.008Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-economy-2",
-    "slug": "significant-india-gdp-and-inflation-data-released",
-    "title": "Significant India GDP and Inflation Data Released",
-    "category": "economy",
-    "status": "active",
-    "summary": "Recent reports from the Reserve Bank of India highlighted key economic indicators, including GDP growth rates and inflation metrics. These insights are crucial for understanding the current economic landscape in India.",
-    "imageUrl": "https://data.rbi.org.in/assets/images/newrbiname.jpg",
-    "keyDrivers": [
-      "Real GDP growth trends",
-      "Inflation fluctuations",
-      "Monetary policy adjustments",
-      "Global economic impact",
-      "Domestic consumption patterns"
-    ],
-    "mckinseyAnalysis": [
-      "Potential slowdown in economic growth",
-      "Inflation pressures may impact consumer spending",
-      "Need for policy intervention to sustain recovery",
-      "Comparative analysis with global trends",
-      "Focus on sectoral growth opportunities"
-    ],
-    "predictionMarketAngle": "Will India's GDP growth exceed 6% in the next fiscal year?",
-    "categoryLabel": "Economy",
-    "categoryEmoji": "💰",
-    "updatedAt": "2026-06-13T01:29:21.008Z"
-  },
-  {
-    "id": "evt-scrape-economy-3",
     "slug": "rbi-monetary-policy-repo-rate-unchanged-gdp-outlook-brightens",
     "title": "RBI Monetary Policy: Repo Rate Unchanged, GDP Outlook Brightens",
     "category": "economy",
     "status": "active",
-    "summary": "The Reserve Bank of India has maintained the repo rate at 5.50% and revised GDP growth forecast for FY 2025-26 to 6.8%. Additionally, it lowered the CPI inflation forecast to 2.6%, reflecting a cautiously optimistic outlook for the Indian economy.",
+    "summary": "The Reserve Bank of India has kept the repo rate steady at 5.50% while revising the GDP growth forecast for FY 2025-26 upwards to 6.8%. The report indicates robust economic conditions with a significant decrease in CPI inflation and a narrowing current account deficit.",
     "imageUrl": "https://static.pib.gov.in/WriteReadData/specificdocs/photo/2021/aug/ph202183101.png",
     "keyDrivers": [
-      "Repo rate maintained at 5.50%",
-      "GDP growth forecast revised to 6.8%",
-      "CPI inflation lowered to 2.6%",
-      "Narrowed current account deficit at 0.2% of GDP",
-      "Strong equity market performance"
+      "Repo rate kept unchanged at 5.50%",
+      "GDP growth forecast revised to 6.8% for FY 2025-26",
+      "CPI inflation forecast lowered to 2.6%",
+      "Current account deficit narrowed to 0.2% of GDP",
+      "Positive market conditions with rising equity indices"
     ],
     "mckinseyAnalysis": [
-      "Resilient domestic demand is supporting growth.",
-      "Strong consumption and investments are driving optimism.",
-      "Global agencies reaffirm India's strong economic outlook."
+      "Balanced monetary policy supports economic momentum and financial stability.",
+      "Strong domestic demand and resilient consumption underpin growth.",
+      "Global agencies reaffirm confidence in India's economic outlook."
     ],
-    "predictionMarketAngle": "Will India's GDP growth forecast continue to improve through FY 2025-26?",
+    "predictionMarketAngle": "Will India's GDP growth reach 7% by the end of FY 2025-26?",
     "categoryLabel": "Economy",
     "categoryEmoji": "💰",
-    "updatedAt": "2026-06-13T01:29:21.009Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
+  },
+  {
+    "id": "evt-scrape-economy-3",
+    "slug": "monetary-policy-committee-holds-repo-rate-at-6",
+    "title": "Monetary Policy Committee Holds Repo Rate at 6%",
+    "category": "economy",
+    "status": "active",
+    "summary": "The Reserve Bank of India's Monetary Policy Committee (MPC) has announced that the policy repo rate will remain unchanged at 6.0% following a meeting held on April 4-5, 2018. This decision is in line with the objective of maintaining a neutral stance on monetary policy amid various economic indicators and inflation expectations.",
+    "imageUrl": "https://www.rbi.org.in/scripts/images/MMP19042018_CH1.jpg",
+    "keyDrivers": [
+      "Monetary policy decision to keep the repo rate unchanged",
+      "Assessment of global and domestic economic indicators",
+      "Inflation expectations influencing the policy stance"
+    ],
+    "mckinseyAnalysis": [
+      "Consumer confidence and growth indicators show improvement",
+      "Inflation pressures remain with upward risks",
+      "Investment activity is gaining traction in the economy"
+    ],
+    "predictionMarketAngle": "Will the RBI increase the repo rate in the next MPC meeting? Yes/No",
+    "categoryLabel": "Economy",
+    "categoryEmoji": "💰",
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-politics-1",
-    "slug": "controversial-plan-to-overhaul-indias-elections",
-    "title": "Controversial Plan to Overhaul India's Elections",
+    "slug": "indias-modi-govt-purged-millions-of-voters-before-elections-in-direct-attack-on",
+    "title": "India’s Modi Gov’t Purged Millions of Voters Before Elections in “Direct Attack” on Democracy",
     "category": "politics",
-    "status": "upcoming",
-    "summary": "The Indian government proposes a significant reform to streamline the election process, proposing to hold all elections every five years. Opposition parties argue that this could undermine democracy and centralize power, creating a contentious political landscape.",
-    "imageUrl": "https://i.ytimg.com/vi/alg-hq9JIqI/maxresdefault.jpg",
+    "status": "active",
+    "summary": "Recent state elections in India have seen Prime Minister Modi's BJP party gain control, prompting allegations of mass voter disenfranchisement. Before the elections, 9 million names were removed from voter rolls, significantly affecting Muslim and minority populations, leading to claims of electoral manipulation.",
+    "imageUrl": "https://i.ytimg.com/vi/cwtCOHzzvhE/maxresdefault.jpg",
     "keyDrivers": [
-      "Election cycle reform",
-      "Government proposal",
-      "Opposition backlash",
-      "Federalism concerns",
-      "Impact on political power"
+      "Election Commission's special intensive revision (SIR) process",
+      "Disenfranchisement of Muslim and minority voters",
+      "Rising control of BJP in state elections"
     ],
     "mckinseyAnalysis": [
-      "Proposal aims to reduce costs and inefficiencies",
-      "Critics highlight risks to regional representation",
-      "Historical context of simultaneous elections in India",
-      "Potential economic benefits identified",
-      "Challenge of securing bipartisan support for constitutional amendments"
+      "BJP now governs over 70% of India",
+      "Mamata Banerjee refuses to accept election results, citing rigging",
+      "Potential long-term implications for Indian democracy"
     ],
-    "predictionMarketAngle": "Will the proposed election overhaul pass in Parliament?",
+    "predictionMarketAngle": "Will the allegations of voter suppression in India lead to significant political changes?",
     "categoryLabel": "Politics",
     "categoryEmoji": "🗳️",
-    "updatedAt": "2026-06-13T01:29:21.009Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-politics-2",
-    "slug": "modis-coalition-heads-for-landslide-win-in-a-key-state-election",
-    "title": "Modi's coalition heads for landslide win in a key state election",
+    "slug": "why-welfare-isnt-winning-elections-in-india-like-it-used-to",
+    "title": "Why welfare isn't winning elections in India like it used to",
     "category": "politics",
     "status": "active",
-    "summary": "Indian Prime Minister Narendra Modi's ruling coalition is poised for a significant victory in the Bihar state election, a pivotal test of his popularity. With leads indicating the Bharatiya Janata Party-led alliance set to cross the 200-seat mark, the win is crucial for strengthening Modi's federal government ahead of upcoming elections.",
-    "imageUrl": "https://d3i6fh83elv35t.cloudfront.net/static/2025/11/2025-11-14T140943Z_1619982495_RC2EWHA3V98U_RTRMADP_3_INDIA-POLITICS-BIHAR-1024x671.jpg",
+    "summary": "The traditional electoral influence of welfare schemes in India is diminishing, as evidenced by recent state election outcomes. Political analysts suggest that while safety-net programs may provide a foundation for electoral success, they are no longer sufficient for securing voter loyalty, prompting a shift in political strategies.",
+    "imageUrl": "https://ichef.bbci.co.uk/news/480/cpsprodpb/a9e8/live/e5b683a0-4bba-11f1-9fc1-69bab7136531.jpg.webp",
     "keyDrivers": [
-      "Popularity of Modi's leadership",
-      "Strength of the BJP-led coalition",
-      "Economic concerns in Bihar",
-      "Female voter support"
+      "Diminishing electoral efficacy of welfare schemes",
+      "Increased competition among political parties",
+      "Shift in voter expectations towards jobs and long-term benefits"
     ],
     "mckinseyAnalysis": [
-      "Victory in Bihar solidifies Modi's position ahead of national elections",
-      "Electoral dynamics influenced by women voters",
-      "Performance of the opposition reflects public sentiment"
+      "Welfare schemes are now a bipartisan consensus in India.",
+      "High levels of welfare spending are squeezing state budgets.",
+      "Voters increasingly prioritize economic growth and job creation over welfare alone."
     ],
-    "predictionMarketAngle": "Will Modi's coalition maintain a majority in future elections?",
+    "predictionMarketAngle": "Will India's political parties adapt successfully to changing voter expectations regarding welfare?",
     "categoryLabel": "Politics",
     "categoryEmoji": "🗳️",
-    "updatedAt": "2026-06-13T01:29:21.009Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-politics-3",
-    "slug": "india-country-report-2026-democratic-backsliding-amid-economic-growth",
-    "title": "India Country Report 2026: Democratic Backsliding Amid Economic Growth",
+    "slug": "freedom-in-the-world-2025-india-report-highlights",
+    "title": "Freedom in the World 2025: India Report Highlights",
     "category": "politics",
     "status": "active",
-    "summary": "The India Country Report 2026 highlights a period marked by continued democratic backsliding under Prime Minister Narendra Modi's government, despite strong economic growth. The BJP, while losing its absolute majority in the 2024 elections, remains influential in promoting a Hindu-nationalist agenda, leading to significant changes in civil rights, press freedom, and institutional integrity.",
-    "imageUrl": "https://bti-project.org/en/reports/country-report/IND#content",
+    "summary": "The 2025 Freedom House report reveals that despite India's multiparty democracy, Prime Minister Modi's government has faced criticism for discriminatory policies and increasing persecution of minorities, particularly Muslims. The report also discusses the party's electoral performance, key political developments, and rising political tensions in the country.",
+    "imageUrl": "https://freedomhouse.org/sites/default/files/styles/400x280_fp_scale_crop_/public/2025-03/India.png.webp?itok=dBbTs04Y",
     "keyDrivers": [
-      "Democratic backsliding under BJP",
-      "Strong economic performance",
-      "Impact of coalition governance",
-      "Resistance against minority rights",
-      "Polarizing rhetoric towards minorities"
+      "Discriminatory policies against Muslims",
+      "Persecution and harassment of journalists",
+      "Impact of Citizenship Amendment Act",
+      "Increased power of the ruling BJP"
     ],
     "mckinseyAnalysis": [
-      "Elections in 2024 revealed the resilience of India's democratic framework despite challenges.",
-      "Economic growth trends could mask underlying inequalities, especially among marginalized communities.",
-      "Moderate resurgence of opposition parties may not be sufficient to counter BJP's influence."
+      "Modi's BJP lost its single-party majority yet retained power through coalition formation.",
+      "The Citizenship Amendment Act raises concerns regarding India's secular values and minority rights.",
+      "Political clashes and unrest linked to Hindu nationalism continue to escalate."
     ],
-    "predictionMarketAngle": "Will Modi's government face significant challenges in maintaining its agenda post-2024 elections?",
+    "predictionMarketAngle": "Will the political landscape in India remain stable under Modi's leadership through 2025?",
     "categoryLabel": "Politics",
     "categoryEmoji": "🗳️",
-    "updatedAt": "2026-06-13T01:29:21.009Z"
+    "updatedAt": "2026-06-14T01:33:44.425Z"
   },
   {
     "id": "evt-scrape-sports-1",
-    "slug": "rcb-wins-ipl-2026-kohli-shines-sooryavanshi-sweeps-awards",
-    "title": "RCB Wins IPL 2026: Kohli Shines, Sooryavanshi Sweeps Awards",
-    "category": "sports",
-    "status": "completed",
-    "summary": "Royal Challengers Bengaluru (RCB) clinched their second consecutive IPL title by defeating Gujarat Titans (GT) in the final. Virat Kohli's outstanding performance helped RCB secure the victory, while Vaibhav Sooryavanshi of Rajasthan Royals was awarded the Orange Cap and named the tournament's Most Valuable Player.",
-    "keyDrivers": [
-      "Virat Kohli's unbeaten 75 runs in the final",
-      "Vaibhav Sooryavanshi's exceptional performance throughout the tournament",
-      "RCB's consistent team effort leading to back-to-back titles"
-    ],
-    "mckinseyAnalysis": [
-      "Kohli's leadership has significantly improved RCB's playoff performance",
-      "Sooryavanshi's young age showcases the depth of talent in Indian cricket",
-      "RCB's strategy focuses on nurturing young players alongside experienced veterans"
-    ],
-    "predictionMarketAngle": "Will RCB continue their winning streak in the next season?",
-    "categoryLabel": "Sports",
-    "categoryEmoji": "🏏",
-    "updatedAt": "2026-06-13T01:29:28.521Z"
-  },
-  {
-    "id": "evt-scrape-sports-2",
     "slug": "final-rcb-vs-gt-code-of-conduct-breach",
     "title": "Final: RCB vs GT - Code of Conduct Breach",
     "category": "sports",
     "status": "active",
-    "summary": "The final match between RCB and GT on June 1, 2026, saw a breach of the code of conduct, raising concerns among officials and fans alike. This incident adds an unexpected twist to the already intense final of the IPL 2026 season.",
+    "summary": "On June 1, 2026, the final match between RCB and GT witnessed a violation of code of conduct, prompting discussions about player conduct in high-stakes games. The incident has sparked significant interest among fans and analysts alike, raising questions about regulations within the league.",
     "imageUrl": "https://documents.iplt20.com/bcci/articles/1780324834_Arjun3_09566.jpg",
     "keyDrivers": [
-      "Breach of conduct rules",
-      "High-stakes match",
-      "Fan reactions"
+      "Incident during IPL final match",
+      "Public and media scrutiny",
+      "Potential penalties for the teams or players"
     ],
     "mckinseyAnalysis": [
-      "Impact on team reputation",
-      "Potential sanctions from the board",
-      "Influence on player behavior in future matches"
+      "Impact on team reputations",
+      "Potential changes in league regulations",
+      "Need for improved player education on conduct"
     ],
-    "predictionMarketAngle": "Will the breach result in penalties for the teams involved?",
+    "predictionMarketAngle": "Will RCB face penalties due to the code of conduct breach?",
     "categoryLabel": "Sports",
     "categoryEmoji": "🏏",
-    "updatedAt": "2026-06-13T01:29:28.521Z"
+    "updatedAt": "2026-06-14T01:33:56.231Z"
+  },
+  {
+    "id": "evt-scrape-sports-2",
+    "slug": "royal-challengers-bengaluru-wins-ipl-2026-final-again",
+    "title": "Royal Challengers Bengaluru wins IPL 2026 Final again",
+    "category": "sports",
+    "status": "completed",
+    "summary": "Royal Challengers Bengaluru (RCB) successfully defends its title, winning the IPL 2026 Final against Gujarat Titans by five wickets. Virat Kohli played a key role with an unbeaten 75, leading RCB to their second consecutive championship.",
+    "imageUrl": "https://sportstar.thehindu.com/cricket/ipl/rcb-final-ipl-2026-champions-result-score-scorecard-royal-challengers-bengaluru-gujarat-titans/article71045737.ece",
+    "keyDrivers": [
+      "Virat Kohli's performance",
+      "Strong team dynamics",
+      "Effective bowling strategy"
+    ],
+    "mckinseyAnalysis": [
+      "RCB's ability to adapt and improve",
+      "Kohli's leadership under pressure",
+      "Strategic selections by the coach"
+    ],
+    "predictionMarketAngle": "Will RCB win the IPL again in 2027?",
+    "categoryLabel": "Sports",
+    "categoryEmoji": "🏏",
+    "updatedAt": "2026-06-14T01:33:56.231Z"
   },
   {
     "id": "evt-scrape-sports-3",
-    "slug": "after-record-ipl-season-sooryavanshi-told-to-focus-on-next-two-to-three-years",
-    "title": "After record IPL season, Sooryavanshi told to focus on next two to three years",
+    "slug": "vaibhav-sooryavanshis-future-in-cricket-predicted-by-experts",
+    "title": "Vaibhav Sooryavanshi's Future in Cricket Predicted by Experts",
     "category": "sports",
     "status": "active",
-    "summary": "Veteran umpire Virender Sharma praises 15-year-old batting sensation Vaibhav Sooryavanshi for immense potential following his record-breaking IPL performance. Sharma believes Sooryavanshi's consistent showing can lead to international success and significant contributions to India.",
+    "summary": "Cricket experts are optimistic about 15-year-old Vaibhav Sooryavanshi's future, highlighting his exceptional IPL performance. Veteran umpire Virender Sharma believes he has immense potential and will achieve international success after scoring 776 runs in IPL 2026.",
     "imageUrl": "https://static.toiimg.com/thumb/131661399.jpg?photoid=131661399&imgsize=59758&width=600&resizemode=4",
     "keyDrivers": [
-      "Sooryavanshi's record-breaking 776 runs in IPL 2026",
-      "Praise from veteran umpire Virender Sharma",
-      "Predictions of future international success for Sooryavanshi"
+      "Record-breaking IPL performance",
+      "Young talent's adaptability",
+      "Expert predictions and support"
     ],
     "mckinseyAnalysis": [
-      "Analysis of IPL performance indicators for young talents",
-      "Impact of consistent performance on future selection",
-      "Influence of mentorship from experienced players"
+      "Consistency in youth development",
+      "Investing in young talent",
+      "Importance of strong mentorship"
     ],
-    "predictionMarketAngle": "Will Vaibhav Sooryavanshi become a key player for the Indian national team? Yes",
+    "predictionMarketAngle": "Will Vaibhav Sooryavanshi become a key player for India in international cricket?",
     "categoryLabel": "Sports",
     "categoryEmoji": "🏏",
-    "updatedAt": "2026-06-13T01:29:28.521Z"
+    "updatedAt": "2026-06-14T01:33:56.231Z"
+  },
+  {
+    "id": "evt-scrape-geopolitics-1",
+    "slug": "indias-foreign-policy-must-be-guided-by-historical-reality-not-catchphrases",
+    "title": "India’s Foreign Policy Must Be Guided by Historical Reality, Not Catchphrases",
+    "category": "geopolitics",
+    "status": "active",
+    "summary": "The article discusses the need for India’s foreign policy to be rooted in historical realities rather than catchphrases. It analyzes the strategic relationship between the US and China, and suggests that India must carefully navigate its alliances, especially in the context of ongoing global shifts and the US-China rivalry.",
+    "imageUrl": "https://www.geopoliticalmonitor.com/wp-content/uploads/2025/09/TrumpModi2.webp",
+    "keyDrivers": [
+      "India's need for balanced diplomacy",
+      "Impact of US-China relations on India",
+      "Strategic partnerships with Russia and Japan"
+    ],
+    "mckinseyAnalysis": [
+      "India's foreign policy requires historical grounding",
+      "US-China rivalry impacts India's geopolitical stance",
+      "Need for India to strengthen ties with multiple powers like Japan and France"
+    ],
+    "predictionMarketAngle": "Will India's foreign policy successfully adapt to emerging global challenges?",
+    "categoryLabel": "Geopolitics",
+    "categoryEmoji": "🌍",
+    "updatedAt": "2026-06-14T01:33:56.231Z"
+  },
+  {
+    "id": "evt-scrape-geopolitics-2",
+    "slug": "indias-strategic-leadership-in-the-global-south",
+    "title": "India's Strategic Leadership in the Global South",
+    "category": "geopolitics",
+    "status": "active",
+    "summary": "Ahead of the 2023 G20 summit, India showcased its leadership aspirations via extensive branding efforts. The country is positioning itself as a voice for the Global South while navigating complex geopolitical dynamics, particularly in relation to China and other powers.",
+    "imageUrl": "https://csis-website-prod.s3.amazonaws.com/s3fs-public/styles/500_x_300/s3/2025-11/GettyImages-2156370376_cropped.jpg?VersionId=Fb6XtsEawkYmaJNN0Ha6N0Q1o9droRpF&h=266da715&itok=E6ao0iD9",
+    "keyDrivers": [
+      "India's growing economic power",
+      "Leadership aspirations at G20",
+      "Strategic alliances with Global South countries",
+      "Responses to China's influence",
+      "Domestic support for global involvement"
+    ],
+    "mckinseyAnalysis": [
+      "India is modernizing its foreign policy to reflect a multipolar world.",
+      "Economic growth presents new opportunities for international influence.",
+      "India's strategic autonomy is challenged by regional tensions.",
+      "Balancing relationships in the face of a rising China is crucial.",
+      "India's development assistance enhances its soft power globally."
+    ],
+    "predictionMarketAngle": "Will India solidify its position as a leader in the Global South by 2025?",
+    "categoryLabel": "Geopolitics",
+    "categoryEmoji": "🌍",
+    "updatedAt": "2026-06-14T01:33:56.231Z"
+  },
+  {
+    "id": "evt-scrape-geopolitics-3",
+    "slug": "indias-foreign-policy-in-2025-navigating-a-shifting-geopolitical-landscape",
+    "title": "India's Foreign Policy in 2025: Navigating a Shifting Geopolitical Landscape",
+    "category": "geopolitics",
+    "status": "upcoming",
+    "summary": "An expert panel discusses Prime Minister Narendra Modi's approach to India’s international relations, focusing on geopolitical challenges and opportunities. Key speakers analyze India's strategies amidst changing dynamics with the US, China, and its neighborhood, emphasizing the importance of economic growth in India's foreign policy.",
+    "imageUrl": "https://i.ytimg.com/vi/fVDU1zjknHM/maxresdefault.jpg",
+    "keyDrivers": [
+      "Modi's multi-alignment strategy",
+      "Geopolitical tensions with China and the US",
+      "Economic growth focus",
+      "Regional dynamics in South Asia",
+      "Global geopolitical landscape changes"
+    ],
+    "mckinseyAnalysis": [
+      "The Indian government is navigating complex relationships with major powers.",
+      "India's strategy is defined by its economic aspirations amidst geopolitical dependencies.",
+      "Challenges in managing relations with neighboring countries impact India's foreign policy.",
+      "The US-China rivalry presents both opportunities and risks for India's strategic positioning.",
+      "India's role in multilateral partnerships is crucial for regional stability."
+    ],
+    "predictionMarketAngle": "Will India's foreign policy successfully navigate geopolitical challenges in 2025?",
+    "categoryLabel": "Geopolitics",
+    "categoryEmoji": "🌍",
+    "updatedAt": "2026-06-14T01:33:56.231Z"
   },
   {
     "id": "evt-scrape-technology-1",
-    "slug": "y-combinators-top-ai-startups-in-india-2026",
-    "title": "Y Combinator's Top AI Startups in India 2026",
+    "slug": "endimension-revolutionizing-radiology-with-ai",
+    "title": "Endimension: Revolutionizing Radiology with AI",
     "category": "technology",
     "status": "active",
-    "summary": "In June 2026, Y Combinator featured 27 top AI startups based in India, highlighting innovation and rapid growth in the AI sector. Notable startups include Bolna AI, Frekil, and Truffle AI, each tackling unique challenges within their industries.",
+    "summary": "Endimension, a health-tech startup founded by IIT alumni in Maharashtra, aims to transform radiology through innovative AI solutions. The company, established in 2018, focuses on enhancing healthcare services using technology.",
+    "imageUrl": "https://d12aarmt01l54a.cloudfront.net/cms/images/Media-20251104101602/140-140.png",
     "keyDrivers": [
-      "Rapid innovation in AI technology",
-      "Growing demand for automation and efficiency",
-      "Strong support from venture capital including Y Combinator",
-      "Diverse applications across various sectors such as healthcare, education, and fintech"
+      "Established by IIT alumni",
+      "Innovative solutions in radiology",
+      "Focus on AI in healthcare",
+      "Located in Maharashtra, India"
     ],
     "mckinseyAnalysis": [
-      "The rise of AI startups in India signifies a transformation in industry operations and customer interaction.",
-      "AI technology is increasingly being integrated into key sectors, driving productivity and efficiency gains.",
-      "Investment in AI startups is expected to facilitate advancements in areas such as healthcare and education."
+      "Potential for significant impact in healthcare",
+      "Investment in health-tech is on the rise in India",
+      "AI advancements can revolutionize diagnostics"
     ],
-    "predictionMarketAngle": "Will Y Combinator continue to invest heavily in Indian AI startups in 2027?",
+    "predictionMarketAngle": "Will Endimension gain significant market traction?",
     "categoryLabel": "Technology",
     "categoryEmoji": "💻",
-    "updatedAt": "2026-06-13T01:29:28.521Z"
+    "updatedAt": "2026-06-14T01:33:56.231Z"
   },
   {
     "id": "evt-scrape-technology-2",
-    "slug": "indias-ai-startups-accelerate-innovation",
-    "title": "India's AI Startups Accelerate Innovation",
+    "slug": "ai-startups-funded-by-y-combinator-in-india-2026",
+    "title": "AI Startups Funded by Y Combinator in India 2026",
     "category": "technology",
     "status": "active",
-    "summary": "A surge in AI startups across India has sparked remarkable innovations in various sectors, including healthcare and fintech. Recent ventures like Endimension and Insight.AI are transforming the landscape with advanced technologies and solutions tailored to local challenges.",
-    "imageUrl": "https://indiaai.gov.in/indiaAi-2021/build/images/Listing-page/article-iteration/get-published-robot-img.png",
+    "summary": "In June 2026, Y Combinator has funded 27 AI startups in India, marking a significant growth in the tech landscape. These startups are focused on various sectors including healthcare, education, and finance, showcasing the diverse applications of artificial intelligence in the country.",
     "keyDrivers": [
-      "Increased investment in AI from venture capitalists.",
-      "Growing talent pool from prestigious institutes like IIT.",
-      "Collaborations between startups and government initiatives."
+      "Increasing demand for AI solutions",
+      "Rapid technological advancement",
+      "Growing startup ecosystem in India",
+      "Support from venture capital firms"
     ],
     "mckinseyAnalysis": [
-      "AI is projected to add significant value to India's economy by 2030.",
-      "The healthcare sector stands to benefit immensely through AI-driven diagnostics and treatment options.",
-      "Financial technology integrates AI for enhanced fraud detection and customer service."
+      "The rise of AI startups highlights India's potential as a technology hub",
+      "Focus on healthcare and education signals a shift towards societal benefits",
+      "Collaboration between startups and established firms can enhance innovation"
     ],
-    "predictionMarketAngle": "Will there be a significant rise in AI-driven startups in India within the next 5 years?",
+    "predictionMarketAngle": "Will the number of AI startups in India increase by 20% by the end of 2026?",
     "categoryLabel": "Technology",
     "categoryEmoji": "💻",
-    "updatedAt": "2026-06-13T01:29:28.522Z"
+    "updatedAt": "2026-06-14T01:33:56.232Z"
   },
   {
     "id": "evt-scrape-technology-3",
@@ -339,91 +410,94 @@
     "title": "Indian AI Startup Funding 2X in Q1 2026",
     "category": "technology",
     "status": "active",
-    "summary": "Indian AI startups saw a significant increase in funding, doubling in the first quarter of 2026. This surge highlights the growing interest and investment in the AI sector within India, reflecting broader technology trends.",
-    "imageUrl": "https://example.com/featured-image.jpg",
+    "summary": "India's AI startups raised a record $679.8 million in Q1 2026, more than doubling the previous quarter's funding. The surge was primarily driven by a single company, Neysa, which secured $600 million, highlighting a shift in venture capital behavior towards fewer, larger investments.",
+    "imageUrl": "https://i.ytimg.com/vi/7WczS_uRm1w/maxresdefault.jpg",
     "keyDrivers": [
-      "Increased investor interest in AI technologies",
-      "Government support for tech startups",
-      "Integration of AI in various industries"
+      "Neysa's $600 million funding",
+      "Shifts towards larger funding rounds",
+      "Increased VC focus on quality",
+      "Sectors of interest: voice AI, healthcare",
+      "Potential for $2-2.5 billion in 2026"
     ],
     "mckinseyAnalysis": [
-      "The growth trend indicates a robust ecosystem for AI innovation in India.",
-      "Investment patterns suggest a shift towards more sustainable business models.",
-      "Potential for AI to disrupt traditional sectors anchored in technology."
+      "Funding doubled compared to previous quarter",
+      "Overall investment was significantly higher than previous years",
+      "Sectoral interest has shifted towards emerging tech like voice AI and cybersecurity",
+      "The trend indicates a maturing ecosystem in India's AI sector",
+      "VCs are rewarding startups with proprietary data and integration capabilities"
     ],
-    "predictionMarketAngle": "Will Indian AI startup funding continue to grow throughout 2026?",
+    "predictionMarketAngle": "Will India's AI startup funding reach $2 billion by the end of 2026? Yes",
     "categoryLabel": "Technology",
     "categoryEmoji": "💻",
-    "updatedAt": "2026-06-13T01:29:28.522Z"
+    "updatedAt": "2026-06-14T01:33:56.232Z"
   },
   {
     "id": "evt-scrape-entertainment-1",
-    "slug": "ram-charans-peddi-witnesses-midweek-box-office-decline",
-    "title": "Ram Charan's 'Peddi' Witnesses Midweek Box Office Decline",
+    "slug": "india-box-office-collection-update-for-june-2026",
+    "title": "India Box Office Collection Update for June 2026",
     "category": "entertainment",
     "status": "active",
-    "summary": "Ram Charan's film 'Peddi' has seen a notable decline in box office collections during the midweek period, grossing ₹222.53 crore in India. Despite this dip, the film's performance remains a topic of discussion among audiences and critics alike.",
-    "imageUrl": "https://static.toiimg.com/thumb/msid-131646544,width-166,height-124/131646544.jpg",
+    "summary": "The India box office collection for the week ending June 14, 2026, shows a total worldwide collection of ₹33,248.1 crores, with ₹4,891.6 crores net from India. The top grossing movie in this period was 'Peddi' with a net collection of ₹207 crores.",
+    "imageUrl": "https://cdn.sacnilk.com/image/movie/2026/10589.jpg",
     "keyDrivers": [
-      "Midweek collection decline",
-      "Strong opening weekend",
-      "Audience engagement"
+      "Increase in movie releases (655 total)",
+      "Diverse language offerings including Hindi, Telugu, and Tamil",
+      "Strong international gross from overseas markets"
     ],
     "mckinseyAnalysis": [
-      "The film grossed ₹222.53 crore in its first week.",
-      "Potential for recovery in weekend earnings.",
-      "Marketing strategies will influence future box office performance."
+      "Growth in box office collections indicates a strong recovery post-pandemic",
+      "Regional films are gaining popularity, diversifying audience engagement",
+      "Technological advancements in film production and distribution are driving profitability"
     ],
-    "predictionMarketAngle": "Will 'Peddi' recover its box office performance next week?",
+    "predictionMarketAngle": "Will the box office collection surpass ₹35,000 crores by the end of June 2026?",
     "categoryLabel": "Entertainment",
     "categoryEmoji": "🎬",
-    "updatedAt": "2026-06-13T01:29:40.600Z"
+    "updatedAt": "2026-06-14T01:34:17.321Z"
   },
   {
     "id": "evt-scrape-entertainment-2",
-    "slug": "box-office-morning-update-haunted-echoes-of-the-past-3d-leads-new-releases",
-    "title": "Box Office Morning Update: Haunted: Echoes of the Past 3D Leads New Releases",
+    "slug": "nora-fatehi-performs-at-fifa-world-cup-2026-opening-ceremony",
+    "title": "Nora Fatehi Performs at FIFA World Cup 2026 Opening Ceremony",
     "category": "entertainment",
     "status": "active",
-    "summary": "The latest box office update indicates that 'Haunted: Echoes of the Past 3D' has topped the new releases in morning shows with impressive double-digit occupancy. Other films like 'Main Vaapas Aaunga' and 'Bharat Bhagya Vidhata' are also performing well.",
-    "imageUrl": "https://media5.bollywoodhungama.in/wp-content/uploads/2026/06/Lag-Ja-Gale.jpg",
+    "summary": "Nora Fatehi dazzled with her performance at the FIFA World Cup 2026 opening ceremony in Toronto, leading the event before the Canada vs. Bosnia match. The show captivated fans and showcased her talent on an international platform.",
+    "imageUrl": "https://static.toiimg.com/thumb/msid-131695620,imgsize-294104,width-134,height-99/131695620.jpg",
     "keyDrivers": [
-      "High opening occupancy for 'Haunted: Echoes of the Past 3D'",
-      "Positive word-of-mouth for new films",
-      "Strategic release timing with no major competition"
+      "High-profile event: FIFA World Cup 2026",
+      "Promotion of Indian artists on global platforms",
+      "Increased visibility for Bollywood talent"
     ],
     "mckinseyAnalysis": [
-      "Market trends show a resurgence in box office attendance post-pandemic",
-      "Focus on horror and thriller genres resonating with audiences",
-      "Investments in marketing for new releases contributing to early box office success"
+      "Event highlights the growing influence of Indian artists worldwide",
+      "Potential impact on India's cultural diplomacy",
+      "Enhancement of Bollywood's international appeal"
     ],
-    "predictionMarketAngle": "Will 'Haunted: Echoes of the Past 3D' maintain its lead at the box office over the weekend?",
+    "predictionMarketAngle": "Will Nora Fatehi's performance significantly boost her international career?",
     "categoryLabel": "Entertainment",
     "categoryEmoji": "🎬",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.321Z"
   },
   {
     "id": "evt-scrape-entertainment-3",
-    "slug": "bollywood-box-office-collection-verdicts-2026",
-    "title": "Bollywood Box Office Collection & Verdicts 2026",
+    "slug": "dhurandhar-the-revenge-breaks-records-in-2026",
+    "title": "Dhurandhar: The Revenge Breaks Records in 2026",
     "category": "entertainment",
     "status": "active",
-    "summary": "The article provides insights into the earnings and performance of Bollywood movies released in 2026, including both hits and flops. It offers a comprehensive breakdown of box office collections, providing a historical context of Bollywood's commercial performance over the past years.",
-    "imageUrl": "https://www.koimoi.com/wp-content/new-galleries/2026/06/bollywood-box-office-collection-verdicts-001.jpg",
+    "summary": "The Hindi film 'Dhurandhar: The Revenge' has taken the box office by storm since its release, grossing over ₹1,852 crore worldwide, securing its place as one of the highest-grossing Indian films ever. This extraordinary success continues the trend of big-budget films dominating the Indian cinema landscape.",
     "keyDrivers": [
-      "Release year box office performance",
-      "Categorization of films as hits/flops",
-      "Historical comparisons and trends"
+      "Strong star cast led by Ranveer Singh",
+      "Effective marketing strategies",
+      "High production value"
     ],
     "mckinseyAnalysis": [
-      "In-depth analysis of box office trends in Bollywood for 2026",
-      "Performance comparison with previous years",
-      "Potential impact of releases on future trends"
+      "This film capitalized on pre-release hype and fan engagement.",
+      "International releases boosted global earnings significantly.",
+      "Similar trends in regional cinema are emerging."
     ],
-    "predictionMarketAngle": "Will the overall box office performance of Bollywood in 2026 surpass 2025?",
+    "predictionMarketAngle": "Will 'Dhurandhar: The Revenge' exceed ₹2,000 crore at the box office?",
     "categoryLabel": "Entertainment",
     "categoryEmoji": "🎬",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   },
   {
     "id": "evt-scrape-energy-1",
@@ -431,136 +505,136 @@
     "title": "India Accuses West of Double Standards Over U.S. Russia Oil Sanctions",
     "category": "energy",
     "status": "active",
-    "summary": "India's Foreign Minister has raised concerns about perceived double standards by Western nations regarding U.S. sanctions on Russia's oil, especially in light of India's oil purchases from Russia. This statement underscores the growing tensions and complexities of international energy politics.",
+    "summary": "India has criticized Western nations for their contradictory approaches to oil sanctions against Russia, particularly in light of the U.S.'s shifting stance regarding India's oil purchases. This is part of ongoing tensions in international energy diplomacy.",
     "imageUrl": "https://d32r1sh890xpii.cloudfront.net/news/270x200/2026-06-12_uttenajhwk.jpg",
     "keyDrivers": [
-      "U.S. sanctions on Russian oil",
-      "India's reliance on Russian oil",
-      "Geopolitical dynamics in oil markets"
+      "India's oil purchase strategy",
+      "U.S.-Russia relations",
+      "Western sanctions policies"
     ],
     "mckinseyAnalysis": [
-      "India's position may affect future energy negotiations",
-      "Likely repercussions for global oil supply chains",
-      "Potential shifts in alliances based on energy dependencies."
+      "India is balancing its energy security with diplomatic relations.",
+      "The criticism reflects India's concerns over its energy dependency.",
+      "This issue highlights a broader geopolitical tension in international energy markets."
     ],
-    "predictionMarketAngle": "Will diplomatic tensions over oil sanctions escalate further?",
+    "predictionMarketAngle": "Will this accusation lead to any changes in U.S. policy towards Indian oil imports?",
     "categoryLabel": "Energy",
     "categoryEmoji": "⛽",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   },
   {
     "id": "evt-scrape-energy-2",
     "slug": "us-becomes-indias-top-gas-supplier-as-iran-war-cuts-it-off-from-the-gulf",
-    "title": "U.S. becomes India’s top gas supplier, as Iran war cuts it off from the Gulf",
+    "title": "U.S. becomes India’s top gas supplier as Iran war cuts it off from the Gulf",
     "category": "energy",
     "status": "active",
-    "summary": "With the ongoing conflict between the U.S. and Iran, India has seen a significant shift in its energy supply dynamics, leading to the U.S. overtaking Iran as the top gas supplier for the country. This change reflects India's growing reliance on alternative sources to meet its energy needs amidst geopolitical tensions.",
-    "imageUrl": "https://image.cnbcfm.com/api/v1/image/108319304-1781067971632-gettyimages-2261545253-raa-seedance260216_npUQs.jpeg?v=1781082278&w=410&h=212&vtcrop=y",
+    "summary": "The ongoing conflict in Iran has led to significant changes in global energy supply routes, with the U.S. emerging as India's primary supplier of liquefied natural gas (LNG) and liquefied petroleum gas (LPG). This shift reflects India's strategic adaptations in response to the geopolitical landscape.",
+    "imageUrl": "https://image.cnbcfm.com/api/v1/image/108289047-1770888053936-gettyimages-499516328-ABC_KC-01-1.jpg?v=1770888063&w=884&h=442&vtcrop=y",
     "keyDrivers": [
-      "Geopolitical tension between the U.S. and Iran",
-      "Increased demand for energy in India",
-      "Diversification of energy sources by India"
+      "Iran war disrupting traditional supply chains",
+      "U.S. gas exports to India increasing",
+      "India's energy diversification strategy"
     ],
     "mckinseyAnalysis": [
-      "India's energy strategy is adapting due to regional instability.",
-      "The shift indicates potential long-term changes in global energy supply chains.",
-      "Collaborations with U.S. suppliers may become more prominent in Indian energy policy."
+      "The U.S. has ramped up LNG and LPG exports to India amidst the Iran conflict.",
+      "India's dependency on Middle Eastern energy is being re-evaluated.",
+      "Strategic energy supply relationships are evolving due to geopolitical tensions."
     ],
-    "predictionMarketAngle": "Will India continue to rely more on U.S. gas supplies?",
+    "predictionMarketAngle": "Will the U.S. maintain its position as India's top gas supplier in the next year?",
     "categoryLabel": "Energy",
     "categoryEmoji": "⛽",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   },
   {
     "id": "evt-scrape-energy-3",
-    "slug": "oil-prices-hold-steady-amid-middle-east-tensions",
-    "title": "Oil Prices Hold Steady Amid Middle East Tensions",
+    "slug": "oil-prices-steady-as-iran-conflict-uncertainty-continues",
+    "title": "Oil Prices Steady as Iran Conflict Uncertainty Continues",
     "category": "energy",
     "status": "active",
-    "summary": "Oil prices stabilized after a period of volatility driven by escalating tensions in the Middle East, particularly related to Iran's conflict with Israel and Lebanon. Traders remain cautious as potential disruptions in the Strait of Hormuz loom.",
-    "imageUrl": "https://img.etimg.com/photo/msid-74689819,quality-100/commodity-gauge.jpg",
+    "summary": "Oil prices remained stable amidst significant losses, influenced by tensions surrounding the U.S.-Israeli conflict with Iran. Hopes for a swift resolution lessened after Hezbollah rejected a ceasefire proposal, affecting both Brent and WTI crude benchmarks.",
+    "imageUrl": "https://img.etimg.com/photo/45980961.cms",
     "keyDrivers": [
-      "Escalating Middle East tensions",
-      "Potential disruptions in Strait of Hormuz",
-      "U.S.-Iran diplomatic negotiations"
+      "U.S.-Israel conflict with Iran",
+      "Hezbollah's rejection of ceasefire",
+      "Market fluctuations in crude pricing"
     ],
     "mckinseyAnalysis": [
-      "Uncertainty surrounding the Iran peace deal affects oil prices",
-      "Market bears volatility due to geopolitical tensions",
-      "Potential for sustained price fluctuations in response to conflict"
+      "Potential impact on global oil supply",
+      "Traders cautious about Middle East tensions",
+      "Geopolitical events influencing commodity markets"
     ],
-    "predictionMarketAngle": "Will oil prices increase in the next month?",
+    "predictionMarketAngle": "Will oil prices see significant fluctuation next week?",
     "categoryLabel": "Energy",
     "categoryEmoji": "⛽",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   },
   {
     "id": "evt-scrape-regulation-1",
-    "slug": "regulating-cryptocurrency-in-india",
-    "title": "Regulating Cryptocurrency in India",
+    "slug": "crypto-regulations-in-india-compliance-and-oversight",
+    "title": "Crypto Regulations in India: Compliance and Oversight",
     "category": "regulation",
     "status": "active",
-    "summary": "India's cryptocurrency landscape faces uncertainty, as the Reserve Bank of India continues to impose regulations while the Supreme Court has recently overturned a previous ban. Stakeholders are advocating for a structured regulatory framework to harness cryptocurrency's potential without a blanket ban.",
-    "imageUrl": "https://www.ibanet.org/document?id=Scandinavian-Trust-May-2026",
+    "summary": "India’s cryptocurrency regulations are evolving with significant involvement from the Reserve Bank of India, the Prevention of Money Laundering Act, and tax authorities. This article outlines the compliance framework for investors and businesses operating within the Indian crypto ecosystem.",
+    "imageUrl": "https://vidhisastras.com/wp-content/uploads/2025/12/crypto-currency-regulation-in-india-vidhisastras.jpg",
     "keyDrivers": [
-      "Supreme Court ruling in favor of cryptocurrency transactions",
-      "Ongoing governmental consultations regarding cryptocurrency regulation",
-      "High potential for wealth generation through cryptocurrency trading"
+      "Rapid evolution of crypto regulations",
+      "Involvement of RBI and PMLA",
+      "Tax obligations for crypto transactions"
     ],
     "mckinseyAnalysis": [
-      "Potential for a regulatory framework to boost confidence in the cryptocurrency market",
-      "Risks associated with unregulated cryptocurrency transactions",
-      "The impact of cryptocurrency technology on traditional banking systems"
+      "Regulatory compliance has become mandatory for crypto exchanges and service providers",
+      "The government is gradually transitioning from unregulated to a structured compliance environment",
+      "There is a need for awareness among individual investors regarding legal frameworks"
     ],
-    "predictionMarketAngle": "Will India implement a comprehensive regulatory framework for cryptocurrencies by 2025?",
+    "predictionMarketAngle": "Will India's crypto regulations become more stringent in the next year?",
     "categoryLabel": "Regulation",
     "categoryEmoji": "⚖️",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   },
   {
     "id": "evt-scrape-regulation-2",
-    "slug": "crypto-regulations-in-india-rbi-pmla-sebi-and-tax-rules-explained",
-    "title": "Crypto Regulations in India: RBI, PMLA, SEBI and Tax Rules Explained",
+    "slug": "indias-sebi-advocates-oversight-of-cryptocurrency-trade",
+    "title": "India's SEBI Advocates Oversight of Cryptocurrency Trade",
     "category": "regulation",
     "status": "active",
-    "summary": "India's cryptocurrency regulations have formalized oversight that includes compliance with the Reserve Bank of India, the Prevention of Money Laundering Act, and tax obligations. While cryptocurrency is not seen as legal tender, it is governed by existing financial laws, marking a significant shift towards a regulated crypto trading environment.",
-    "imageUrl": "https://vidhisastras.com/wp-content/uploads/2025/12/crypto-currency-regulation-in-india-vidhisastras.jpg",
+    "summary": "India's market regulator, SEBI, has proposed that multiple regulators oversee cryptocurrency trading, indicating a shift towards the official acceptance of private virtual assets. This position contrasts sharply with the Reserve Bank of India’s stance against private digital currencies, which it views as a macroeconomic risk.",
+    "imageUrl": "https://www.reuters.com/resizer/v2/L5WMVMFJCBNOFNUXH4MLO3KQWM.jpg?auth=fb5c8ab77e2ebb2f33a8f8f62d48e03695fac4b393b0e7acbb985d4ec41b9e83&width=1920&quality=80",
     "keyDrivers": [
-      "Regulatory framework by RBI and PMLA",
-      "Taxation of cryptocurrency transactions",
-      "Compliance obligations for crypto businesses"
+      "SEBI's proposal for multi-regulator oversight",
+      "RBI's ongoing opposition to private cryptocurrencies",
+      "Historical context of India's cryptocurrency regulations"
     ],
     "mckinseyAnalysis": [
-      "Increased regulatory scrutiny is shaping the crypto market in India.",
-      "The Reserve Bank of India plays a pivotal role in overseeing financial transactions related to crypto.",
-      "Crypto businesses are now classified under anti-money laundering obligations."
+      "SEBI's recommendation mirrors practices in the U.S. where securities are overseen by specific regulators",
+      "Potential for clearer regulatory frameworks could mitigate risks associated with cryptocurrencies",
+      "The government panel's ongoing discussions highlight the evolving regulatory landscape in India"
     ],
-    "predictionMarketAngle": "Will India's crypto regulations lead to increased compliance and transparency in the market?",
+    "predictionMarketAngle": "Will India's government adopt a multi-regulator framework for cryptocurrencies by the end of 2024?",
     "categoryLabel": "Regulation",
     "categoryEmoji": "⚖️",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   },
   {
     "id": "evt-scrape-regulation-3",
-    "slug": "indias-sebi-to-oversee-crypto-trade-contrasting-rbis-stance",
-    "title": "India's SEBI to Oversee Crypto Trade, Contrasting RBI's Stance",
+    "slug": "regulating-cryptocurrency-in-india",
+    "title": "Regulating Cryptocurrency in India",
     "category": "regulation",
-    "status": "active",
-    "summary": "India's market watchdog SEBI has recommended regulatory oversight for cryptocurrency trading, signaling a shift towards acceptance of private virtual assets. This stands in contrast to the Reserve Bank of India's stance against private digital currencies due to macroeconomic risks.",
-    "imageUrl": "https://www.reuters.com/resizer/v2/L5WMVMFJCBNOFNUXH4MLO3KQWM.jpg?auth=fb5c8ab77e2ebb2f33a8f8f62d48e03695fac4b393b0e7acbb985d4ec41b9e83&width=1920&quality=80",
+    "status": "upcoming",
+    "summary": "Cryptocurrencies remain unregulated in India following the Supreme Court's 2020 ruling, which overturned a previous ban by the Reserve Bank of India. The Indian government is considering legislation to formally regulate or potentially criminalize cryptocurrency transactions, leaving a cloud of uncertainty over future dealings.",
+    "imageUrl": "https://www.ibanet.org/document?id=Scandinavian-Trust-May-2026",
     "keyDrivers": [
-      "SEBI's recommendation for multiple regulators to oversee crypto",
-      "Contrast with RBI's strict position against private cryptocurrencies",
-      "India's historical regulatory challenges with crypto since 2018"
+      "Supreme Court's ruling in 2020",
+      "Government's draft bill on cryptocurrency",
+      "Uncertainty in regulatory framework"
     ],
     "mckinseyAnalysis": [
-      "SEBI aims to monitor cryptocurrencies similar to U.S. SEC",
-      "Proposed regulations could affect investor protections and market stability",
-      "The split between SEBI and RBI may create regulatory confusion"
+      "Potential for significant growth in cryptocurrency usage in India",
+      "Need for a legislative framework to ensure safety and security in transactions",
+      "Caution against a total ban to leverage benefits of blockchain technology"
     ],
-    "predictionMarketAngle": "Will India's regulatory stance on cryptocurrencies lead to wider adoption by 2025?",
+    "predictionMarketAngle": "Will the Indian government introduce a comprehensive cryptocurrency regulation by the end of 2023?",
     "categoryLabel": "Regulation",
     "categoryEmoji": "⚖️",
-    "updatedAt": "2026-06-13T01:29:40.601Z"
+    "updatedAt": "2026-06-14T01:34:17.322Z"
   }
 ]

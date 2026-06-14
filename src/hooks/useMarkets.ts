@@ -41,11 +41,17 @@ export function isIndiaRelated(question: string, tags?: { label: string }[]): bo
 
 /** Fetch all markets from the Supabase polymarket_cache table */
 async function fetchAllFromDB(): Promise<{ all: Market[]; india: Market[] }> {
+  // Fetch the full cache, not just the top-N by volume. India-relevant markets
+  // on Polymarket have far lower volume than US/global ones, so a top-300
+  // window excluded almost all of them (only the single highest-volume India
+  // market survived — starving the India view and the multi-outcome election
+  // groups). The cache is a few hundred rows, so pulling all of them is cheap
+  // and is quality/India-filtered and cached afterward.
   const { data, error } = await supabase
     .from('polymarket_cache')
     .select('id, data, is_india, volume, fetched_at')
     .order('volume', { ascending: false })
-    .limit(300);
+    .limit(2000);
 
   if (error) throw new Error(error.message);
   if (!data || data.length === 0) throw new Error('No cached markets found');

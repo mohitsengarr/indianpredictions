@@ -23,7 +23,9 @@ import {
 } from 'lucide-react';
 import { useMarkets, useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
 import { useWatchlist } from '@/hooks/useWatchlist';
-import { Star } from 'lucide-react';
+import { Star, Trophy } from 'lucide-react';
+import MultiOutcomeCard from '@/components/MultiOutcomeCard';
+import { groupMarkets } from '@/lib/market-groups';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR, timeUntil } from '@/lib/formatters';
 import { useGeo } from '@/contexts/GeoContext';
@@ -182,6 +184,12 @@ const HomePage = () => {
       });
 
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
+
+  // Multi-outcome "races" (Polymarket-style grouped cards). Group the India
+  // markets; grouped members are excluded from the binary "All India Markets"
+  // list below so they aren't shown twice.
+  const { groups: marketGroups, groupedIds } = groupMarkets(indiaMarkets);
+  const ungroupedIndiaMarkets = indiaMarkets.filter((m) => !groupedIds.has(m.id));
 
   // Watchlist ("My Markets") — resolve saved ids against all known markets
   const { watchlist } = useWatchlist();
@@ -620,8 +628,28 @@ const HomePage = () => {
               );
             })}
 
+            {/* ── Races to Watch (multi-outcome grouped cards) ── */}
+            {marketGroups.length > 0 && (
+              <section>
+                <AnimateIn delay={0.1}>
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-secondary/15 flex items-center justify-center shrink-0">
+                      <Trophy className="w-4 h-4 text-secondary" />
+                    </div>
+                    <div>
+                      <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Races to Watch</h2>
+                      <p className="text-[11px] text-muted-foreground">Multi-outcome events — see every contender's odds at a glance</p>
+                    </div>
+                  </div>
+                </AnimateIn>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                  {marketGroups.slice(0, 3).map((g) => <MultiOutcomeCard key={g.id} group={g} />)}
+                </div>
+              </section>
+            )}
+
             {/* ── All India Markets ── */}
-            {indiaMarkets.length > 0 && (
+            {ungroupedIndiaMarkets.length > 0 && (
               <section>
                 <AnimateIn delay={0.1}>
                   <div className="flex items-center justify-between mb-3">
@@ -633,17 +661,17 @@ const HomePage = () => {
                       </div>
                     </div>
                     <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">
-                      {indiaMarkets.length} markets live
+                      {ungroupedIndiaMarkets.length} markets live
                     </span>
                   </div>
                 </AnimateIn>
                 <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3" baseDelay={0.1} staggerDelay={0.06}>
-                  {indiaMarkets.slice(0, 6).map(m => <MarketCard key={m.id} market={m} />)}
+                  {ungroupedIndiaMarkets.slice(0, 6).map(m => <MarketCard key={m.id} market={m} />)}
                 </StaggerChildren>
-                {indiaMarkets.length > 6 && (
+                {ungroupedIndiaMarkets.length > 6 && (
                   <div className="text-center mt-4">
                     <Link to="/markets" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
-                      View all {indiaMarkets.length} markets <ArrowRight className="w-4 h-4" />
+                      View all {ungroupedIndiaMarkets.length} markets <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
                 )}

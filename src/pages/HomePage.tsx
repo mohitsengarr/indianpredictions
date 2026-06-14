@@ -22,6 +22,8 @@ import {
   Target, Eye, Send, CheckCircle, Shield, Bell,
 } from 'lucide-react';
 import { useMarkets, useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
+import { useWatchlist } from '@/hooks/useWatchlist';
+import { Star } from 'lucide-react';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR, timeUntil } from '@/lib/formatters';
 import { useGeo } from '@/contexts/GeoContext';
@@ -180,6 +182,12 @@ const HomePage = () => {
       });
 
   const indiaTotalVol = indiaMarkets.reduce((s, m) => s + m.volume, 0);
+
+  // Watchlist ("My Markets") — resolve saved ids against all known markets
+  const { watchlist } = useWatchlist();
+  const watchedMarkets = watchlist
+    .map((id) => allMarkets.find((m) => m.id === id) ?? indiaMarkets.find((m) => m.id === id))
+    .filter((m): m is NonNullable<typeof m> => Boolean(m));
 
   // Upcoming Events timeline: only show events dated today or later (the static
   // TIMELINE_EVENTS data spans past dates too). Filter BEFORE slicing.
@@ -344,6 +352,30 @@ const HomePage = () => {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 lg:px-8 space-y-8 mt-6">
+
+        {/* ── My Markets (watchlist — returning-visitor retention) ── */}
+        {watchedMarkets.length > 0 && (
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-secondary/15 flex items-center justify-center shrink-0">
+                  <Star className="w-4 h-4 text-secondary fill-secondary" />
+                </div>
+                <div>
+                  <h2 className="font-display font-bold text-base lg:text-lg leading-tight">My Markets</h2>
+                  <p className="text-[11px] text-muted-foreground">Markets you're tracking — saved on this device</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+              {watchedMarkets.map((m) => (
+                <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                  <MarketCard market={m} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* ── How It Works (enhanced visual panels) ── */}
         <AnimateIn delay={0.05}>

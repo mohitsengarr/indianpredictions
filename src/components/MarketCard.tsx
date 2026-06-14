@@ -2,10 +2,34 @@ import { useEffect, useRef, useState } from 'react';
 import { Market } from '@/lib/types';
 import { formatINR, formatPercent, formatProbability, timeUntil } from '@/lib/formatters';
 import { CATEGORY_LABELS } from '@/lib/mock-data';
-import { TrendingUp, TrendingDown, Clock, Users, ExternalLink } from 'lucide-react';
+import { TrendingUp, TrendingDown, Clock, Users, ExternalLink, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLivePrice } from '@/contexts/LivePricesContext';
 import { trackMarketClick, trackPolymarketClick } from '@/lib/analytics';
+import { useWatchlist } from '@/hooks/useWatchlist';
+
+/** Compact inline probability sparkline drawn from the market's price history. */
+const Sparkline = ({ market }: { market: Market }) => {
+  const data = market.priceHistory;
+  if (!data || data.length < 2) return null;
+  const prices = data.map((d) => d.yes);
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const range = max - min || 1;
+  const w = 100, h = 24;
+  const pts = data.map((d, i) => {
+    const x = (i / (data.length - 1)) * w;
+    const y = h - ((d.yes - min) / range) * h;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' L ');
+  const up = prices[prices.length - 1] >= prices[0];
+  const color = up ? 'hsl(var(--success))' : 'hsl(var(--destructive))';
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-6 mt-2" preserveAspectRatio="none" aria-hidden="true">
+      <path d={`M ${pts}`} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+    </svg>
+  );
+};
 
 interface MarketCardProps {
   market: Market;
@@ -54,6 +78,9 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
   // When prices are complementary, derive noPct from yesPct so widths always sum to 100%
   const noPct  = Math.abs(yesPrice + noPrice - 1) <= 0.02 ? 100 - yesPct : Math.round(noPrice * 100);
 
+  const { isWatched, toggle } = useWatchlist();
+  const watched = isWatched(market.id);
+
   const openMarket = () => { trackMarketClick(market.id, market.category); navigate(`/market/${market.id}`); };
 
   return (
@@ -67,20 +94,31 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
         overflow-hidden relative
         ${cardFlash === 'up' ? 'price-flash-up' : cardFlash === 'down' ? 'price-flash-down' : ''}`}
     >
+      {/* Watchlist star (top-right) */}
+      <button
+        type="button"
+        aria-label={watched ? 'Remove from My Markets' : 'Add to My Markets'}
+        aria-pressed={watched}
+        onClick={(e) => { e.stopPropagation(); toggle(market.id); }}
+        className="absolute top-2.5 right-2.5 z-10 p-1 rounded-full hover:bg-muted transition-colors"
+      >
+        <Star className={`w-4 h-4 transition-colors ${watched ? 'fill-secondary text-secondary' : 'text-muted-foreground/40 hover:text-secondary'}`} />
+      </button>
+
       {/* Live pulse dot */}
       {livePrice && (
-        <span className="absolute top-3 right-3 flex h-2 w-2">
+        <span className="absolute top-3 right-9 flex h-2 w-2">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-60" />
           <span className="relative inline-flex rounded-full h-2 w-2 bg-success opacity-80" />
         </span>
       )}
 
       {/* Category chip + time */}
-      <div className="flex items-center justify-between mb-2.5">
+      <div className="flex items-center justify-between mb-2.5 pr-7">
         <span className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full border ${catColor}`}>
           {cat?.emoji} {cat?.label}
         </span>
-        <span className="text-[11px] text-muted-foreground flex items-center gap-1 pr-4">
+        <span className="text-[11px] text-muted-foreground flex items-center gap-1">
           <Clock className="w-3 h-3" />
           {timeUntil(market.closesAt)}
         </span>
@@ -115,6 +153,9 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
           <span className="text-[11px] font-semibold text-destructive">No {formatProbability(noPrice)}</span>
         </div>
       </div>
+
+      {/* 30-day probability trend sparkline */}
+      {!compact && <Sparkline market={market} />}
 
       {!compact && (
         <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-2 border-t border-border/60">

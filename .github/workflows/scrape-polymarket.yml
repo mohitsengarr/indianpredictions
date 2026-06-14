@@ -1,0 +1,32 @@
+name: Refresh Polymarket Cache
+
+on:
+  schedule:
+    # Every 6 hours at :23 (off-peak minute)
+    - cron: '23 */6 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+# Don't overlap refreshes (each one upserts the whole keep-set).
+concurrency:
+  group: polymarket-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # No npm install needed — the script uses only Node built-ins
+      # (global fetch + crypto). Polymarket's Gamma API is public.
+      - name: Refresh polymarket_cache from Polymarket Gamma API
+        env:
+          SUPABASE_URL: 'https://hivvemtveyjexrwgruhs.supabase.co'
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/scrape-polymarket.mjs

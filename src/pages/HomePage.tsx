@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import MarketCard from '@/components/MarketCard';
@@ -188,7 +188,7 @@ const HomePage = () => {
   // Multi-outcome "races" (Polymarket-style grouped cards). Group the India
   // markets; grouped members are excluded from the binary "All India Markets"
   // list below so they aren't shown twice.
-  const { groups: marketGroups, groupedIds } = groupMarkets(indiaMarkets);
+  const { groups: marketGroups, groupedIds } = useMemo(() => groupMarkets(indiaMarkets), [indiaMarkets]);
   const ungroupedIndiaMarkets = indiaMarkets.filter((m) => !groupedIds.has(m.id));
 
   // Watchlist ("My Markets") — resolve saved ids against all known markets

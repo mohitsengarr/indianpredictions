@@ -14,7 +14,10 @@ const listeners = new Set<() => void>();
 let memoryFallback: string[] | null = null;
 
 function read(): string[] {
-  if (memoryFallback) return memoryFallback;
+  // localStorage is the source of truth so cross-tab `storage` events reflect
+  // real changes. memoryFallback is only used when storage is unavailable
+  // (Safari private mode / SSR prerender) — otherwise a local write would
+  // shadow localStorage and break cross-tab sync.
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];

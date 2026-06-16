@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useMarket, useMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
 /* ── Deterministic PRNG (string hash → mulberry32) ──
    Seeding from market.id + range keeps the synthetic series stable across
@@ -115,7 +116,16 @@ const MarketDetailPage = () => {
   const navigate = useNavigate();
   const { market, loading, error } = useMarket(id);
   const { markets: allMarkets } = useMarkets();
+  const { record } = useRecentlyViewed();
   const [chartRange, setChartRange] = useState<'7d' | '30d' | 'all'>('30d');
+
+  // Record this market in the "Recently viewed" history once it resolves.
+  // Guarded against undefined; keyed on the id so navigating between markets
+  // records each one exactly once.
+  const marketId = market?.id;
+  useEffect(() => {
+    if (marketId) record(marketId);
+  }, [marketId, record]);
 
   useSEO({
     title: market

@@ -54,3 +54,6 @@ jobs:
           # Rebase before push in case another workflow/dev pushed meanwhile
           git pull --rebase origin main
           git push
+
+      - name: Ping IndexNow (Bing/Yandex) with refreshed URLs
+        run: node scripts/ping-indexnow.mjs

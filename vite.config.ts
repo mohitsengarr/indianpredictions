@@ -78,4 +78,18 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split heavy vendor libs into their own chunks so the main bundle
+        // (was ~790KB) shrinks and the homepage doesn't pull charting/animation
+        // code it doesn't need up front — improves LCP/INP (Core Web Vitals).
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          charts: ["recharts"],
+          motion: ["framer-motion"],
+        },
+      },
+    },
+  },
 }));

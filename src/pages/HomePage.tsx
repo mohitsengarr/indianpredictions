@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { useMarkets, useIndiaMarkets, useBiggestMovers, useClosingSoon } from '@/hooks/useMarkets';
 import { useWatchlist } from '@/hooks/useWatchlist';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 import { Star, Trophy } from 'lucide-react';
 import MultiOutcomeCard from '@/components/MultiOutcomeCard';
 import { groupMarkets } from '@/lib/market-groups';
@@ -196,6 +197,20 @@ const HomePage = () => {
   const watchedMarkets = watchlist
     .map((id) => allMarkets.find((m) => m.id === id) ?? indiaMarkets.find((m) => m.id === id))
     .filter((m): m is NonNullable<typeof m> => Boolean(m));
+
+  // Recently viewed — resolve saved ids against all known markets, exclude
+  // anything already surfaced in My Markets, and cap at 6 cards.
+  const { recent } = useRecentlyViewed();
+  const watchlistIds = new Set(watchlist);
+  const recentMarkets = useMemo(
+    () =>
+      recent
+        .map((id) => allMarkets.find((m) => m.id === id) ?? indiaMarkets.find((m) => m.id === id))
+        .filter((m): m is NonNullable<typeof m> => Boolean(m) && !watchlistIds.has(m!.id))
+        .slice(0, 6),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [recent, allMarkets, indiaMarkets],
+  );
 
   // Upcoming Events timeline: only show events dated today or later (the static
   // TIMELINE_EVENTS data spans past dates too). Filter BEFORE slicing.
@@ -377,6 +392,30 @@ const HomePage = () => {
             </div>
             <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
               {watchedMarkets.map((m) => (
+                <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                  <MarketCard market={m} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Recently Viewed (history rail — returning-visitor retention) ── */}
+        {recentMarkets.length > 0 && (
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <Clock className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <h2 className="font-display font-bold text-base lg:text-lg leading-tight">Recently Viewed</h2>
+                  <p className="text-[11px] text-muted-foreground">Markets you've looked at — on this device</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+              {recentMarkets.map((m) => (
                 <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
                   <MarketCard market={m} />
                 </div>

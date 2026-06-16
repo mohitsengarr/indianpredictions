@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLivePrice } from '@/contexts/LivePricesContext';
 import { trackMarketClick, trackPolymarketClick } from '@/lib/analytics';
 import { useWatchlist } from '@/hooks/useWatchlist';
+import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
 /** Compact inline probability sparkline drawn from the market's price history. */
 const Sparkline = ({ market }: { market: Market }) => {
@@ -81,7 +82,9 @@ const MarketCard = ({ market, compact = false }: MarketCardProps) => {
   const { isWatched, toggle } = useWatchlist();
   const watched = isWatched(market.id);
 
-  const openMarket = () => { trackMarketClick(market.id, market.category); navigate(`/market/${market.id}`); };
+  const { record } = useRecentlyViewed();
+
+  const openMarket = () => { trackMarketClick(market.id, market.category); record(market.id); navigate(`/market/${market.id}`); };
 
   return (
     <div

@@ -1,0 +1,111 @@
+{
+  "weekOf": "2026-06-17",
+  "generatedAt": "2026-06-17T06:26:15.575Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Politics, Markets, Bollywood, Energy. The single most active is “India’s Modi Gov’t Purged Millions of Voters Before Elections in “Direct Attack” on Democracy”, where the market implies roughly a 72% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "items": [
+    {
+      "title": "India’s Modi Gov’t Purged Millions of Voters Before Elections in “Direct Attack” on Democracy",
+      "slug": "indias-modi-govt-purged-millions-of-voters-before-elections-in-direct-attack-on",
+      "category": "politics",
+      "categoryLabel": "Politics",
+      "angle": "Will the Modi government's actions affect the upcoming elections significantly?",
+      "probability": 72,
+      "updatedAt": "2026-06-16T01:35:59.089Z"
+    },
+    {
+      "title": "US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted",
+      "slug": "us-realty-firm-opendoor-winds-down-india-operations-250-jobs-impacted",
+      "category": "markets",
+      "categoryLabel": "Markets",
+      "angle": "Will this lead to further layoffs in the Indian tech sector?",
+      "probability": 44,
+      "updatedAt": "2026-06-15T01:36:20.644Z"
+    },
+    {
+      "title": "Maharashtra Home Department Orders Detailed Probe into Comedian Pranit More's Controversy",
+      "slug": "maharashtra-home-department-orders-detailed-probe-into-comedian-pranit-mores-con",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will the investigation lead to legal repercussions for Pranit More?",
+      "probability": 73,
+      "updatedAt": "2026-06-16T01:36:23.371Z"
+    },
+    {
+      "title": "Bollywood Box Office Collection Report 2026",
+      "slug": "bollywood-box-office-collection-report-2026",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will Bollywood movies continue to dominate the Indian box office in 2026?",
+      "probability": 23,
+      "updatedAt": "2026-06-16T01:36:23.371Z"
+    },
+    {
+      "title": "Haunted: Echoes of the Past Leads Box Office with Rs. 9.38 Cr",
+      "slug": "haunted-echoes-of-the-past-leads-box-office-with-rs-938-cr",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Haunted: Echoes of the Past' maintain its box office lead next weekend?",
+      "probability": 79,
+      "updatedAt": "2026-06-16T01:36:23.371Z"
+    },
+    {
+      "title": "India Pushes States to Fast-Track Nuclear and Battery Storage Approvals",
+      "slug": "india-pushes-states-to-fast-track-nuclear-and-battery-storage-approvals",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will India successfully fast-track nuclear and battery approvals by the end of 2026?",
+      "probability": 28,
+      "updatedAt": "2026-06-16T01:36:23.371Z"
+    },
+    {
+      "title": "Ethanol transition can shift to \"Transport Energy Backbone\" to shield India from oil shocks: KPMG",
+      "slug": "ethanol-transition-can-shift-to-transport-energy-backbone-to-shield-india-from-o",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will the ethanol transition significantly reduce India's oil import dependency?",
+      "probability": 77,
+      "updatedAt": "2026-06-16T01:36:23.371Z"
+    },
+    {
+      "title": "U.S. becomes India’s top gas supplier, as Iran war cuts it off from the Gulf",
+      "slug": "us-becomes-indias-top-gas-supplier-as-iran-war-cuts-it-off-from-the-gulf",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will this shift lead to long-term changes in India's energy policy?",
+      "probability": 65,
+      "updatedAt": "2026-06-16T01:36:23.371Z"
+    }
+  ],
+  "topNews": [
+    {
+      "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
+      "category": "sports",
+      "source": "https://www.iplt20.com/news",
+      "publishedDate": "2026-06-16T08:19:40.129Z"
+    },
+    {
+      "title": "Press Releases - Reserve Bank of India",
+      "category": "economy",
+      "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62863",
+      "publishedDate": "2026-06-16T08:19:36.986Z"
+    },
+    {
+      "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
+      "category": "markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "publishedDate": "2026-06-16T08:19:35.438Z"
+    },
+    {
+      "title": "Share Market Today | Latest Stock Market News, Sensex Today and Nifty Live Updates",
+      "category": "markets",
+      "source": "https://www.business-standard.com/markets",
+      "publishedDate": "2026-06-16T08:19:35.438Z"
+    },
+    {
+      "title": "NSE - National Stock Exchange of India Ltd: Live Share/Stock Market News &amp; Updates, Quotes- Nseindia.com",
+      "category": "markets",
+      "source": "https://www.nseindia.com/",
+      "publishedDate": "2026-06-16T08:19:35.438Z"
+    }
+  ]
+}

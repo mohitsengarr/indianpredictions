@@ -23,14 +23,17 @@
     <meta name="language" content="English" />
     <meta name="revisit-after" content="3 days" />
     <meta name="rating" content="general" />
-    <link rel="canonical" href="https://www.indiapredictions.com/" />
+    <!-- Canonical is set per-route: at build time by the prerenderer (head
+         injection in src/main.tsx) for static pages, and at runtime by useSEO
+         for SPA routes. A single hardcoded canonical here would wrongly point
+         every prerendered page at the homepage. -->
 
     <!-- ═══ Open Graph (Facebook, LinkedIn, WhatsApp, Telegram) ════════ -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="India Predictions" />
     <meta property="og:title" content="India Predictions – Live Prediction Market Odds for Cricket, Elections & Economy" />
     <meta property="og:description" content="Track live prediction-market probabilities for India — cricket, IPL, elections, RBI policy, economy. Aggregated from Polymarket, updated every 5 minutes. No real-money trading." />
-    <meta property="og:url" content="https://www.indiapredictions.com/" />
+    <!-- og:url is set per-route (prerender head injection / useSEO), like canonical -->
     <meta property="og:locale" content="en_IN" />
     <meta property="og:image" content="https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/07c14fad-e803-4809-8654-86579cab78d8/id-preview-a8d4ee2e--5fc81140-cec5-43a7-b277-b2d8ba92190f.lovable.app-1771895603345.png" />
     <meta property="og:image:width" content="1200" />

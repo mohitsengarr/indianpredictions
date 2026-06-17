@@ -59,12 +59,103 @@ export async function prerender(data: { url: string }) {
     html = "";
   }
 
+  // Per-route <head> so each prerendered page ships its own title, canonical,
+  // and (where relevant) JSON-LD in the STATIC HTML — useSEO only runs after
+  // hydration, so without this every prerendered page would inherit the
+  // homepage's title and canonical from index.html (bad for indexing).
+  const head = await buildHead(data.url).catch(() => undefined);
+
   // NOTE: We deliberately do NOT return discovered `links`. Link auto-discovery
   // would pull in runtime-data-driven routes (/markets, /crypto, /analytics,
   // /insights, /events/*, etc.) that must stay client-rendered. The exact set
   // of routes to prerender is controlled explicitly via `additionalPrerenderRoutes`
   // in vite.config.ts (static pages + every /blog/<slug>).
-  return { html };
+  return { html, head };
+}
+
+const SITE = "https://www.indiapredictions.com";
+
+/** JSON-LD as a head <script> element; escape `<` so it can't break out. */
+function ldScript(obj: unknown) {
+  return {
+    type: "script",
+    props: {
+      type: "application/ld+json",
+      children: JSON.stringify(obj).replace(/</g, "\\u003c"),
+    },
+  };
+}
+
+/**
+ * Build per-route head data (title + canonical [+ description/JSON-LD]) for the
+ * prerenderer. Data modules are imported lazily so they don't bloat the client
+ * bundle — this only runs at build time.
+ */
+async function buildHead(url: string) {
+  const path = url.split(/[?#]/)[0];
+  const canonical = path === "/" ? `${SITE}/` : `${SITE}${path.replace(/\/$/, "")}`;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const elements = new Set<any>();
+  elements.add({ type: "link", props: { rel: "canonical", href: canonical } });
+  elements.add({ type: "meta", props: { property: "og:url", content: canonical } });
+
+  const STATIC_TITLES: Record<string, string> = {
+    "/": "India Predictions – Live Prediction Market Odds for Cricket, Elections & Economy",
+    "/about": "About India Predictions – Methodology & Data Sources",
+    "/blog": "Blog – India Prediction Market Analysis & Education",
+    "/terms": "Terms of Service – India Predictions",
+    "/privacy": "Privacy Policy – India Predictions",
+    "/disclaimer": "Risk Disclaimer – India Predictions",
+  };
+
+  let title = STATIC_TITLES[path] ?? "India Predictions";
+
+  if (path === "/digest") {
+    const digest = (await import("./data/digest.json")).default as {
+      weekOf: string; summary: string; generatedAt: string;
+      items: { title: string; probability: number }[];
+    };
+    const weekLabel = new Date(digest.weekOf).toLocaleDateString("en-IN", {
+      day: "numeric", month: "long", year: "numeric",
+    });
+    title = `India Prediction Market Digest — Week of ${weekLabel}`;
+    elements.add({ type: "meta", props: { name: "description", content: digest.summary.slice(0, 155) } });
+    elements.add(ldScript({
+      "@context": "https://schema.org", "@type": "Article",
+      headline: title, description: digest.summary,
+      datePublished: digest.generatedAt, dateModified: digest.generatedAt,
+      author: { "@type": "Organization", name: "India Predictions", url: SITE },
+      publisher: { "@type": "Organization", name: "India Predictions", url: SITE },
+      mainEntityOfPage: `${SITE}/digest`,
+    }));
+    elements.add(ldScript({
+      "@context": "https://schema.org", "@type": "Dataset",
+      name: `India Prediction Market Probabilities — Week of ${weekLabel}`,
+      description: "Crowd-sourced implied probabilities for the most-watched India prediction-market questions.",
+      creator: { "@type": "Organization", name: "India Predictions" },
+      dateModified: digest.generatedAt, isAccessibleForFree: true,
+      variableMeasured: digest.items.map((i) => ({ "@type": "PropertyValue", name: i.title, value: `${i.probability}%` })),
+    }));
+  } else if (path.startsWith("/blog/")) {
+    const { BLOG_POSTS } = await import("./data/blog-posts");
+    const slug = path.slice("/blog/".length);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const post = (BLOG_POSTS as any[]).find((p) => p.slug === slug);
+    if (post) {
+      title = post.title;
+      if (post.excerpt) elements.add({ type: "meta", props: { name: "description", content: String(post.excerpt).slice(0, 155) } });
+      elements.add(ldScript({
+        "@context": "https://schema.org", "@type": "Article",
+        headline: post.title, description: post.excerpt ?? post.title,
+        datePublished: post.publishedAt, dateModified: post.publishedAt,
+        author: { "@type": "Organization", name: "India Predictions", url: SITE },
+        publisher: { "@type": "Organization", name: "India Predictions", url: SITE },
+        mainEntityOfPage: canonical,
+      }));
+    }
+  }
+
+  return { title, elements };
 }
 
 /**

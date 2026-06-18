@@ -1,7 +1,7 @@
 {
-  "weekOf": "2026-06-17",
-  "generatedAt": "2026-06-17T06:36:01.250Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Bollywood, Energy, Regulation. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-18",
+  "generatedAt": "2026-06-18T01:32:55.873Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Energy, Regulation, Bollywood. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
       "title": "US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted",
@@ -13,67 +13,67 @@
       "updatedAt": "2026-06-15T01:36:20.644Z"
     },
     {
-      "title": "Maharashtra Home Department Orders Probe into Pranit More's Controversy",
-      "slug": "maharashtra-home-department-orders-probe-into-pranit-mores-controversy",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will the investigation result in any formal charges against Pranit More?",
-      "probability": 26,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
-    },
-    {
-      "title": "Bollywood Box Office Collection Report (2026)",
-      "slug": "bollywood-box-office-collection-report-2026",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will Bollywood box office collections exceed previous years in 2026?",
-      "probability": 34,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
-    },
-    {
-      "title": "India’s ONGC Considers Resuming Venezuela Oil Operations",
-      "slug": "indias-ongc-considers-resuming-venezuela-oil-operations",
+      "title": "Oil Prices Rebound Following US-Israel Peace Agreement",
+      "slug": "oil-prices-rebound-following-us-israel-peace-agreement",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will ONGC successfully resume operations in Venezuela this year?",
-      "probability": 31,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
-    },
-    {
-      "title": "Crude Oil Rebounds After 5% Plunge Amid US-Iran Peace Deal Talks",
-      "slug": "crude-oil-rebounds-after-5-plunge-amid-us-iran-peace-deal-talks",
-      "category": "energy",
-      "categoryLabel": "Energy",
-      "angle": "Will the oil prices stabilize above $80 per barrel in the next month?",
-      "probability": 79,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
+      "angle": "Will oil prices stabilize above $80 per barrel following this news?",
+      "probability": 58,
+      "updatedAt": "2026-06-18T01:32:53.994Z"
     },
     {
       "title": "U.S. becomes India’s top gas supplier, as Iran war cuts it off from the Gulf",
       "slug": "us-becomes-indias-top-gas-supplier-as-iran-war-cuts-it-off-from-the-gulf",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will this shift in gas supply chain strengthen U.S.-India relations?",
+      "angle": "Will the U.S. maintain its position as India's top gas supplier for the next year?",
       "probability": 65,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
+      "updatedAt": "2026-06-18T01:32:53.994Z"
     },
     {
       "title": "Regulating Cryptocurrency in India",
       "slug": "regulating-cryptocurrency-in-india",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will the Indian government implement a comprehensive cryptocurrency regulation before the end of 2024?",
+      "angle": "Will the Indian government regulate cryptocurrencies within the next 12 months?",
       "probability": 64,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
+      "updatedAt": "2026-06-18T01:32:53.994Z"
     },
     {
-      "title": "Understanding Crypto Regulations in India",
-      "slug": "understanding-crypto-regulations-in-india",
+      "title": "Crypto Regulations in India: Key Compliance Insights",
+      "slug": "crypto-regulations-in-india-key-compliance-insights",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's crypto regulations become more stringent in the next year?",
-      "probability": 55,
-      "updatedAt": "2026-06-17T01:35:56.294Z"
+      "angle": "Will India's crypto regulatory framework be more stringent in the next year?",
+      "probability": 49,
+      "updatedAt": "2026-06-18T01:32:53.994Z"
+    },
+    {
+      "title": "Hai Jawani Toh Ishq Hona Hai Crosses Rs 70 Cr Mark",
+      "slug": "hai-jawani-toh-ishq-hona-hai-crosses-rs-70-cr-mark",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Hai Jawani Toh Ishq Hona Hai' continue to increase its box office collections over the next month?",
+      "probability": 44,
+      "updatedAt": "2026-06-18T01:32:53.993Z"
+    },
+    {
+      "title": "Dhurandhar: The Revenge Tops Box Office in India",
+      "slug": "dhurandhar-the-revenge-tops-box-office-in-india",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Dhurandhar: The Revenge' maintain its box office success into 2024?",
+      "probability": 25,
+      "updatedAt": "2026-06-18T01:32:53.993Z"
+    },
+    {
+      "title": "India’s Foreign Policy Must Be Guided by Historical Reality, Not Catchphrases",
+      "slug": "indias-foreign-policy-must-be-guided-by-historical-reality-not-catchphrases",
+      "category": "geopolitics",
+      "categoryLabel": "Geopolitics",
+      "angle": "Will India adjust its foreign policy effectively by 2035?",
+      "probability": 37,
+      "updatedAt": "2026-06-18T01:32:39.741Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
       "category": "sports",
       "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-17T01:32:38.639Z"
+      "publishedDate": "2026-06-18T01:26:26.315Z"
     },
     {
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-17T01:32:38.639Z"
+      "publishedDate": "2026-06-18T01:26:26.315Z"
     },
     {
-      "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
-      "category": "markets",
-      "source": "https://www.thehindu.com/business/markets/",
-      "publishedDate": "2026-06-17T01:32:33.481Z"
+      "title": "Press Releases - Reserve Bank of India",
+      "category": "economy",
+      "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62863",
+      "publishedDate": "2026-06-18T01:26:22.975Z"
     },
     {
       "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
       "category": "markets",
       "source": "https://economictimes.indiatimes.com/markets",
-      "publishedDate": "2026-06-17T01:32:33.480Z"
+      "publishedDate": "2026-06-18T01:26:21.473Z"
     },
     {
-      "title": "Sensex and Nifty | Sensex and Nifty extend gains on easing oil prices and improving risk appetite - Telegraph India",
+      "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
       "category": "markets",
-      "source": "https://www.telegraphindia.com/business/sensex-and-nifty-extend-gains-on-easing-oil-prices-and-improving-risk-appetite-prnt/cid/2165864",
-      "publishedDate": "2026-06-17T00:34:43.000Z"
+      "source": "https://www.thehindu.com/business/markets/",
+      "publishedDate": "2026-06-18T01:26:21.473Z"
     }
   ]
 }

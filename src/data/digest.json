@@ -1,7 +1,7 @@
 {
-  "weekOf": "2026-06-18",
-  "generatedAt": "2026-06-18T01:32:55.873Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Energy, Regulation, Bollywood. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-19",
+  "generatedAt": "2026-06-19T01:40:25.202Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Bollywood, Energy, Regulation. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
       "title": "US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted",
@@ -13,67 +13,67 @@
       "updatedAt": "2026-06-15T01:36:20.644Z"
     },
     {
-      "title": "Oil Prices Rebound Following US-Israel Peace Agreement",
-      "slug": "oil-prices-rebound-following-us-israel-peace-agreement",
-      "category": "energy",
-      "categoryLabel": "Energy",
-      "angle": "Will oil prices stabilize above $80 per barrel following this news?",
-      "probability": 58,
-      "updatedAt": "2026-06-18T01:32:53.994Z"
+      "title": "Vicky Kaushal Praises Sharvari After 'Alpha' Trailer Release",
+      "slug": "vicky-kaushal-praises-sharvari-after-alpha-trailer-release",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Alpha' perform well at the box office? Yes.",
+      "probability": 21,
+      "updatedAt": "2026-06-19T01:40:23.609Z"
+    },
+    {
+      "title": "Bollywood Box Office Collection & Verdicts 2026",
+      "slug": "bollywood-box-office-collection-verdicts-2026",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will the top-grossing films of 2026 exceed previous records?",
+      "probability": 57,
+      "updatedAt": "2026-06-19T01:40:23.609Z"
     },
     {
       "title": "U.S. becomes India’s top gas supplier, as Iran war cuts it off from the Gulf",
       "slug": "us-becomes-indias-top-gas-supplier-as-iran-war-cuts-it-off-from-the-gulf",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will the U.S. maintain its position as India's top gas supplier for the next year?",
+      "angle": "Will India continue to rely on U.S. gas supplies in the next 5 years?",
       "probability": 65,
-      "updatedAt": "2026-06-18T01:32:53.994Z"
+      "updatedAt": "2026-06-19T01:40:23.609Z"
     },
     {
-      "title": "Regulating Cryptocurrency in India",
-      "slug": "regulating-cryptocurrency-in-india",
+      "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
+      "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will oil prices decrease in the next 60 days?",
+      "probability": 75,
+      "updatedAt": "2026-06-19T01:40:23.609Z"
+    },
+    {
+      "title": "India's SEBI Recommends Oversight on Cryptocurrency Trading",
+      "slug": "indias-sebi-recommends-oversight-on-cryptocurrency-trading",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will the Indian government regulate cryptocurrencies within the next 12 months?",
-      "probability": 64,
-      "updatedAt": "2026-06-18T01:32:53.994Z"
+      "angle": "Will India implement SEBI's cryptocurrency oversight recommendations by the end of 2024?",
+      "probability": 22,
+      "updatedAt": "2026-06-19T01:40:23.609Z"
     },
     {
-      "title": "Crypto Regulations in India: Key Compliance Insights",
-      "slug": "crypto-regulations-in-india-key-compliance-insights",
+      "title": "Crypto Regulations in India: Compliance Overview",
+      "slug": "crypto-regulations-in-india-compliance-overview",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's crypto regulatory framework be more stringent in the next year?",
-      "probability": 49,
-      "updatedAt": "2026-06-18T01:32:53.994Z"
+      "angle": "Will India introduce a comprehensive cryptocurrency law by 2026?",
+      "probability": 41,
+      "updatedAt": "2026-06-19T01:40:23.609Z"
     },
     {
-      "title": "Hai Jawani Toh Ishq Hona Hai Crosses Rs 70 Cr Mark",
-      "slug": "hai-jawani-toh-ishq-hona-hai-crosses-rs-70-cr-mark",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will 'Hai Jawani Toh Ishq Hona Hai' continue to increase its box office collections over the next month?",
-      "probability": 44,
-      "updatedAt": "2026-06-18T01:32:53.993Z"
-    },
-    {
-      "title": "Dhurandhar: The Revenge Tops Box Office in India",
-      "slug": "dhurandhar-the-revenge-tops-box-office-in-india",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will 'Dhurandhar: The Revenge' maintain its box office success into 2024?",
-      "probability": 25,
-      "updatedAt": "2026-06-18T01:32:53.993Z"
-    },
-    {
-      "title": "India’s Foreign Policy Must Be Guided by Historical Reality, Not Catchphrases",
-      "slug": "indias-foreign-policy-must-be-guided-by-historical-reality-not-catchphrases",
-      "category": "geopolitics",
-      "categoryLabel": "Geopolitics",
-      "angle": "Will India adjust its foreign policy effectively by 2035?",
-      "probability": 37,
-      "updatedAt": "2026-06-18T01:32:39.741Z"
+      "title": "Final: RCB vs GT - Code of Conduct Breach",
+      "slug": "final-rcb-vs-gt-code-of-conduct-breach",
+      "category": "sports",
+      "categoryLabel": "Cricket & Sports",
+      "angle": "Will the breach lead to disciplinary action against any players?",
+      "probability": 79,
+      "updatedAt": "2026-06-19T01:39:29.659Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
       "category": "sports",
       "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-18T01:26:26.315Z"
+      "publishedDate": "2026-06-19T01:32:06.889Z"
     },
     {
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-18T01:26:26.315Z"
-    },
-    {
-      "title": "Press Releases - Reserve Bank of India",
-      "category": "economy",
-      "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62863",
-      "publishedDate": "2026-06-18T01:26:22.975Z"
+      "publishedDate": "2026-06-19T01:32:06.889Z"
     },
     {
       "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
       "category": "markets",
       "source": "https://economictimes.indiatimes.com/markets",
-      "publishedDate": "2026-06-18T01:26:21.473Z"
+      "publishedDate": "2026-06-19T01:32:01.837Z"
     },
     {
       "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
       "category": "markets",
       "source": "https://www.thehindu.com/business/markets/",
-      "publishedDate": "2026-06-18T01:26:21.473Z"
+      "publishedDate": "2026-06-19T01:32:01.837Z"
+    },
+    {
+      "title": "Indices advance further as geopolitical optimism eclipse Fed’s hawkish stance",
+      "category": "markets",
+      "source": "https://www.bizzbuzz.news/markets/indices-advance-further-as-geopolitical-optimism-eclipse-feds-hawkish-stance-1394874",
+      "publishedDate": "2026-06-19T01:02:10.000Z"
     }
   ]
 }

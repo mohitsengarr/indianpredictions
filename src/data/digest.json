@@ -1,8 +1,17 @@
 {
-  "weekOf": "2026-06-19",
-  "generatedAt": "2026-06-19T01:40:25.202Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Bollywood, Energy, Regulation. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-20",
+  "generatedAt": "2026-06-20T01:26:30.965Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Markets, Energy, Regulation. The single most active is “T20 World Cup: Big blow for India! Shreyanka Patil ruled out, replacement named”, where the market implies roughly a 37% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
+    {
+      "title": "T20 World Cup: Big blow for India! Shreyanka Patil ruled out, replacement named",
+      "slug": "t20-world-cup-big-blow-for-india-shreyanka-patil-ruled-out-replacement-named",
+      "category": "sports",
+      "categoryLabel": "Cricket & Sports",
+      "angle": "Will India's performance in the T20 World Cup be affected by this injury?",
+      "probability": 37,
+      "updatedAt": "2026-06-20T01:26:19.953Z"
+    },
     {
       "title": "US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted",
       "slug": "us-realty-firm-opendoor-winds-down-india-operations-250-jobs-impacted",
@@ -13,99 +22,90 @@
       "updatedAt": "2026-06-15T01:36:20.644Z"
     },
     {
-      "title": "Vicky Kaushal Praises Sharvari After 'Alpha' Trailer Release",
-      "slug": "vicky-kaushal-praises-sharvari-after-alpha-trailer-release",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will 'Alpha' perform well at the box office? Yes.",
-      "probability": 21,
-      "updatedAt": "2026-06-19T01:40:23.609Z"
-    },
-    {
-      "title": "Bollywood Box Office Collection & Verdicts 2026",
-      "slug": "bollywood-box-office-collection-verdicts-2026",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will the top-grossing films of 2026 exceed previous records?",
-      "probability": 57,
-      "updatedAt": "2026-06-19T01:40:23.609Z"
-    },
-    {
-      "title": "U.S. becomes India’s top gas supplier, as Iran war cuts it off from the Gulf",
-      "slug": "us-becomes-indias-top-gas-supplier-as-iran-war-cuts-it-off-from-the-gulf",
+      "title": "India Receives First Post-Deal LNG Cargo Through Strait Of Hormuz",
+      "slug": "india-receives-first-post-deal-lng-cargo-through-strait-of-hormuz",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India continue to rely on U.S. gas supplies in the next 5 years?",
-      "probability": 65,
-      "updatedAt": "2026-06-19T01:40:23.609Z"
+      "angle": "Will India increase its LNG imports from Iran in the coming year?",
+      "probability": 57,
+      "updatedAt": "2026-06-20T01:26:28.929Z"
+    },
+    {
+      "title": "Anthropic’s restrictions ignite sovereign AI debate in India",
+      "slug": "anthropics-restrictions-ignite-sovereign-ai-debate-in-india",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will the restrictions significantly hinder AI development in India?",
+      "probability": 45,
+      "updatedAt": "2026-06-20T01:26:28.929Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil prices decrease in the next 60 days?",
+      "angle": "Will India's oil prices stabilize in the next quarter?",
       "probability": 75,
-      "updatedAt": "2026-06-19T01:40:23.609Z"
+      "updatedAt": "2026-06-20T01:26:28.929Z"
     },
     {
-      "title": "India's SEBI Recommends Oversight on Cryptocurrency Trading",
-      "slug": "indias-sebi-recommends-oversight-on-cryptocurrency-trading",
+      "title": "India's SEBI Proposes Oversight for Cryptocurrency Trading",
+      "slug": "indias-sebi-proposes-oversight-for-cryptocurrency-trading",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India implement SEBI's cryptocurrency oversight recommendations by the end of 2024?",
-      "probability": 22,
-      "updatedAt": "2026-06-19T01:40:23.609Z"
+      "angle": "Will SEBI's recommendations lead to new cryptocurrency regulations in India?",
+      "probability": 25,
+      "updatedAt": "2026-06-20T01:26:28.929Z"
     },
     {
-      "title": "Crypto Regulations in India: Compliance Overview",
-      "slug": "crypto-regulations-in-india-compliance-overview",
+      "title": "Crypto Regulations in India: Compliance and Legal Frameworks",
+      "slug": "crypto-regulations-in-india-compliance-and-legal-frameworks",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India introduce a comprehensive cryptocurrency law by 2026?",
-      "probability": 41,
-      "updatedAt": "2026-06-19T01:40:23.609Z"
+      "angle": "Will regulatory measures on crypto in India continue to tighten in the next 12 months?",
+      "probability": 59,
+      "updatedAt": "2026-06-20T01:26:28.929Z"
     },
     {
-      "title": "Final: RCB vs GT - Code of Conduct Breach",
-      "slug": "final-rcb-vs-gt-code-of-conduct-breach",
-      "category": "sports",
-      "categoryLabel": "Cricket & Sports",
-      "angle": "Will the breach lead to disciplinary action against any players?",
-      "probability": 79,
-      "updatedAt": "2026-06-19T01:39:29.659Z"
+      "title": "‘Cocktail 2’ Divides Fans Over Love Triangle",
+      "slug": "cocktail-2-divides-fans-over-love-triangle",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Cocktail 2' surpass its predecessor's box office performance?",
+      "probability": 63,
+      "updatedAt": "2026-06-20T01:26:28.928Z"
     }
   ],
   "topNews": [
     {
-      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
-      "category": "sports",
-      "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-19T01:32:06.889Z"
-    },
-    {
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-19T01:32:06.889Z"
+      "publishedDate": "2026-06-20T01:21:29.591Z"
+    },
+    {
+      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
+      "category": "sports",
+      "source": "https://sports.ndtv.com/ipl-2026/news",
+      "publishedDate": "2026-06-20T01:21:29.591Z"
     },
     {
       "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
       "category": "markets",
       "source": "https://economictimes.indiatimes.com/markets",
-      "publishedDate": "2026-06-19T01:32:01.837Z"
+      "publishedDate": "2026-06-20T01:21:24.223Z"
     },
     {
-      "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
+      "title": "Indian shares snap 5-session rally - Markets - Business Recorder",
       "category": "markets",
-      "source": "https://www.thehindu.com/business/markets/",
-      "publishedDate": "2026-06-19T01:32:01.837Z"
+      "source": "https://www.brecorder.com/news/40426418/indian-shares-snap-5-session-rally",
+      "publishedDate": "2026-06-19T23:57:32.000Z"
     },
     {
-      "title": "Indices advance further as geopolitical optimism eclipse Fed’s hawkish stance",
-      "category": "markets",
-      "source": "https://www.bizzbuzz.news/markets/indices-advance-further-as-geopolitical-optimism-eclipse-feds-hawkish-stance-1394874",
-      "publishedDate": "2026-06-19T01:02:10.000Z"
+      "title": "TMC meets Lok Sabha speaker seeking 20 rebel MPs' disqualification - The Economic Times",
+      "category": "politics",
+      "source": "https://economictimes.indiatimes.com/news/politics-and-nation/tmc-meets-lok-sabha-speaker-seeking-20-rebel-mps-disqualification/articleshow/131866152.cms",
+      "publishedDate": "2026-06-19T19:09:00.000Z"
     }
   ]
 }

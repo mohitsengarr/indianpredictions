@@ -1,7 +1,7 @@
 {
-  "weekOf": "2026-06-20",
-  "generatedAt": "2026-06-20T01:26:30.965Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Markets, Energy, Regulation. The single most active is “T20 World Cup: Big blow for India! Shreyanka Patil ruled out, replacement named”, where the market implies roughly a 37% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-21",
+  "generatedAt": "2026-06-21T01:36:40.830Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Markets, Bollywood, Energy. The single most active is “T20 World Cup: Big blow for India! Shreyanka Patil ruled out, replacement named”, where the market implies roughly a 37% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
       "title": "T20 World Cup: Big blow for India! Shreyanka Patil ruled out, replacement named",
@@ -22,58 +22,58 @@
       "updatedAt": "2026-06-15T01:36:20.644Z"
     },
     {
-      "title": "India Receives First Post-Deal LNG Cargo Through Strait Of Hormuz",
-      "slug": "india-receives-first-post-deal-lng-cargo-through-strait-of-hormuz",
-      "category": "energy",
-      "categoryLabel": "Energy",
-      "angle": "Will India increase its LNG imports from Iran in the coming year?",
-      "probability": 57,
-      "updatedAt": "2026-06-20T01:26:28.929Z"
+      "title": "Aamir Khan and Gauri Spratt Register Marriage",
+      "slug": "aamir-khan-and-gauri-spratt-register-marriage",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will Aamir Khan's marriage with Gauri Spratt lead to further media attention?",
+      "probability": 25,
+      "updatedAt": "2026-06-21T01:36:39.296Z"
     },
     {
-      "title": "Anthropic’s restrictions ignite sovereign AI debate in India",
-      "slug": "anthropics-restrictions-ignite-sovereign-ai-debate-in-india",
+      "title": "Shahid Kapoor's Cocktail 2 Secures 8.83 Cr Opening Start",
+      "slug": "shahid-kapoors-cocktail-2-secures-883-cr-opening-start",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will Cocktail 2 continue to perform well at the box office?",
+      "probability": 40,
+      "updatedAt": "2026-06-21T01:36:39.296Z"
+    },
+    {
+      "title": "India Orders Major Strategic Oil Reserve Expansion After Supply Crisis",
+      "slug": "india-orders-major-strategic-oil-reserve-expansion-after-supply-crisis",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will the restrictions significantly hinder AI development in India?",
-      "probability": 45,
-      "updatedAt": "2026-06-20T01:26:28.929Z"
+      "angle": "Will India successfully complete the oil reserve expansion within the stipulated time frame?",
+      "probability": 30,
+      "updatedAt": "2026-06-21T01:36:39.296Z"
+    },
+    {
+      "title": "Crude Oil Prices Drop Amid Increased Shipping in Hormuz Strait",
+      "slug": "crude-oil-prices-drop-amid-increased-shipping-in-hormuz-strait",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will oil prices continue to fall next week?",
+      "probability": 26,
+      "updatedAt": "2026-06-21T01:36:39.296Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India's oil prices stabilize in the next quarter?",
+      "angle": "Will oil prices stabilize in the next six months?",
       "probability": 75,
-      "updatedAt": "2026-06-20T01:26:28.929Z"
+      "updatedAt": "2026-06-21T01:36:39.296Z"
     },
     {
-      "title": "India's SEBI Proposes Oversight for Cryptocurrency Trading",
-      "slug": "indias-sebi-proposes-oversight-for-cryptocurrency-trading",
+      "title": "India's SEBI Advocates Multi-Agency Oversight for Cryptocurrency Regulation",
+      "slug": "indias-sebi-advocates-multi-agency-oversight-for-cryptocurrency-regulation",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will SEBI's recommendations lead to new cryptocurrency regulations in India?",
-      "probability": 25,
-      "updatedAt": "2026-06-20T01:26:28.929Z"
-    },
-    {
-      "title": "Crypto Regulations in India: Compliance and Legal Frameworks",
-      "slug": "crypto-regulations-in-india-compliance-and-legal-frameworks",
-      "category": "regulation",
-      "categoryLabel": "Regulation",
-      "angle": "Will regulatory measures on crypto in India continue to tighten in the next 12 months?",
-      "probability": 59,
-      "updatedAt": "2026-06-20T01:26:28.929Z"
-    },
-    {
-      "title": "‘Cocktail 2’ Divides Fans Over Love Triangle",
-      "slug": "cocktail-2-divides-fans-over-love-triangle",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will 'Cocktail 2' surpass its predecessor's box office performance?",
-      "probability": 63,
-      "updatedAt": "2026-06-20T01:26:28.928Z"
+      "angle": "Will India establish a regulatory framework for cryptocurrencies by the end of 2024?",
+      "probability": 74,
+      "updatedAt": "2026-06-21T01:36:39.296Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-20T01:21:29.591Z"
+      "publishedDate": "2026-06-21T01:30:21.199Z"
     },
     {
-      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
+      "title": "Cricket News: Latest Cricket Match News Updates, Live Score Today",
       "category": "sports",
-      "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-20T01:21:29.591Z"
+      "source": "https://www.indiatoday.in/sports/cricket",
+      "publishedDate": "2026-06-21T01:30:21.199Z"
+    },
+    {
+      "title": "Press Releases - Reserve Bank of India",
+      "category": "economy",
+      "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62863",
+      "publishedDate": "2026-06-21T01:30:18.076Z"
     },
     {
       "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
       "category": "markets",
       "source": "https://economictimes.indiatimes.com/markets",
-      "publishedDate": "2026-06-20T01:21:24.223Z"
+      "publishedDate": "2026-06-21T01:30:16.357Z"
     },
     {
-      "title": "Indian shares snap 5-session rally - Markets - Business Recorder",
+      "title": "NSE - National Stock Exchange of India Ltd: Live Share/Stock Market News &amp; Updates, Quotes- Nseindia.com",
       "category": "markets",
-      "source": "https://www.brecorder.com/news/40426418/indian-shares-snap-5-session-rally",
-      "publishedDate": "2026-06-19T23:57:32.000Z"
-    },
-    {
-      "title": "TMC meets Lok Sabha speaker seeking 20 rebel MPs' disqualification - The Economic Times",
-      "category": "politics",
-      "source": "https://economictimes.indiatimes.com/news/politics-and-nation/tmc-meets-lok-sabha-speaker-seeking-20-rebel-mps-disqualification/articleshow/131866152.cms",
-      "publishedDate": "2026-06-19T19:09:00.000Z"
+      "source": "https://www.nseindia.com/",
+      "publishedDate": "2026-06-21T01:30:16.357Z"
     }
   ]
 }

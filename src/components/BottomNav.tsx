@@ -26,9 +26,7 @@ const BottomNav = () => {
         {/* Logo area */}
         <div className="px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-white font-display font-extrabold text-sm">
-              IP
-            </div>
+            <img src="/favicon.svg" alt="India Predictions logo" className="w-8 h-8 rounded-lg" />
             <div>
               <p className="font-display text-lg font-extrabold text-white tracking-tight leading-none">
                 India<span className="text-secondary">Predictions</span>

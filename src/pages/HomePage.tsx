@@ -271,7 +271,7 @@ const HomePage = () => {
                 className="lg:col-span-3 space-y-4"
               >
                 <div className="flex items-center gap-2">
-                  <span className="text-2xl">🇮🇳</span>
+                  <img src="/favicon.svg" alt="India Predictions logo" className="w-8 h-8 rounded-lg" />
                   <span className="font-display text-xl lg:text-2xl font-extrabold text-white tracking-tight">
                     India<span className="text-secondary">Predictions</span>
                   </span>

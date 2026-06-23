@@ -37,7 +37,7 @@ jobs:
       - name: Run Firecrawl scraper
         env:
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-          SUPABASE_URL: 'https://hivvemtveyjexrwgruhs.supabase.co'
+          SUPABASE_URL: 'https://gcmugkbvfizcnkrhwjzz.supabase.co'
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node scripts/scrape-firecrawl.mjs
 

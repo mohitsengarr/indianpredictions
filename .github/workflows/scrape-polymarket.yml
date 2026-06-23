@@ -27,6 +27,6 @@ jobs:
       # (global fetch + crypto). Polymarket's Gamma API is public.
       - name: Refresh polymarket_cache from Polymarket Gamma API
         env:
-          SUPABASE_URL: 'https://hivvemtveyjexrwgruhs.supabase.co'
+          SUPABASE_URL: 'https://gcmugkbvfizcnkrhwjzz.supabase.co'
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node scripts/scrape-polymarket.mjs

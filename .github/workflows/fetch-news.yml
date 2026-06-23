@@ -35,7 +35,7 @@ jobs:
       - name: Run Exa news fetcher
         env:
           EXA_API_KEY: ${{ secrets.EXA_API_KEY }}
-          SUPABASE_URL: 'https://hivvemtveyjexrwgruhs.supabase.co'
+          SUPABASE_URL: 'https://gcmugkbvfizcnkrhwjzz.supabase.co'
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: node scripts/fetch-news-exa.mjs
 

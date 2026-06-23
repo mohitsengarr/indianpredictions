@@ -9,25 +9,37 @@ data the whole site depends on.
 
 ---
 
-## 1. Mark GA4 Key Events (~2 min) — makes "conversions" register
+## 1. Mark GA4 Key Events — makes "conversions" register
 
-The events are already firing to GA4 (`G-TLW3N9MB4M`). You just flag which ones count.
+**Status (verified 23 Jun 2026):** The full pipeline is confirmed working. On the
+correct property — **India Predictions**, account "trending", property
+`528354347`, stream `indiapredictions` (`G-TLW3N9MB4M`) — I triggered each
+conversion live and saw them in **Reports → Realtime → Event count by event name**:
+`page_view`, `market_click`, `polymarket_click`, `watchlist_add` (plus
+`session_start`). So the tracking is 100% live and correct.
 
-1. Open **GA4 → Admin → Events** (property: India Predictions).
-2. First confirm data is flowing: **Reports → Realtime**, open the site in another
-   tab, click a market / "View on Polymarket" / star a market — you should see
-   `market_click`, `polymarket_click`, `watchlist_add` appear within ~30s.
-3. Back in **Admin → Events**, toggle **"Mark as key event"** on:
+**The one remaining step (1 click each):** GA4 will not let you flag an event as a
+key event until the event *name* has been ingested into **Admin → Events** (this
+list lags Realtime by up to ~24h for first-seen events — there is no
+"create key event by name" button in this property's UI; I checked). Once
+`market_click` / `polymarket_click` / `watchlist_add` appear in the
+**Admin → Events → Recent events** list (give it up to a day after 23 Jun), do:
+
+1. **GA4 → Admin → Data display → Events → Recent events tab.**
+2. Click the **star** next to each, to mark as key event:
    - `polymarket_click`   ← primary conversion (user acted on a market)
-   - `newsletter_submit`
+   - `newsletter_submit`  (fires once a user submits the newsletter form)
    - `watchlist_add`
    - `market_click`
    - (optional) `digest_view`
-4. They'll show as Key Events / conversions within ~24h in reports (instantly in Realtime).
+3. They'll show as Key Events / conversions in reports within ~24h of marking.
 
-If you see NO events in Realtime after 5 min: hard-refresh the site, check an
-ad-blocker isn't blocking `googletagmanager.com`, and confirm the GA4 ID is
-`G-TLW3N9MB4M`.
+> I can flip these toggles for you in a follow-up once they surface in the Events
+> list — it's a 1-click-each task at that point. Nothing in the code or wiring is
+> blocking; this is purely GA4's processing delay.
+
+If you ever see NO events in Realtime: hard-refresh the site, check an ad-blocker
+isn't blocking `googletagmanager.com`, and confirm the GA4 ID is `G-TLW3N9MB4M`.
 
 ---
 
@@ -66,33 +78,44 @@ You generate the token; **I commit it** (just paste it to me in chat).
 
 ---
 
-## 4. Rotate Supabase service key (~5 min) — unblocks LIVE markets ⭐ highest impact
+## 4. Set Supabase service key → unblocks LIVE markets ⭐ highest impact
 
-This is why `/markets`, the category hubs, "Races to Watch" and "Biggest Movers"
-currently show only stale/closed markets: the Polymarket cache can't refresh
-without a working `SUPABASE_SERVICE_KEY`, and the project `hivvemtveyjexrwgruhs`
-is owned by a **different Supabase account** than the others you're logged into.
+**Migrated to your own account (done 23 Jun 2026).** The app no longer depends on
+the old project `hivvemtveyjexrwgruhs` (different account, "no access"). It now
+points at **`menke-report`** in your **Sengar Consultancy** org, project ref
+**`gcmugkbvfizcnkrhwjzz`** (`https://gcmugkbvfizcnkrhwjzz.supabase.co`).
 
-1. Log into the Supabase account that **owns** project `hivvemtveyjexrwgruhs`
-   (NOT the Lovable / Sengar Consultancy / Prediction Markets US account — those
-   returned "no access"). It's likely the original email used when the app's
-   Supabase was first created.
-2. **Settings → API → Project API keys → `service_role` → Reset/Roll.** Copy the new key.
-3. GitHub → repo **Settings → Secrets and variables → Actions** →
-   `New repository secret` (or Update) named **`SUPABASE_SERVICE_KEY`** → paste → Save.
+Already done for you (no cost — reused an existing active project, $0 extra):
+- Created all 5 backend tables in `menke-report` (public schema, isolated by name
+  from your ESOP tables): `polymarket_cache`, `polymarket_meta`,
+  `trending_events_cache`, `breaking_news`, `analytics_events` — with the same
+  RLS (public read / service write; anon insert for analytics).
+- Repointed `.env`, `supabase/config.toml`, and the 3 GitHub workflows
+  (`scrape-polymarket`, `scrape-events`, `fetch-news`) to the new URL.
+- The publishable (anon) key in `.env` is the new project's — it's public, safe to commit.
+
+**The one remaining step — set the service key secret (only YOU can; it's a
+credential entry I'm not allowed to do, and it can't be read via the API tools):**
+
+1. Supabase → project **menke-report** → **Settings → API → Project API keys →
+   `service_role` → reveal/copy**. (It's in *your* logged-in account now.)
+   Direct: https://supabase.com/dashboard/project/gcmugkbvfizcnkrhwjzz/settings/api
+2. GitHub → **Settings → Secrets and variables → Actions** → update/create
+   **`SUPABASE_SERVICE_KEY`** = that key.
    URL: https://github.com/mohitsengarr/indianpredictions/settings/secrets/actions
-4. While you're in that Supabase project's **SQL Editor**, also run the
-   `analytics_events` migration (so analytics persists server-side too):
-   paste the contents of `supabase/migrations/20260402_create_analytics_events.sql`
-   and Run.
-5. Tell me **"secret is set"** — I'll trigger the "Refresh Polymarket Cache"
-   workflow and verify the cache fills with ~11 open India markets + 600 global,
-   after which every market section across the site goes live automatically
-   (and re-runs every 6h).
+3. **Vercel** (so the live site reads the new DB): Project → Settings →
+   Environment Variables → set `VITE_SUPABASE_URL` =
+   `https://gcmugkbvfizcnkrhwjzz.supabase.co` and `VITE_SUPABASE_PUBLISHABLE_KEY`
+   = the new anon key (in `.env`), then redeploy.
+4. Tell me **"secret is set"** — I'll push the config changes and dispatch the
+   "Refresh Polymarket Cache" + scrape workflows (gh is authed with `workflow`
+   scope). The cache fills from GitHub's runners (this machine has no outbound
+   network to Polymarket) and every market section goes live, re-running every 6h.
 
-> Note: if you can't locate the owning account, the alternative is to point the
-> app at a NEW Supabase project in an account you control — I'd update `.env` and
-> run all migrations. Say the word and I'll set that up instead.
+> ⚠️ The OLD migration file `supabase/migrations/20260313002143_*.sql` has a
+> hardcoded **service_role JWT for the old project** committed in git history —
+> treat that old key as compromised and disable/rotate it in the old account if
+> you ever regain access. It does not affect the new setup.
 
 ---
 

@@ -1,6 +1,6 @@
 {
-  "weekOf": "2026-06-22",
-  "generatedAt": "2026-06-22T01:36:53.728Z",
+  "weekOf": "2026-06-23",
+  "generatedAt": "2026-06-23T01:21:37.768Z",
   "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Bollywood, Energy, Regulation. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
@@ -13,67 +13,67 @@
       "updatedAt": "2026-06-15T01:36:20.644Z"
     },
     {
-      "title": "Rhea Kapoor Reports Theft of Diamond Earrings in New York",
-      "slug": "rhea-kapoor-reports-theft-of-diamond-earrings-in-new-york",
+      "title": "Rhea Kapoor Reports Shocking Theft of Rs 1.35 Crore Diamond Earrings in New York",
+      "slug": "rhea-kapoor-reports-shocking-theft-of-rs-135-crore-diamond-earrings-in-new-york",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will Rhea Kapoor recover her stolen earrings?",
-      "probability": 47,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "angle": "Will the culprit be found and brought to justice? Yes/No",
+      "probability": 77,
+      "updatedAt": "2026-06-23T01:21:35.609Z"
     },
     {
-      "title": "Bollywood Box Office Collection 2026 Report & Verdict",
-      "slug": "bollywood-box-office-collection-2026-report-verdict",
+      "title": "Bollywood Box Office Collection 2026 Report",
+      "slug": "bollywood-box-office-collection-2026-report",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will 'Dhurandhar 2' maintain its blockbuster status throughout the year? (Yes/No)",
-      "probability": 69,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "angle": "Will the Bollywood box office recover post-pandemic?",
+      "probability": 38,
+      "updatedAt": "2026-06-23T01:21:35.609Z"
     },
     {
-      "title": "India Receives First Post-Deal LNG Cargo Through Strait Of Hormuz",
-      "slug": "india-receives-first-post-deal-lng-cargo-through-strait-of-hormuz",
+      "title": "India’s Imports of Russian Oil Set for New Record High",
+      "slug": "indias-imports-of-russian-oil-set-for-new-record-high",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India's LNG imports increase significantly over the next year?",
-      "probability": 57,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "angle": "Will India's imports of Russian oil exceed previous records in the next quarter?",
+      "probability": 33,
+      "updatedAt": "2026-06-23T01:21:35.609Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil prices stabilize in the next quarter? Yes.",
+      "angle": "Will India's oil prices stabilize in the next 60 days?",
       "probability": 75,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "updatedAt": "2026-06-23T01:21:35.609Z"
     },
     {
-      "title": "Oil Price Today: Crude Oil Sees Significant Decline Amid Middle East Tensions",
-      "slug": "oil-price-today-crude-oil-sees-significant-decline-amid-middle-east-tensions",
+      "title": "Crude Oil Prices Drop Amid Middle East Tensions",
+      "slug": "crude-oil-prices-drop-amid-middle-east-tensions",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will crude oil prices recover in the next month?",
-      "probability": 46,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "angle": "Will crude oil prices rebound in the next month?",
+      "probability": 58,
+      "updatedAt": "2026-06-23T01:21:35.609Z"
     },
     {
-      "title": "India's SEBI Proposes Oversight of Cryptocurrency Trade",
-      "slug": "indias-sebi-proposes-oversight-of-cryptocurrency-trade",
+      "title": "India's SEBI Calls for Oversight of Crypto Trade",
+      "slug": "indias-sebi-calls-for-oversight-of-crypto-trade",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's regulator create a comprehensive framework for cryptocurrencies by the end of 2023?",
-      "probability": 43,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "angle": "Will India's regulators agree to SEBI's recommendations on cryptocurrency oversight?",
+      "probability": 49,
+      "updatedAt": "2026-06-23T01:21:35.609Z"
     },
     {
-      "title": "Regulating Cryptocurrency in India",
-      "slug": "regulating-cryptocurrency-in-india",
-      "category": "regulation",
-      "categoryLabel": "Regulation",
-      "angle": "Will India successfully implement a regulatory framework for cryptocurrency by 2025?",
-      "probability": 64,
-      "updatedAt": "2026-06-22T01:36:51.651Z"
+      "title": "India’s Future Strategic Choices: Complications of Mass",
+      "slug": "indias-future-strategic-choices-complications-of-mass",
+      "category": "geopolitics",
+      "categoryLabel": "Geopolitics",
+      "angle": "Will India successfully assert itself as a leader in the Global South by 2030?",
+      "probability": 20,
+      "updatedAt": "2026-06-23T01:21:18.564Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-22T01:30:07.212Z"
+      "publishedDate": "2026-06-23T01:14:51.096Z"
     },
     {
-      "title": "Equity Market Watch, Live Nifty & Sensex Charts & News - NSE India",
-      "category": "markets",
-      "source": "https://www.nseindia.com/market-data/live-equity-market",
-      "publishedDate": "2026-06-22T01:30:01.994Z"
+      "title": "Cricket News Today, Latest Cricket Updates, Cricket Live Score, Upcoming Matches | Times of India",
+      "category": "sports",
+      "source": "https://timesofindia.indiatimes.com/sports/cricket",
+      "publishedDate": "2026-06-23T01:14:51.096Z"
     },
     {
-      "title": "Stock Market: Stock Market Today | Stock Market Live News Update - Moneycontrol.com",
+      "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
       "category": "markets",
-      "source": "https://www.moneycontrol.com/stocksmarketsindia/",
-      "publishedDate": "2026-06-22T01:30:01.994Z"
+      "source": "https://economictimes.indiatimes.com/markets",
+      "publishedDate": "2026-06-23T01:14:45.960Z"
     },
     {
-      "title": "Sensex Today: Nifty Bulls Defend 24,000 as Quarter Nears End; RIL, IT Stocks in Focus",
+      "title": "NSE - National Stock Exchange of India Ltd: Live Share/Stock Market News &amp; Updates, Quotes- Nseindia.com",
       "category": "markets",
-      "source": "https://one.news18.com/english/article/market/nifty-bulls-battle-to-hold-24000-as-quarter-ends-ril-it-stocks-in-focus-cne-6619929439",
-      "publishedDate": "2026-06-22T00:51:23.000Z"
+      "source": "https://www.nseindia.com/",
+      "publishedDate": "2026-06-23T01:14:45.960Z"
     },
     {
-      "title": "Sensex Today | Stock Market LIVE Updates: Nifty bulls fight to hold 24,000 as quarter ends soon; RIL, IT in focus",
+      "title": "Sensex Today: Stock Market LIVE Updates - Nifty Aims to Retest 100-DMA on Weekly Expiry",
       "category": "markets",
-      "source": "https://www.cnbctv18.com/market/stock-market-live-updates-sensex-nifty-50-ril-it-infosys-nestle-bharat-forge-rvnl-grse-aavas-banks-share-price-liveblog-19929439.htm",
-      "publishedDate": "2026-06-22T00:49:08.000Z"
+      "source": "https://one.news18.com/english/article/market/nifty-eyes-100-dma-retest-amidst-cautious-optimism-and-market-headwinds-cne-6619930253",
+      "publishedDate": "2026-06-23T00:38:35.000Z"
     }
   ]
 }

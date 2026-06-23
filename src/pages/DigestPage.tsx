@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, TrendingUp, Newspaper } from 'lucide-react';
 import { useSEO } from '@/hooks/useSEO';
+import { trackDigestView } from '@/lib/analytics';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { CategoryIcon } from '@/components/icons/CategoryIcons';
 import digest from '@/data/digest.json';
@@ -15,6 +17,8 @@ const DigestPage = () => {
   const weekLabel = new Date(digest.weekOf).toLocaleDateString('en-IN', {
     day: 'numeric', month: 'long', year: 'numeric',
   });
+
+  useEffect(() => { trackDigestView(digest.weekOf); }, []);
 
   useSEO({
     title: `India Prediction Market Digest — Week of ${weekLabel}`,

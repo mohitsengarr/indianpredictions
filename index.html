@@ -10,7 +10,10 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-TLW3N9MB4M');
+      // SPA owns page_view firing on each route change (RouteTracker →
+      // trackPageView → gtag page_view). Disable the automatic pageview so we
+      // don't double-count or mis-measure engagement on client navigations.
+      gtag('config', 'G-TLW3N9MB4M', { send_page_view: false });
     </script>
 
     <!-- ═══ Primary SEO ════════════════════════════════════════════════ -->

@@ -27,6 +27,7 @@ const InsightsPage = lazy(() => import("./pages/InsightsPage"));
 const CryptoPage = lazy(() => import("./pages/CryptoPage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const DigestPage = lazy(() => import("./pages/DigestPage"));
+const CategoryHubPage = lazy(() => import("./pages/CategoryHubPage"));
 const TermsPage = lazy(() => import("./pages/TermsPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const DisclaimerPage = lazy(() => import("./pages/DisclaimerPage"));
@@ -87,6 +88,10 @@ const AnimatedRoutes = () => {
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/digest" element={<DigestPage />} />
+            <Route path="/cricket" element={<CategoryHubPage slug="cricket" />} />
+            <Route path="/elections" element={<CategoryHubPage slug="elections" />} />
+            <Route path="/economy" element={<CategoryHubPage slug="economy" />} />
+            <Route path="/bollywood" element={<CategoryHubPage slug="bollywood" />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/disclaimer" element={<DisclaimerPage />} />

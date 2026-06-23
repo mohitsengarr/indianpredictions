@@ -136,6 +136,13 @@ async function buildHead(url: string) {
       dateModified: digest.generatedAt, isAccessibleForFree: true,
       variableMeasured: digest.items.map((i) => ({ "@type": "PropertyValue", name: i.title, value: `${i.probability}%` })),
     }));
+  } else if (["/cricket", "/elections", "/economy", "/bollywood"].includes(path)) {
+    const { getCategoryHub } = await import("./data/category-hubs");
+    const hub = getCategoryHub(path.slice(1));
+    if (hub) {
+      title = hub.title;
+      elements.add({ type: "meta", props: { name: "description", content: hub.metaDescription } });
+    }
   } else if (path.startsWith("/blog/")) {
     const { BLOG_POSTS } = await import("./data/blog-posts");
     const slug = path.slice("/blog/".length);

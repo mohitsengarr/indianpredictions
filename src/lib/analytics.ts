@@ -86,7 +86,9 @@ export type AnalyticsEventType =
   | 'share_click'
   | 'polymarket_click'
   | 'newsletter_submit'
-  | 'scroll_milestone';
+  | 'scroll_milestone'
+  | 'watchlist_add'
+  | 'digest_view';
 
 interface AnalyticsEvent {
   visitor_id: string;
@@ -196,6 +198,31 @@ export function setAnalyticsGeo(country: string, region: string) {
   _geoRegion = region;
 }
 
+/**
+ * Mirror an event to GA4 via gtag. Key events (conversions) are marked in the
+ * GA4 UI (Admin → Events). Safe to call before gtag loads (no-op).
+ */
+function sendGA4(eventType: AnalyticsEventType, data: {
+  marketId?: string; category?: string; extra?: Record<string, string | number>;
+}) {
+  if (typeof window === 'undefined') return;
+  const g = (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag;
+  if (typeof g !== 'function') return;
+  if (eventType === 'page_view') {
+    g('event', 'page_view', {
+      page_path: window.location.pathname,
+      page_title: typeof document !== 'undefined' ? document.title : undefined,
+    });
+    return;
+  }
+  g('event', eventType, {
+    market_id: data.marketId,
+    category: data.category,
+    page_path: window.location.pathname,
+    ...(data.extra ?? {}),
+  });
+}
+
 /** Track an analytics event */
 export function trackEvent(
   eventType: AnalyticsEventType,
@@ -205,6 +232,9 @@ export function trackEvent(
     extra?: Record<string, string | number>;
   } = {}
 ) {
+  // Mirror to GA4 (conversions are marked as key events in the GA4 UI).
+  sendGA4(eventType, data);
+
   const event: AnalyticsEvent = {
     visitor_id: getVisitorId(),
     session_id: getSessionId(),
@@ -257,6 +287,16 @@ export function trackNewsletterSubmit() {
 /** Track share button click */
 export function trackShareClick(platform: string, marketId?: string) {
   trackEvent('share_click', { marketId, extra: { platform } });
+}
+
+/** Track adding a market to the watchlist (key event) */
+export function trackWatchlistAdd(marketId: string, category?: string) {
+  trackEvent('watchlist_add', { marketId, category });
+}
+
+/** Track a weekly digest view */
+export function trackDigestView(weekOf: string) {
+  trackEvent('digest_view', { extra: { week_of: weekOf } });
 }
 
 // ── Scroll Tracking ──────────────────────────────────────────────

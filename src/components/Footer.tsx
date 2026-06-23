@@ -11,6 +11,15 @@ const footerSections = [
     ],
   },
   {
+    title: 'Categories',
+    links: [
+      { label: 'Cricket', href: '/cricket' },
+      { label: 'Elections', href: '/elections' },
+      { label: 'Economy', href: '/economy' },
+      { label: 'Bollywood', href: '/bollywood' },
+    ],
+  },
+  {
     title: 'Legal',
     links: [
       { label: 'Terms of Service', href: '/terms' },
@@ -31,7 +40,7 @@ const footerSections = [
 
 const Footer = () => (
   <footer className="border-t border-border bg-muted/30 mt-8">
-    <div className="max-w-5xl mx-auto px-4 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <div className="max-w-5xl mx-auto px-4 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-5 gap-8">
       <div>
         <p className="font-display font-bold text-base mb-2">
           India<span className="text-secondary">Predictions</span>

@@ -54,8 +54,13 @@ export function useWatchlist() {
 
   const toggle = useCallback((id: string) => {
     const current = read();
-    const next = current.includes(id) ? current.filter((x) => x !== id) : [id, ...current];
+    const adding = !current.includes(id);
+    const next = adding ? [id, ...current] : current.filter((x) => x !== id);
     write(next);
+    if (adding) {
+      // Fire-and-forget; lazy import avoids a hook→analytics import cycle.
+      import('@/lib/analytics').then((m) => m.trackWatchlistAdd(id)).catch(() => {});
+    }
   }, []);
 
   const isWatched = useCallback((id: string) => ids.includes(id), [ids]);

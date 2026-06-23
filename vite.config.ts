@@ -9,7 +9,7 @@ import { vitePrerenderPlugin } from "vite-prerender-plugin";
 // Only content-driven routes that don't depend on runtime data. Dynamic
 // data routes (/markets, /crypto, /analytics, /insights, /events/*,
 // /portfolio, /wallet, /profile) are intentionally left as normal SPA.
-const STATIC_ROUTES = ["/", "/about", "/blog", "/digest", "/terms", "/privacy", "/disclaimer"];
+const STATIC_ROUTES = ["/", "/about", "/blog", "/digest", "/cricket", "/elections", "/economy", "/bollywood", "/terms", "/privacy", "/disclaimer"];
 
 /**
  * Read blog post slugs straight from the source data file so each /blog/<slug>

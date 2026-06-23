@@ -308,8 +308,17 @@ const HomePage = () => {
                   </Link>
                 </div>
 
-                <p className="text-[10px] text-white/40 pt-1">
-                  Prediction market tracker — no real money involved. Data from Polymarket.
+                {/* Trust microcopy directly under the CTA to lift conversion */}
+                <p className="text-xs text-white/70 font-medium pt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <span className="inline-flex items-center gap-1"><CheckCircle className="w-3.5 h-3.5 text-success" /> Free, no signup</span>
+                  <span className="text-white/30">·</span>
+                  <span>Live data from Polymarket</span>
+                  <span className="text-white/30">·</span>
+                  <span>Updated every 5 min</span>
+                </p>
+
+                <p className="text-[10px] text-white/40">
+                  Prediction market tracker — no real money involved.
                 </p>
 
                 {/* Stats row */}

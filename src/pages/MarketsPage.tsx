@@ -21,9 +21,9 @@ const MarketsPage = () => {
   const loading = indiaOnly ? indiaLoading : allLoading;
 
   useSEO({
-    title: "All Prediction Markets – Cricket, Economy, Crypto, Bollywood",
-    description: "Browse all live prediction markets on India Predictions. Filter by cricket, economy, crypto or Bollywood. Sort by volume, activity or closing time. Trade in INR.",
-    keywords: "all prediction markets India, live event contracts, opinion trading markets, cricket market, economy prediction, crypto prediction India",
+    title: "All India Prediction Markets – Cricket, Elections, Economy, Crypto",
+    description: "Browse every live India prediction market in one place — cricket & IPL, elections, RBI & Nifty, crypto, Bollywood. Sort by trending, volume or closing soon. Free, no signup.",
+    keywords: "all India prediction markets, prediction market india, live event odds, cricket market, election prediction, economy prediction, crypto prediction India",
     canonical: "/markets",
   });
 
@@ -82,9 +82,25 @@ const MarketsPage = () => {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search markets..."
+                placeholder="Search markets — RBI, IPL, election…"
                 className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none transition-all duration-200 focus:ring-2 focus:ring-white/30"
               />
+            </div>
+            {/* Quick-filter chips — give users a one-tap path to common topics */}
+            <div className="flex items-center gap-2 mt-2.5 flex-wrap">
+              {['RBI', 'IPL', 'Election', 'Nifty', 'Bitcoin'].map((term) => (
+                <button
+                  key={term}
+                  onClick={() => setSearch(search === term ? '' : term)}
+                  className={`text-[11px] px-2.5 py-1 rounded-full border font-medium transition-all active:scale-90 ${
+                    search === term
+                      ? 'bg-white text-primary border-white'
+                      : 'bg-white/10 text-white/70 border-white/20 hover:bg-white/20'
+                  }`}
+                >
+                  {term}
+                </button>
+              ))}
             </div>
           </AnimateIn>
         </div>

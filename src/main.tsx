@@ -100,7 +100,7 @@ async function buildHead(url: string) {
   elements.add({ type: "meta", props: { property: "og:url", content: canonical } });
 
   const STATIC_TITLES: Record<string, string> = {
-    "/": "India Predictions – Live Prediction Market Odds for Cricket, Elections & Economy",
+    "/": "India Prediction Markets — Live Odds for Cricket, Elections & Economy",
     "/about": "About India Predictions – Methodology & Data Sources",
     "/blog": "Blog – India Prediction Market Analysis & Education",
     "/terms": "Terms of Service – India Predictions",

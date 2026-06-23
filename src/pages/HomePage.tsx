@@ -122,9 +122,9 @@ const HOME_SECTIONS: { key: EventCategory; iconKey: string; label: string; sub: 
 
 const HomePage = () => {
   useSEO({
-    title: "India Predictions – Track Live Prediction Market Odds for Cricket, Politics & Economy",
-    description: "Track live prediction market odds for India — cricket, politics, economy, Bollywood and more. Aggregated from Polymarket. Updated every 5 minutes.",
-    keywords: "India prediction market, IPL trading, cricket prediction, RBI rate prediction, Nifty prediction, Bollywood box office prediction, opinion trading India",
+    title: "Live Prediction Market Odds for Cricket, Elections, RBI & Economy",
+    description: "See live prediction-market probabilities for India: IPL & cricket, elections, RBI & Nifty, crypto and Bollywood. Aggregated from Polymarket, updated every 5 min. Free, no signup.",
+    keywords: "India prediction markets, prediction market india, election prediction market india, cricket prediction market, RBI rate prediction, Nifty prediction, Bollywood box office prediction",
     canonical: "/",
     schema: {
       '@context': 'https://schema.org',

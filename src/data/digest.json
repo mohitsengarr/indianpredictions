@@ -1,111 +1,111 @@
 {
-  "weekOf": "2026-06-23",
-  "generatedAt": "2026-06-23T11:50:46.386Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Markets, Bollywood, Energy, Regulation. The single most active is “US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted”, where the market implies roughly a 44% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-24",
+  "generatedAt": "2026-06-24T01:19:30.170Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Bollywood, Energy, Regulation, Cricket & Sports. The single most active is “Pawan Singh's Brother Attacked Over Property Dispute”, where the market implies roughly a 68% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
-      "title": "US Realty Firm Opendoor Winds Down India Operations, 250 Jobs Impacted",
-      "slug": "us-realty-firm-opendoor-winds-down-india-operations-250-jobs-impacted",
-      "category": "markets",
-      "categoryLabel": "Markets",
-      "angle": "Will this lead to further layoffs in the Indian tech sector?",
-      "probability": 44,
-      "updatedAt": "2026-06-15T01:36:20.644Z"
-    },
-    {
-      "title": "Rhea Kapoor Reports Shocking Theft of Rs 1.35 Crore Diamond Earrings in New York",
-      "slug": "rhea-kapoor-reports-shocking-theft-of-rs-135-crore-diamond-earrings-in-new-york",
+      "title": "Pawan Singh's Brother Attacked Over Property Dispute",
+      "slug": "pawan-singhs-brother-attacked-over-property-dispute",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will the culprit be found and brought to justice? Yes/No",
-      "probability": 77,
-      "updatedAt": "2026-06-23T01:21:35.609Z"
+      "angle": "Will Pawan Singh's brother recover fully?",
+      "probability": 68,
+      "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "Bollywood Box Office Collection 2026 Report",
-      "slug": "bollywood-box-office-collection-2026-report",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will the Bollywood box office recover post-pandemic?",
-      "probability": 38,
-      "updatedAt": "2026-06-23T01:21:35.609Z"
-    },
-    {
-      "title": "India’s Imports of Russian Oil Set for New Record High",
-      "slug": "indias-imports-of-russian-oil-set-for-new-record-high",
+      "title": "India Boosts U.S. LPG Imports to Record High",
+      "slug": "india-boosts-us-lpg-imports-to-record-high",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India's imports of Russian oil exceed previous records in the next quarter?",
-      "probability": 33,
-      "updatedAt": "2026-06-23T01:21:35.609Z"
+      "angle": "Will India's LPG imports from the U.S. continue to rise in the next quarter?",
+      "probability": 69,
+      "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India's oil prices stabilize in the next 60 days?",
+      "angle": "Will India's energy prices remain stable in the next quarter?",
       "probability": 75,
-      "updatedAt": "2026-06-23T01:21:35.609Z"
+      "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "Crude Oil Prices Drop Amid Middle East Tensions",
-      "slug": "crude-oil-prices-drop-amid-middle-east-tensions",
+      "title": "Crude Oil Prices Plunge Amid Geopolitical Tensions",
+      "slug": "crude-oil-prices-plunge-amid-geopolitical-tensions",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will crude oil prices rebound in the next month?",
+      "angle": "Will crude oil prices remain volatile in the coming weeks?",
       "probability": 58,
-      "updatedAt": "2026-06-23T01:21:35.609Z"
+      "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "India's SEBI Calls for Oversight of Crypto Trade",
-      "slug": "indias-sebi-calls-for-oversight-of-crypto-trade",
+      "title": "India's SEBI Advocates Oversight on Crypto Trading Amid RBI Concerns",
+      "slug": "indias-sebi-advocates-oversight-on-crypto-trading-amid-rbi-concerns",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's regulators agree to SEBI's recommendations on cryptocurrency oversight?",
-      "probability": 49,
-      "updatedAt": "2026-06-23T01:21:35.609Z"
+      "angle": "Will India implement a unified regulatory framework for cryptocurrencies by 2025?",
+      "probability": 34,
+      "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "India’s Future Strategic Choices: Complications of Mass",
-      "slug": "indias-future-strategic-choices-complications-of-mass",
-      "category": "geopolitics",
-      "categoryLabel": "Geopolitics",
-      "angle": "Will India successfully assert itself as a leader in the Global South by 2030?",
-      "probability": 20,
-      "updatedAt": "2026-06-23T01:21:18.564Z"
+      "title": "Regulating Cryptocurrency in India",
+      "slug": "regulating-cryptocurrency-in-india",
+      "category": "regulation",
+      "categoryLabel": "Regulation",
+      "angle": "Will India implement a comprehensive cryptocurrency regulatory framework by the end of 2024?",
+      "probability": 64,
+      "updatedAt": "2026-06-24T01:19:29.871Z"
+    },
+    {
+      "title": "Final: RCB vs GT - Code of Conduct Breach",
+      "slug": "final-rcb-vs-gt-code-of-conduct-breach",
+      "category": "sports",
+      "categoryLabel": "Cricket & Sports",
+      "angle": "Will the breach lead to disciplinary action against any players?",
+      "probability": 79,
+      "updatedAt": "2026-06-24T01:19:16.759Z"
+    },
+    {
+      "title": "Shedge replaces injured Reddy in India's T20I squad",
+      "slug": "shedge-replaces-injured-reddy-in-indias-t20i-squad",
+      "category": "sports",
+      "categoryLabel": "Cricket & Sports",
+      "angle": "Will Suryansh Shedge make an impact in the upcoming T20I series?",
+      "probability": 32,
+      "updatedAt": "2026-06-24T01:19:16.759Z"
     }
   ],
   "topNews": [
     {
-      "title": "Sensex Edges Higher as Pharma Sector Leads Gains; IT Stoc...",
+      "title": "ESPNcricinfo: IPL 2026 | Live Scores, Cricket News, Match Details & Updates",
+      "category": "sports",
+      "source": "https://www.cricinfo.com/",
+      "publishedDate": "2026-06-24T01:13:25.758Z"
+    },
+    {
+      "title": "Tech-Led global selloff, Fed rate fears weigh on Indian equities - The Economic Times",
       "category": "markets",
-      "source": "https://www.marketsmojo.com/news/stock-market-news/sensex-edges-higher-as-pharma-sector-leads-gains-it-stocks-drag-market-4068603",
-      "publishedDate": "2026-06-23T10:00:06.000Z"
+      "source": "https://economictimes.indiatimes.com/markets/stocks/news/tech-led-global-selloff-fed-rate-fears-weigh-on-indian-equities/articleshow/131952279.cms",
+      "publishedDate": "2026-06-24T00:15:00.000Z"
     },
     {
-      "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
-      "category": "sports",
-      "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-23T07:32:28.111Z"
+      "title": "Sensex slides 900 points as global tech sell-off weighs - The Times of India",
+      "category": "markets",
+      "source": "https://timesofindia.indiatimes.com/business/india-business/sensex-slides-900-points-as-global-tech-sell-off-weighs/articleshow/131949835.cms",
+      "publishedDate": "2026-06-23T21:16:00.000Z"
     },
     {
-      "title": "Top Indian, Chinese officials meet, note ‘gradual normalization’ in ties: New Delhi",
+      "title": "Hormuz reopening to ease supply chains, strengthen energy security: Doval - The Economic Times",
       "category": "geopolitics",
-      "source": "https://www.aa.com.tr/en/asia-pacific/top-indian-chinese-officials-meet-note-gradual-normalization-in-ties-new-delhi/3975040",
-      "publishedDate": "2026-06-23T07:31:32.000Z"
+      "source": "https://economictimes.indiatimes.com/news/politics-and-nation/hormuz-reopening-to-ease-supply-chains-strengthen-energy-security-doval/articleshow/131948658.cms",
+      "publishedDate": "2026-06-23T18:58:00.000Z"
     },
     {
-      "title": "'India welcomes US-Iran MoU': NSA Ajit Doval expresses 'cautious optimism' at BRICS meet over peace deal | India News - ",
-      "category": "geopolitics",
-      "source": "https://timesofindia.indiatimes.com/india/india-welcomes-us-iran-mou-nsa-ajit-doval-expresses-cautious-optimism-at-brics-meet-over-peace-deal/articleshow/131927812.cms",
-      "publishedDate": "2026-06-23T07:01:00.000Z"
-    },
-    {
-      "title": "‘Dream fulfilled’: Vaibhav Sooryavanshi gets India jersey, says words can’t describe the feeling - The Economic Times",
-      "category": "sports",
-      "source": "https://economictimes.indiatimes.com/news/sports/dream-fulfilled-vaibhav-sooryavanshi-gets-india-jersey-says-words-cant-describe-the-feeling/articleshow/131927007.cms",
-      "publishedDate": "2026-06-23T06:09:00.000Z"
+      "title": "India Must Diversify Energy Sources: NITI Aayog VC: Rediff Moneynews",
+      "category": "energy",
+      "source": "https://money.rediff.com/news/market/india-must-diversify-energy-sources-niti-aayog-vc/49335320260623",
+      "publishedDate": "2026-06-23T15:52:00.000Z"
     }
   ]
 }

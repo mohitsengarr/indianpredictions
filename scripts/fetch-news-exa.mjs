@@ -161,9 +161,13 @@ async function main() {
     try {
       const { createClient } = await import('@supabase/supabase-js');
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
-      const { error } = await supabase
-        .from('breaking_news')
-        .upsert(final.map(a => ({
+      // Dedupe by id before upserting: dedup() keys on URL, but the same article
+      // can surface under multiple category queries and hash to the same id.
+      // Postgres rejects a duplicate id within one ON CONFLICT batch
+      // ("cannot affect row a second time"), which would drop the whole write.
+      const seenIds = new Set();
+      const rows = final
+        .map(a => ({
           id: a.id,
           title: a.title,
           summary: a.summary,
@@ -171,7 +175,11 @@ async function main() {
           source_url: a.source,
           published_at: a.publishedDate,
           fetched_at: a.fetchedAt,
-        })), { onConflict: 'id' });
+        }))
+        .filter(r => (seenIds.has(r.id) ? false : seenIds.add(r.id)));
+      const { error } = await supabase
+        .from('breaking_news')
+        .upsert(rows, { onConflict: 'id' });
 
       if (error) console.error('Supabase upsert error:', error.message);
       else console.log('Upserted to Supabase successfully');

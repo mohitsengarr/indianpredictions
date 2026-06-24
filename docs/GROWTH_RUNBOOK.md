@@ -69,7 +69,16 @@ You generate the token; **I commit it** (just paste it to me in chat).
 
 ---
 
-## 4. Set Supabase service key → unblocks LIVE markets ⭐ highest impact
+## 4. Supabase backend in your account → ✅ LIVE & VERIFIED (25 Jun 2026)
+
+> **DONE.** Service key + Vercel env set; all 3 scrape workflows ran green;
+> `polymarket_cache` = 607 markets (7 open India), `trending_events_cache` = 25,
+> `breaking_news` = 98. indiapredictions.com/markets now shows live open markets.
+> Auto-refreshes every 6h (Polymarket), 6h (news), daily (events). Also fixed a
+> latent `breaking_news` upsert dedupe bug found during this. Original setup
+> detail kept below for the record.
+
+### (original) Set Supabase service key → unblocks LIVE markets ⭐ highest impact
 
 **Migrated to your own account (done 23 Jun 2026).** The app no longer depends on
 the old project `hivvemtveyjexrwgruhs` (different account, "no access"). It now

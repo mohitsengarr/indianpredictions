@@ -9,34 +9,25 @@ data the whole site depends on.
 
 ---
 
-## 1. Mark GA4 Key Events — makes "conversions" register
+## 1. Mark GA4 Key Events — ✅ DONE (24 Jun 2026)
 
-**Status (verified 23 Jun 2026):** The full pipeline is confirmed working. On the
-correct property — **India Predictions**, account "trending", property
-`528354347`, stream `indiapredictions` (`G-TLW3N9MB4M`) — I triggered each
-conversion live and saw them in **Reports → Realtime → Event count by event name**:
-`page_view`, `market_click`, `polymarket_click`, `watchlist_add` (plus
-`session_start`). So the tracking is 100% live and correct.
+Marked as **key events** on the correct property (**India Predictions**, account
+"trending", property `528354347`, stream `indiapredictions`, `G-TLW3N9MB4M`):
 
-**The one remaining step (1 click each):** GA4 will not let you flag an event as a
-key event until the event *name* has been ingested into **Admin → Events** (this
-list lags Realtime by up to ~24h for first-seen events — there is no
-"create key event by name" button in this property's UI; I checked). Once
-`market_click` / `polymarket_click` / `watchlist_add` appear in the
-**Admin → Events → Recent events** list (give it up to a day after 23 Jun), do:
+- ✅ `market_click`
+- ✅ `polymarket_click`   ← primary conversion (user acted on a market)
+- ✅ `watchlist_add`
 
-1. **GA4 → Admin → Data display → Events → Recent events tab.**
-2. Click the **star** next to each, to mark as key event:
-   - `polymarket_click`   ← primary conversion (user acted on a market)
-   - `newsletter_submit`  (fires once a user submits the newsletter form)
-   - `watchlist_add`
-   - `market_click`
-   - (optional) `digest_view`
-3. They'll show as Key Events / conversions in reports within ~24h of marking.
+They now show under **Admin → Data display → Events → Key events** and will report
+as conversions within ~24h. The full pipeline was verified live in Realtime first.
 
-> I can flip these toggles for you in a follow-up once they surface in the Events
-> list — it's a 1-click-each task at that point. Nothing in the code or wiring is
-> blocking; this is purely GA4's processing delay.
+**Two optional ones not yet marked** — they haven't *fired* yet, and GA4 won't let
+you star an event until its name has been ingested:
+- `newsletter_submit` — fires only when a real user submits the newsletter form.
+- `digest_view` — fires on a /digest page view.
+
+Once either first fires (and is ingested, ~a few hours later), mark it the same
+way: **Events → Recent events → star it**. Ping me and I'll do it, or it's 1 click.
 
 If you ever see NO events in Realtime: hard-refresh the site, check an ad-blocker
 isn't blocking `googletagmanager.com`, and confirm the GA4 ID is `G-TLW3N9MB4M`.

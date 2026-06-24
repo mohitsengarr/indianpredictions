@@ -51,21 +51,25 @@ Builder for one-offs: search "Google Campaign URL Builder". Keep a sheet of cano
 
 ---
 
-## 3. Google Search Console + Bing (~5 min) — then hand me the token
+## 3. Google Search Console — ✅ DONE (25 Jun 2026)
 
-You generate the token; **I commit it** (just paste it to me in chat).
+No token/code change was needed: **`indiapredictions.com` was already a verified
+Domain property** (covers www + non-www, http + https). On 25 Jun I submitted the
+sitemap and it read successfully:
 
-**Google Search Console**
-1. https://search.google.com/search-console → Add property → **URL prefix** →
-   `https://www.indiapredictions.com`
-2. Choose **"HTML tag"** verification → copy the `<meta name="google-site-verification" ...>` tag.
-3. **Paste that tag to me** → I add it to `index.html` → you click Verify.
-4. After verifying: **Sitemaps → add** `https://www.indiapredictions.com/sitemap.xml`.
+- **Sitemap:** `https://www.indiapredictions.com/sitemap.xml` →
+  Status **Success**, **176 pages discovered**.
 
-**Bing Webmaster Tools**
-- Easiest: https://www.bing.com/webmasters → **Import from Google Search Console**.
-- (Bing already receives fresh URLs via the IndexNow ping wired into the scrape
-  workflow — key file: `public/f5f417ea0737f0cd70ce4338d6e58795.txt`.)
+Indexing will roll out over the coming days. Check progress in **GSC → Indexing →
+Pages** and **Performance**.
+
+**Bing Webmaster Tools** (optional — not yet done):
+- Bing already receives fresh URLs via the IndexNow ping wired into the scrape
+  workflow (key file `public/f5f417ea0737f0cd70ce4338d6e58795.txt`), so this is
+  low-priority.
+- To add the dashboard: https://www.bing.com/webmasters → sign in with your
+  Microsoft account → **Import from Google Search Console** (one click once
+  signed in). Needs your Microsoft login, so it's a you-step.
 
 ---
 

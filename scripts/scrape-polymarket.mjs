@@ -54,6 +54,16 @@ const NON_INDIA = [
   'dogecoin', 'solana meme', 'pepe coin', 'shiba inu', 'fifa world cup 2026', 'uefa euro', 'copa america',
 ];
 
+// Terms queried against Polymarket's search endpoint. The volume-ranked
+// /markets query is hard-capped by the API at ~2100 results (offset 2200 → 422),
+// which excludes low-volume India markets. The search endpoint is not
+// volume-capped, so it surfaces the India long tail the volume scan can't reach.
+const INDIA_SEARCH_TERMS = [
+  'india', 'indian', 'cricket', 'ipl', 'bcci', 't20 india', 'rbi', 'nifty',
+  'sensex', 'modi', 'bjp', 'rupee', 'bollywood', 'adani', 'ambani', 'kohli',
+];
+const SEARCH_PER_TERM = 25;
+
 function wordMatch(haystack, needle) {
   const esc = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ +/g, '\\s+');
   return new RegExp(`(^|[^a-z])${esc}([^a-z]|$)`, 'i').test(haystack);
@@ -74,10 +84,13 @@ function inferCategory(text) {
   const t = text.toLowerCase();
   if (/cricket|ipl|bcci|t20|odi|test match|match/.test(t)) return 'cricket';
   if (/bitcoin|crypto|eth|blockchain|upi|web3|token|defi|nft/.test(t)) return 'crypto';
-  if (/election|vote|president|prime minister|minister|politics|parliament|senate|congress|modi|assembly/.test(t)) return 'politics';
+  if (/election|vote|president|prime minister|minister|politics|parliament|senate|congress|modi|assembly|\bwar\b|military|missile|airstrike|clash|conflict|nuclear|sanction|tariff|trade deal|ceasefire|\bcoup\b|invade|invasion|geopolit/.test(t)) return 'politics';
   if (/movie|film|box office|bollywood|oscar|emmy|award|celebrity|music|album|series/.test(t)) return 'entertainment';
   if (/gdp|inflation|rate|fed|rbi|nifty|stock|nasdaq|dow|market|economy|cpi|recession|bank/.test(t)) return 'economy';
-  return 'crypto';
+  // Default to politics, not crypto: most uncategorized markets are world/news
+  // events (e.g. "India strike on Pakistan"), and defaulting them to crypto
+  // polluted the Crypto filter and mis-tagged geopolitical India markets.
+  return 'politics';
 }
 
 // Deterministic synthetic price history (seeded by id) — mirrors mapper.
@@ -139,6 +152,17 @@ async function fetchPage(offset) {
   return res.json();
 }
 
+// Search is not volume-capped, so it reaches low-volume India markets that the
+// top-2100-by-volume scan never sees. Returns the events array (each with a
+// nested markets[] of the same shape as /markets).
+async function fetchSearch(term) {
+  const url = `https://gamma-api.polymarket.com/public-search?q=${encodeURIComponent(term)}&limit_per_type=${SEARCH_PER_TERM}&events_status=active`;
+  const res = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!res.ok) throw new Error(`search ${res.status} for "${term}"`);
+  const data = await res.json();
+  return Array.isArray(data.events) ? data.events : [];
+}
+
 async function main() {
   console.log(`[${new Date().toISOString()}] Scraping Polymarket (scan up to ${MAX_SCAN})...`);
   const mapped = [];
@@ -163,6 +187,35 @@ async function main() {
   const keep = [...india, ...rest.slice(0, TOP_GLOBAL)];
   const openIndia = india.filter((x) => new Date(x.m.closesAt).getTime() > Date.now()).length;
   console.log(`Mapped ${mapped.length} | India ${india.length} (open ${openIndia}) | keeping ${keep.length}`);
+
+  // ── Search pass: pull the low-volume India long tail the volume cap hides ──
+  const seenIds = new Set(keep.map((x) => x.m.id));
+  let searchAdded = 0;
+  for (const term of INDIA_SEARCH_TERMS) {
+    let events;
+    try {
+      events = await fetchSearch(term);
+    } catch (e) {
+      console.error(`  search "${term}" failed: ${e.message}`);
+      continue;
+    }
+    for (const ev of events) {
+      for (const pm of (Array.isArray(ev.markets) ? ev.markets : [])) {
+        if (pm.closed || pm.active === false) continue;        // open & active only
+        if (seenIds.has(String(pm.id))) continue;              // dedupe vs scan + prior terms
+        const m = mapMarket(pm);
+        if (!m) continue;                                      // invalid / resolved prices
+        if (new Date(m.closesAt).getTime() <= Date.now()) continue;
+        if (indiaScore(`${m.title} ${m.description} ${m.category}`) < 0.5) continue; // keep India-relevant only
+        seenIds.add(m.id);
+        keep.push({ m, isIndia: true });
+        searchAdded++;
+      }
+    }
+    await new Promise((r) => setTimeout(r, 150)); // be polite
+  }
+  const openIndiaTotal = keep.filter((x) => x.isIndia && new Date(x.m.closesAt).getTime() > Date.now()).length;
+  console.log(`Search pass: +${searchAdded} India markets | total keep ${keep.length} | open India ${openIndiaTotal}`);
 
   if (keep.length < MIN_TOTAL) {
     console.error(`❌ Only ${keep.length} markets (min ${MIN_TOTAL}). Aborting without writing.`);

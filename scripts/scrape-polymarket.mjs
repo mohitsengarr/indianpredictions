@@ -82,7 +82,10 @@ function indiaScore(text) {
 // ── Category inference (mirrors mapper) ────────────────────────────────
 function inferCategory(text) {
   const t = text.toLowerCase();
-  if (/cricket|ipl|bcci|t20|odi|test match|match/.test(t)) return 'cricket';
+  // Avoid substring bleed: bare "match" tagged any market whose description said
+  // "match" (e.g. the Modi Nobel market) as cricket, and bare "odi" matched
+  // "custodian"/"melodic". Require cricket-specific words / boundaries.
+  if (/cricket|\bipl\b|bcci|\bt20\b|\bodi\b|test match/.test(t)) return 'cricket';
   // Word boundaries matter: bare "eth" matched "wh(eth)er", "defi" matched
   // "define/deficit", "upi" matched "occupied" — silently mis-tagging news
   // markets as crypto whenever their description said "whether".

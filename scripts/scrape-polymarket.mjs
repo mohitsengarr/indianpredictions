@@ -83,7 +83,10 @@ function indiaScore(text) {
 function inferCategory(text) {
   const t = text.toLowerCase();
   if (/cricket|ipl|bcci|t20|odi|test match|match/.test(t)) return 'cricket';
-  if (/bitcoin|crypto|eth|blockchain|upi|web3|token|defi|nft/.test(t)) return 'crypto';
+  // Word boundaries matter: bare "eth" matched "wh(eth)er", "defi" matched
+  // "define/deficit", "upi" matched "occupied" — silently mis-tagging news
+  // markets as crypto whenever their description said "whether".
+  if (/bitcoin|crypto|\bethereum\b|\beth\b|blockchain|\bupi\b|\bweb3\b|\btoken\b|\bdefi\b|\bnft\b|dogecoin|solana/.test(t)) return 'crypto';
   if (/election|vote|president|prime minister|minister|politics|parliament|senate|congress|modi|assembly|\bwar\b|military|missile|airstrike|clash|conflict|nuclear|sanction|tariff|trade deal|ceasefire|\bcoup\b|invade|invasion|geopolit/.test(t)) return 'politics';
   if (/movie|film|box office|bollywood|oscar|emmy|award|celebrity|music|album|series/.test(t)) return 'entertainment';
   if (/gdp|inflation|rate|fed|rbi|nifty|stock|nasdaq|dow|market|economy|cpi|recession|bank/.test(t)) return 'economy';

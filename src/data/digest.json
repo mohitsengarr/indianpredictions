@@ -1,8 +1,17 @@
 {
-  "weekOf": "2026-06-24",
-  "generatedAt": "2026-06-24T19:56:24.615Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Bollywood, Politics, Energy, Regulation. The single most active is “Actor Pankaj Tripathi's Brother Injured in Axe Attack”, where the market implies roughly a 52% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-25",
+  "generatedAt": "2026-06-25T01:24:35.192Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
+    {
+      "title": "Shedge replaces injured Reddy in India's T20I squad",
+      "slug": "shedge-replaces-injured-reddy-in-indias-t20i-squad",
+      "category": "sports",
+      "categoryLabel": "Cricket & Sports",
+      "angle": "Will Shedge perform well in his debut match?",
+      "probability": 47,
+      "updatedAt": "2026-06-25T01:24:19.492Z"
+    },
     {
       "title": "Actor Pankaj Tripathi's Brother Injured in Axe Attack",
       "slug": "actor-pankaj-tripathis-brother-injured-in-axe-attack",
@@ -11,15 +20,6 @@
       "angle": "Will the media attention on this incident increase discussions about safety for public figures?",
       "probability": 52,
       "updatedAt": "2026-06-24T19:56:22.727Z"
-    },
-    {
-      "title": "Why welfare isn't winning elections in India like it used to",
-      "slug": "why-welfare-isnt-winning-elections-in-india-like-it-used-to",
-      "category": "politics",
-      "categoryLabel": "Politics",
-      "angle": "Will welfare policies remain a decisive factor in Indian elections? Yes/No",
-      "probability": 76,
-      "updatedAt": "2026-06-24T19:55:54.734Z"
     },
     {
       "title": "Pawan Singh's Brother Attacked Over Property Dispute",
@@ -31,49 +31,49 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "Adani Targets 10 GW Nuclear Power Capacity in India by 2035",
-      "slug": "adani-targets-10-gw-nuclear-power-capacity-in-india-by-2035",
-      "category": "energy",
-      "categoryLabel": "Energy",
-      "angle": "Will Adani successfully develop 10 GW nuclear power capacity by 2035?",
-      "probability": 36,
-      "updatedAt": "2026-06-24T19:56:22.728Z"
-    },
-    {
       "title": "Anthropic’s restrictions ignite sovereign AI debate in India",
       "slug": "anthropics-restrictions-ignite-sovereign-ai-debate-in-india",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will the debate influence government policy on AI in India?",
+      "angle": "Will India implement stricter AI regulations by the end of 2026?",
       "probability": 45,
-      "updatedAt": "2026-06-24T19:56:22.728Z"
+      "updatedAt": "2026-06-25T01:24:33.489Z"
     },
     {
-      "title": "Oil Prices Decline Near Four-Month Low Amid Increased Tanker Flow Through Hormuz",
-      "slug": "oil-prices-decline-near-four-month-low-amid-increased-tanker-flow-through-hormuz",
+      "title": "Oil Prices Hit Four-Month Low as Tankers Move Through Hormuz",
+      "slug": "oil-prices-hit-four-month-low-as-tankers-move-through-hormuz",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will crude oil prices stabilize above $80 next month?",
-      "probability": 34,
-      "updatedAt": "2026-06-24T19:56:22.728Z"
+      "angle": "Will oil prices rebound in the next month?",
+      "probability": 49,
+      "updatedAt": "2026-06-25T01:24:33.489Z"
     },
     {
-      "title": "India's SEBI Calls for Oversight of Cryptocurrency Trade",
-      "slug": "indias-sebi-calls-for-oversight-of-cryptocurrency-trade",
+      "title": "India's SEBI Advocates for Oversight on Crypto Trade",
+      "slug": "indias-sebi-advocates-for-oversight-on-crypto-trade",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will SEBI's proposal lead to new cryptocurrency regulations in India?",
-      "probability": 44,
-      "updatedAt": "2026-06-24T19:56:22.728Z"
+      "angle": "Will India implement a regulatory framework for cryptocurrencies within the next year?",
+      "probability": 29,
+      "updatedAt": "2026-06-25T01:24:33.489Z"
     },
     {
-      "title": "Regulating Cryptocurrency in India",
-      "slug": "regulating-cryptocurrency-in-india",
+      "title": "Crypto Regulations in India: Compliance and Oversight",
+      "slug": "crypto-regulations-in-india-compliance-and-oversight",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India regulate cryptocurrency trading by the end of 2024?",
-      "probability": 64,
-      "updatedAt": "2026-06-24T19:56:22.728Z"
+      "angle": "Will India's crypto regulations become stricter in the next year?",
+      "probability": 39,
+      "updatedAt": "2026-06-25T01:24:33.489Z"
+    },
+    {
+      "title": "Box Office Update: Cocktail 2 Leads June 2026 Collections",
+      "slug": "box-office-update-cocktail-2-leads-june-2026-collections",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Cocktail 2' surpass ₹100 crores in net collection?",
+      "probability": 32,
+      "updatedAt": "2026-06-25T01:24:33.488Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "Cricket News |IPL 2026 Cricket Updates| ESPNcricinfo",
       "category": "sports",
       "source": "https://www.cricinfo.com/cricket-news",
-      "publishedDate": "2026-06-24T18:53:05.510Z"
+      "publishedDate": "2026-06-25T01:18:04.917Z"
     },
     {
-      "title": "Speaker Birla to decide on TMC, Sena (UBT) defections before Monsoon Session | India News - The Times of India",
-      "category": "politics",
-      "source": "https://timesofindia.indiatimes.com/india/speaker-birla-to-decide-on-tmc-sena-ubt-defections-before-monsoon-session/articleshow/131971751.cms",
-      "publishedDate": "2026-06-24T15:13:00.000Z"
+      "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
+      "category": "sports",
+      "source": "https://www.iplt20.com/news",
+      "publishedDate": "2026-06-25T01:18:04.917Z"
     },
     {
-      "title": "NLCIL signs MoU with Indian Oil Corporation Limited for development of large-scale renewable energy projects in T.N. - T",
+      "title": "Press Releases - Reserve Bank of India",
+      "category": "economy",
+      "source": "https://rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62864",
+      "publishedDate": "2026-06-25T01:18:01.383Z"
+    },
+    {
+      "title": "Rajasthan CM Reviews Pachpadra Refinery Progress",
       "category": "energy",
-      "source": "https://www.thehindu.com/news/national/tamil-nadu/nlcil-signs-mou-with-indian-oil-corporation-limited-for-development-of-large-scale-renewable-energy-projects-in-tn/article71140661.ece",
-      "publishedDate": "2026-06-24T14:50:43.000Z"
+      "source": "https://www.newkerala.com/news/a/rajasthan-cm-reviews-pachpadra-refinery-progress-says-pm-306.htm",
+      "publishedDate": "2026-06-24T15:25:19.000Z"
     },
     {
-      "title": "Mitigata raises $15m Series B for AI cyber resilience",
-      "category": "technology",
-      "source": "https://fintech.global/2026/06/24/mitigata-raises-15m-series-b-for-ai-cyber-resilience/",
-      "publishedDate": "2026-06-24T14:14:28.000Z"
-    },
-    {
-      "title": "Markets rebound on softening crude oil prices; Sensex jumps 790 points - The Hindu",
+      "title": "Domestic investors cushion FII outflows amid strong market rally on June 24 - CNBC TV18",
       "category": "markets",
-      "source": "https://www.thehindu.com/business/markets/markets-rebound-on-softening-crude-oil-prices-sensex-jumps-790-points/article71141683.ece",
-      "publishedDate": "2026-06-24T12:43:04.000Z"
+      "source": "https://www.cnbctv18.com/market/domestic-investors-cushion-fii-outflows-amid-strong-market-rally-on-june-24-19931717.htm",
+      "publishedDate": "2026-06-24T15:16:30.000Z"
     }
   ]
 }

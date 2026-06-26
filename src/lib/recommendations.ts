@@ -335,7 +335,12 @@ export function trendingScore(market: Market, allMarkets: Market[], userRegion =
   // just not featured) so grids stop leading with "Yes 99% / No 98%" cards.
   const settledPenalty = (market.yesPrice >= 0.97 || market.yesPrice <= 0.03) ? -25 : 0;
 
-  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility + geo + uncertainty + settledPenalty;
+  // Don't feature essentially-untraded markets: a 50/50 with ~no volume is an
+  // un-priced default, not genuine contestedness, so it shouldn't ride the
+  // uncertainty boost to the top.
+  const noActivityPenalty = market.volume < 100 ? -15 : 0;
+
+  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility + geo + uncertainty + settledPenalty + noActivityPenalty;
 }
 
 /**

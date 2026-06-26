@@ -1,6 +1,6 @@
 {
-  "weekOf": "2026-06-25",
-  "generatedAt": "2026-06-25T01:24:35.192Z",
+  "weekOf": "2026-06-26",
+  "generatedAt": "2026-06-26T01:27:16.317Z",
   "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
@@ -31,81 +31,81 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
+      "title": "$70 Oil Could Put India Back on Track for 7% Economic Growth",
+      "slug": "70-oil-could-put-india-back-on-track-for-7-economic-growth",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will oil remain around $70 in the next quarter?",
+      "probability": 29,
+      "updatedAt": "2026-06-26T01:27:14.341Z"
+    },
+    {
+      "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
+      "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will oil prices decline in the next 30-60 days?",
+      "probability": 75,
+      "updatedAt": "2026-06-26T01:27:14.341Z"
+    },
+    {
       "title": "Anthropic’s restrictions ignite sovereign AI debate in India",
       "slug": "anthropics-restrictions-ignite-sovereign-ai-debate-in-india",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India implement stricter AI regulations by the end of 2026?",
+      "angle": "Will the debate lead to stricter AI regulations in India?",
       "probability": 45,
-      "updatedAt": "2026-06-25T01:24:33.489Z"
+      "updatedAt": "2026-06-26T01:27:14.341Z"
     },
     {
-      "title": "Oil Prices Hit Four-Month Low as Tankers Move Through Hormuz",
-      "slug": "oil-prices-hit-four-month-low-as-tankers-move-through-hormuz",
-      "category": "energy",
-      "categoryLabel": "Energy",
-      "angle": "Will oil prices rebound in the next month?",
-      "probability": 49,
-      "updatedAt": "2026-06-25T01:24:33.489Z"
-    },
-    {
-      "title": "India's SEBI Advocates for Oversight on Crypto Trade",
-      "slug": "indias-sebi-advocates-for-oversight-on-crypto-trade",
+      "title": "India's SEBI Recommends Regulatory Oversight for Cryptocurrencies",
+      "slug": "indias-sebi-recommends-regulatory-oversight-for-cryptocurrencies",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India implement a regulatory framework for cryptocurrencies within the next year?",
-      "probability": 29,
-      "updatedAt": "2026-06-25T01:24:33.489Z"
+      "angle": "Will India's SEBI's recommendations lead to new cryptocurrency regulations by 2025?",
+      "probability": 36,
+      "updatedAt": "2026-06-26T01:27:14.341Z"
     },
     {
-      "title": "Crypto Regulations in India: Compliance and Oversight",
-      "slug": "crypto-regulations-in-india-compliance-and-oversight",
+      "title": "Understanding Crypto Regulations in India",
+      "slug": "understanding-crypto-regulations-in-india",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's crypto regulations become stricter in the next year?",
-      "probability": 39,
-      "updatedAt": "2026-06-25T01:24:33.489Z"
-    },
-    {
-      "title": "Box Office Update: Cocktail 2 Leads June 2026 Collections",
-      "slug": "box-office-update-cocktail-2-leads-june-2026-collections",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will 'Cocktail 2' surpass ₹100 crores in net collection?",
-      "probability": 32,
-      "updatedAt": "2026-06-25T01:24:33.488Z"
+      "angle": "Will India's crypto regulations become more stringent over the next year?",
+      "probability": 55,
+      "updatedAt": "2026-06-26T01:27:14.341Z"
     }
   ],
   "topNews": [
     {
-      "title": "Cricket News |IPL 2026 Cricket Updates| ESPNcricinfo",
-      "category": "sports",
-      "source": "https://www.cricinfo.com/cricket-news",
-      "publishedDate": "2026-06-25T01:18:04.917Z"
-    },
-    {
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-25T01:18:04.917Z"
+      "publishedDate": "2026-06-26T01:20:15.826Z"
     },
     {
-      "title": "Press Releases - Reserve Bank of India",
-      "category": "economy",
-      "source": "https://rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62864",
-      "publishedDate": "2026-06-25T01:18:01.383Z"
+      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
+      "category": "sports",
+      "source": "https://sports.ndtv.com/ipl-2026/news",
+      "publishedDate": "2026-06-26T01:20:15.826Z"
     },
     {
-      "title": "Rajasthan CM Reviews Pachpadra Refinery Progress",
-      "category": "energy",
-      "source": "https://www.newkerala.com/news/a/rajasthan-cm-reviews-pachpadra-refinery-progress-says-pm-306.htm",
-      "publishedDate": "2026-06-24T15:25:19.000Z"
+      "title": "Cricket News |IPL 2026 Cricket Updates| Cricinfo",
+      "category": "sports",
+      "source": "https://www.cricinfo.com/cricket-news",
+      "publishedDate": "2026-06-26T01:20:15.826Z"
     },
     {
-      "title": "Domestic investors cushion FII outflows amid strong market rally on June 24 - CNBC TV18",
-      "category": "markets",
-      "source": "https://www.cnbctv18.com/market/domestic-investors-cushion-fii-outflows-amid-strong-market-rally-on-june-24-19931717.htm",
-      "publishedDate": "2026-06-24T15:16:30.000Z"
+      "title": "IPL 2026 News, Indian Premier League 2026 News & Updates - Sportstar",
+      "category": "sports",
+      "source": "https://sportstar.thehindu.com/cricket/ipl/ipl-news/",
+      "publishedDate": "2026-06-26T01:20:15.826Z"
+    },
+    {
+      "title": "IPL 2026: IPL Latest News & Updates, Points Table, Upcoming Match Schedule, Live Scores and Results",
+      "category": "sports",
+      "source": "https://timesofindia.indiatimes.com/sports/cricket/ipl",
+      "publishedDate": "2026-06-26T01:20:15.826Z"
     }
   ]
 }

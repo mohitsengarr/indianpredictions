@@ -328,7 +328,14 @@ export function trendingScore(market: Market, allMarkets: Market[], userRegion =
   // Geo boost (0–15) — regional relevance
   const geo = geoBoost(market, userRegion);
 
-  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility + geo;
+  // Contestedness (0–20): markets near a coin-flip are the most engaging to
+  // read; markets near 0% / 100% are effectively decided and dull.
+  const uncertainty = (1 - 2 * Math.abs(market.yesPrice - 0.5)) * 20;
+  // Push effectively-decided markets down the trending view (still listed,
+  // just not featured) so grids stop leading with "Yes 99% / No 98%" cards.
+  const settledPenalty = (market.yesPrice >= 0.97 || market.yesPrice <= 0.03) ? -25 : 0;
+
+  return indiaScore + trendComponent + freshnessScore + closingSoonBoost + quality + volatility + geo + uncertainty + settledPenalty;
 }
 
 /**

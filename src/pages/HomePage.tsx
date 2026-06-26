@@ -30,7 +30,7 @@ import { groupMarkets } from '@/lib/market-groups';
 import { useSEO } from '@/hooks/useSEO';
 import { formatINR, timeUntil, formatProbability } from '@/lib/formatters';
 import { useGeo } from '@/contexts/GeoContext';
-import { getRegionalMarkets } from '@/lib/recommendations';
+import { getRegionalMarkets, sortByTrending } from '@/lib/recommendations';
 import { trackCategoryClick } from '@/lib/analytics';
 import { MapPin } from 'lucide-react';
 import FAQSection from '@/components/FAQSection';
@@ -189,13 +189,15 @@ const HomePage = () => {
 
   // Market sections
   const enabledMarkets = indiaMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
-  const filtered = enabledMarkets.filter((m) => {
+  // Sort the grid by trending (now uncertainty-aware) so it leads with
+  // contested markets instead of high-volume but settled ones.
+  const filtered = sortByTrending(enabledMarkets.filter((m) => {
     const catConfig = CATEGORY_SECTIONS.find(c => c.key === category);
     const marketCats = category === 'all' ? null : (catConfig?.marketCats ?? []);
     const matchCat = !marketCats || marketCats.includes(m.category);
     const matchSearch = m.title.toLowerCase().includes(search.toLowerCase());
     return matchCat && matchSearch;
-  });
+  }));
 
   const filteredEvents = category === 'all'
     ? []

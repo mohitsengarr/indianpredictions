@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import MarketCard from '@/components/MarketCard';
+import MarketCard, { Sparkline } from '@/components/MarketCard';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
 import EventCard from '@/components/EventCard';
@@ -28,7 +28,7 @@ import { Star, Trophy } from 'lucide-react';
 import MultiOutcomeCard from '@/components/MultiOutcomeCard';
 import { groupMarkets } from '@/lib/market-groups';
 import { useSEO } from '@/hooks/useSEO';
-import { formatINR, timeUntil } from '@/lib/formatters';
+import { formatINR, timeUntil, formatProbability } from '@/lib/formatters';
 import { useGeo } from '@/contexts/GeoContext';
 import { getRegionalMarkets } from '@/lib/recommendations';
 import { trackCategoryClick } from '@/lib/analytics';
@@ -57,10 +57,17 @@ const SkeletonCard = () => (
 const CountUp = ({ end, duration = 1.5, prefix = '', suffix = '' }: { end: number; duration?: number; prefix?: string; suffix?: string }) => {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
+  // Don't use { once: true }: data loads after mount, so `end` flips 0 -> N
+  // while the chip may already be in view; a once-latch would freeze on end=0.
+  const isInView = useInView(ref);
 
   useEffect(() => {
     if (!isInView) return;
+    // Nothing to animate yet (data still loading) — don't latch on 0 via step=0.
+    if (end <= 0) {
+      setCount(0);
+      return;
+    }
     let start = 0;
     const step = end / (duration * 60);
     const timer = setInterval(() => {
@@ -167,6 +174,19 @@ const HomePage = () => {
     })
     .slice(0, 4);
 
+  // Hero right column: 3 live, most-uncertain open India markets.
+  // Take the highest-volume open markets, then surface the ones closest to a
+  // coin-flip (50/50) — genuine uncertainty is what's engaging, not settled odds.
+  const uncertainMarkets = useMemo(() =>
+    indiaOnly
+      .filter(m => new Date(m.closesAt).getTime() > now
+        && m.yesPrice > 0.02 && m.yesPrice < 0.98)
+      .sort((a, b) => b.volume - a.volume)
+      .slice(0, 20)
+      .sort((a, b) => Math.abs(a.yesPrice - 0.5) - Math.abs(b.yesPrice - 0.5))
+      .slice(0, 3),
+    [indiaOnly, now]);
+
   // Market sections
   const enabledMarkets = indiaMarkets.filter((m) => APP_CONFIG.enabledCategories.includes(m.category));
   const filtered = enabledMarkets.filter((m) => {
@@ -265,9 +285,9 @@ const HomePage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
               {/* Left: Brand + Headline + CTAs */}
               <motion.div
-                initial={{ opacity: 0, y: -12 }}
+                initial={{ opacity: 0, y: -6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
                 className="lg:col-span-3 space-y-4"
               >
                 <div className="flex items-center gap-2">
@@ -351,32 +371,64 @@ const HomePage = () => {
 
               {/* Right: Product mockup + Featured Events */}
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: 0.05, ease: 'easeOut' }}
                 className="lg:col-span-2 space-y-3"
               >
                 {/* Hero dashboard mockup — shows the product in context */}
                 <HeroDashboardMockup className="hidden sm:block" />
 
-                <p className="text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-1 sm:mt-3">Most-Watched India Events</p>
-                {featuredEvents.slice(0, 3).map((event) => (
-                  <Link
-                    key={event.id}
-                    to={`/events/${event.slug}`}
-                    className="block bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg px-3.5 py-2.5 transition-all group"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="text-xs font-bold text-white leading-snug line-clamp-1">{event.title}</p>
-                        <p className="text-[11px] text-white/50 line-clamp-1 mt-0.5">{event.predictionMarketAngle}</p>
+                <p className="text-[11px] font-semibold text-white/50 uppercase tracking-wider mb-1 sm:mt-3">Live India Markets</p>
+                {indiaLoading && uncertainMarkets.length === 0 ? (
+                  Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="bg-white/10 rounded-lg h-[88px] animate-pulse" />
+                  ))
+                ) : uncertainMarkets.length > 0 ? (
+                  uncertainMarkets.map((m) => {
+                    const yesPct = Math.round(m.yesPrice * 100);
+                    const noPct = 100 - yesPct;
+                    return (
+                      <Link
+                        key={m.id}
+                        to={`/market/${m.id}`}
+                        className="block bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg px-3.5 py-2.5 transition-all group"
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <p className="text-xs font-bold text-white leading-snug line-clamp-2 min-w-0">{m.title}</p>
+                          <span className="text-sm font-extrabold text-secondary whitespace-nowrap">{formatProbability(m.yesPrice)}</span>
+                        </div>
+                        <div className="flex rounded overflow-hidden h-1.5 mt-2">
+                          <div style={{ width: `${yesPct}%`, background: 'hsl(var(--success))' }} />
+                          <div style={{ width: `${noPct}%`, background: 'hsl(var(--destructive))' }} />
+                        </div>
+                        <Sparkline market={m} />
+                        <div className="flex items-center justify-between mt-1 text-[10px] text-white/50">
+                          <span>{formatINR(m.volume)} vol</span>
+                          <span>{timeUntil(m.closesAt)}</span>
+                        </div>
+                      </Link>
+                    );
+                  })
+                ) : (
+                  featuredEvents.slice(0, 3).map((event) => (
+                    <Link
+                      key={event.id}
+                      to={`/events/${event.slug}`}
+                      className="block bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg px-3.5 py-2.5 transition-all group"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-white leading-snug line-clamp-1">{event.title}</p>
+                          <p className="text-[11px] text-white/50 line-clamp-1 mt-0.5">{event.predictionMarketAngle}</p>
+                        </div>
+                        <span className="text-[10px] font-semibold text-secondary group-hover:text-white whitespace-nowrap transition-colors flex items-center gap-0.5">
+                          View <ArrowRight className="w-3 h-3" />
+                        </span>
                       </div>
-                      <span className="text-[10px] font-semibold text-secondary group-hover:text-white whitespace-nowrap transition-colors flex items-center gap-0.5">
-                        View <ArrowRight className="w-3 h-3" />
-                      </span>
-                    </div>
-                  </Link>
-                ))}
+                    </Link>
+                  ))
+                )}
               </motion.div>
             </div>
           </div>

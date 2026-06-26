@@ -10,7 +10,7 @@ import { useWatchlist } from '@/hooks/useWatchlist';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
 /** Compact inline probability sparkline drawn from the market's price history. */
-const Sparkline = ({ market }: { market: Market }) => {
+export const Sparkline = ({ market }: { market: Market }) => {
   const data = market.priceHistory;
   if (!data || data.length < 2) return null;
   const prices = data.map((d) => d.yes);

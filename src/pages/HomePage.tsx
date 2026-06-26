@@ -485,6 +485,55 @@ const HomePage = () => {
           </section>
         )}
 
+        {/* ── Markets on the move (surfaced directly under the hero — engagement-first) ── */}
+        {biggestMovers.length > 0 && (
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-destructive/15 flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-destructive" />
+                </div>
+                <div>
+                  <h2 className="font-display font-bold text-base leading-tight">Biggest India Movers</h2>
+                  <p className="text-[11px] text-muted-foreground">India markets with the largest probability shifts in 24h</p>
+                </div>
+              </div>
+              <Link to="/markets" className="text-xs font-semibold text-primary hover:underline whitespace-nowrap shrink-0">All markets →</Link>
+            </div>
+            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+              {biggestMovers.map((m) => (
+                <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                  <MarketCard market={m} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {closingSoon.length > 0 && (
+          <section>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
+                  <Clock className="w-4 h-4 text-warning" />
+                </div>
+                <div>
+                  <h2 className="font-display font-bold text-base leading-tight">Closing Soon</h2>
+                  <p className="text-[11px] text-muted-foreground">India markets about to resolve — last chance to track</p>
+                </div>
+              </div>
+              <Link to="/markets" className="text-xs font-semibold text-primary hover:underline whitespace-nowrap shrink-0">All markets →</Link>
+            </div>
+            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
+              {closingSoon.map((m) => (
+                <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
+                  <MarketCard market={m} />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* ── How It Works (enhanced visual panels) ── */}
         <AnimateIn delay={0.05}>
           <section className="bg-card border border-border rounded-xl p-5 lg:p-6">
@@ -850,58 +899,6 @@ const HomePage = () => {
                         </time>
                       </a>
                     </article>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ── Biggest Movers (India-relevant only) ── */}
-            {biggestMovers.length > 0 && (
-              <section>
-                <AnimateIn delay={0.1}>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-destructive/15 flex items-center justify-center">
-                        <TrendingUp className="w-4 h-4 text-destructive" />
-                      </div>
-                      <div>
-                        <h2 className="font-display font-bold text-base leading-tight">Biggest India Movers</h2>
-                        <p className="text-[11px] text-muted-foreground">India markets with the largest probability shifts in 24h</p>
-                      </div>
-                    </div>
-                  </div>
-                </AnimateIn>
-                <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
-                  {biggestMovers.map((m, i) => (
-                    <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
-                      <MarketCard market={m} />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* ── Closing Soon ── */}
-            {closingSoon.length > 0 && (
-              <section>
-                <AnimateIn delay={0.1}>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-full bg-warning/15 flex items-center justify-center">
-                        <Clock className="w-4 h-4 text-warning" />
-                      </div>
-                      <div>
-                        <h2 className="font-display font-bold text-base leading-tight">Closing Soon</h2>
-                        <p className="text-[11px] text-muted-foreground">India markets about to resolve — last chance to track</p>
-                      </div>
-                    </div>
-                  </div>
-                </AnimateIn>
-                <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible sm:snap-none sm:pb-0">
-                  {closingSoon.map((m, i) => (
-                    <div key={m.id} className="min-w-[85vw] snap-center sm:min-w-0">
-                      <MarketCard market={m} />
-                    </div>
                   ))}
                 </div>
               </section>

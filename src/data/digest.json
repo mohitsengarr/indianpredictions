@@ -1,6 +1,6 @@
 {
-  "weekOf": "2026-06-26",
-  "generatedAt": "2026-06-26T01:27:16.317Z",
+  "weekOf": "2026-06-27",
+  "generatedAt": "2026-06-27T01:22:10.347Z",
   "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
@@ -31,49 +31,49 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
+      "title": "Welcome To The Jungle Day 1 Live Update: Akshay Kumar's Comedy Entertainer Heads For 15+ Crore Net Opening Day",
+      "slug": "welcome-to-the-jungle-day-1-live-update-akshay-kumars-comedy-entertainer-heads-f",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will Welcome To The Jungle surpass 20 crore on its opening day?",
+      "probability": 34,
+      "updatedAt": "2026-06-27T01:22:08.338Z"
+    },
+    {
       "title": "$70 Oil Could Put India Back on Track for 7% Economic Growth",
       "slug": "70-oil-could-put-india-back-on-track-for-7-economic-growth",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil remain around $70 in the next quarter?",
+      "angle": "Will oil prices stabilize around $70 for the next quarter?",
       "probability": 29,
-      "updatedAt": "2026-06-26T01:27:14.341Z"
+      "updatedAt": "2026-06-27T01:22:08.338Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil prices decline in the next 30-60 days?",
+      "angle": "Will India's gas and oil prices stabilize within the next year?",
       "probability": 75,
-      "updatedAt": "2026-06-26T01:27:14.341Z"
+      "updatedAt": "2026-06-27T01:22:08.338Z"
     },
     {
-      "title": "Anthropic’s restrictions ignite sovereign AI debate in India",
-      "slug": "anthropics-restrictions-ignite-sovereign-ai-debate-in-india",
+      "title": "One of India’s largest gold exporters paid its managing director just $180 a month, investigators say in accounting probe",
+      "slug": "one-of-indias-largest-gold-exporters-paid-its-managing-director-just-180-a-month",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will the debate lead to stricter AI regulations in India?",
-      "probability": 45,
-      "updatedAt": "2026-06-26T01:27:14.341Z"
+      "angle": "Will Rajesh Exports face legal repercussions from this investigation?",
+      "probability": 26,
+      "updatedAt": "2026-06-27T01:22:08.338Z"
     },
     {
-      "title": "India's SEBI Recommends Regulatory Oversight for Cryptocurrencies",
-      "slug": "indias-sebi-recommends-regulatory-oversight-for-cryptocurrencies",
+      "title": "India's SEBI Advocates Regulatory Oversight of Crypto Trading",
+      "slug": "indias-sebi-advocates-regulatory-oversight-of-crypto-trading",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's SEBI's recommendations lead to new cryptocurrency regulations by 2025?",
-      "probability": 36,
-      "updatedAt": "2026-06-26T01:27:14.341Z"
-    },
-    {
-      "title": "Understanding Crypto Regulations in India",
-      "slug": "understanding-crypto-regulations-in-india",
-      "category": "regulation",
-      "categoryLabel": "Regulation",
-      "angle": "Will India's crypto regulations become more stringent over the next year?",
-      "probability": 55,
-      "updatedAt": "2026-06-26T01:27:14.341Z"
+      "angle": "Will India's regulatory framework for cryptocurrencies be implemented by the end of 2024?",
+      "probability": 62,
+      "updatedAt": "2026-06-27T01:22:08.338Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-26T01:20:15.826Z"
+      "publishedDate": "2026-06-27T01:15:58.769Z"
     },
     {
       "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
       "category": "sports",
       "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-26T01:20:15.826Z"
-    },
-    {
-      "title": "Cricket News |IPL 2026 Cricket Updates| Cricinfo",
-      "category": "sports",
-      "source": "https://www.cricinfo.com/cricket-news",
-      "publishedDate": "2026-06-26T01:20:15.826Z"
-    },
-    {
-      "title": "IPL 2026 News, Indian Premier League 2026 News & Updates - Sportstar",
-      "category": "sports",
-      "source": "https://sportstar.thehindu.com/cricket/ipl/ipl-news/",
-      "publishedDate": "2026-06-26T01:20:15.826Z"
+      "publishedDate": "2026-06-27T01:15:58.769Z"
     },
     {
       "title": "IPL 2026: IPL Latest News & Updates, Points Table, Upcoming Match Schedule, Live Scores and Results",
       "category": "sports",
       "source": "https://timesofindia.indiatimes.com/sports/cricket/ipl",
-      "publishedDate": "2026-06-26T01:20:15.826Z"
+      "publishedDate": "2026-06-27T01:15:58.769Z"
+    },
+    {
+      "title": "Equity Market Watch, Live Nifty & Sensex Charts & News - NSE India",
+      "category": "markets",
+      "source": "https://www.nseindia.com/market-data/live-equity-market",
+      "publishedDate": "2026-06-27T01:15:53.962Z"
+    },
+    {
+      "title": "Stock Market: Stock Market Today | Stock Market Live News Update - Moneycontrol.com",
+      "category": "markets",
+      "source": "https://www.moneycontrol.com/stocksmarketsindia/",
+      "publishedDate": "2026-06-27T01:15:53.962Z"
     }
   ]
 }

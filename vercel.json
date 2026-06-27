@@ -1,5 +1,17 @@
 {
+  "installCommand": "npm install",
   "rewrites": [
+    {
+      "source": "/market/:id",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|WhatsApp|Slackbot|Slack-ImgProxy|Discordbot|TelegramBot|Pinterest|redditbot|Googlebot|bingbot|Applebot|embedly|vkShare|W3C_Validator|Mastodon|Threads|SkypeUriPreview|Iframely).*"
+        }
+      ],
+      "destination": "/api/market-og?id=:id"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

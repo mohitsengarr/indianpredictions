@@ -4,7 +4,7 @@ import CategoryTabs from '@/components/CategoryTabs';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
 import { APP_CONFIG } from '@/lib/mock-data';
-import { MarketCategory } from '@/lib/types';
+import { MarketCategory, Market } from '@/lib/types';
 import { Search, SlidersHorizontal, RefreshCw, AlertCircle, Globe, MapPin } from 'lucide-react';
 import { useMarkets, useIndiaMarkets } from '@/hooks/useMarkets';
 import { useSEO } from '@/hooks/useSEO';
@@ -31,16 +31,28 @@ const MarketsPage = () => {
   // re-runs when the underlying markets, filters, or sort key actually change
   // (previously `filtered` was a new array every render, so every keystroke
   // invalidated the sort memo and re-sorted on each render).
-  const filteredUnsorted = useMemo(
-    () =>
-      markets.filter(
-        (m) =>
-          APP_CONFIG.enabledCategories.includes(m.category) &&
-          (category === 'all' || m.category === category) &&
-          m.title.toLowerCase().includes(search.toLowerCase())
-      ),
-    [markets, category, search]
-  );
+  // A query is active if the user has typed a search or picked a category.
+  const hasQuery = search.trim() !== '' || category !== 'all';
+
+  const { filteredUnsorted, usedGlobalFallback } = useMemo(() => {
+    const q = search.toLowerCase();
+    // Search title AND description (title-only was too narrow — e.g. a market
+    // about elections phrased "Will BJP win Tamil Nadu?" has no "election" in
+    // its title).
+    const matches = (m: Market) =>
+      APP_CONFIG.enabledCategories.includes(m.category) &&
+      (category === 'all' || m.category === category) &&
+      `${m.title} ${m.description ?? ''}`.toLowerCase().includes(q);
+
+    const primary = markets.filter(matches);
+    // India-only is the default, but a query with no India matches shouldn't
+    // dead-end at "No markets found" — fall back to global results and say so.
+    if (indiaOnly && hasQuery && primary.length === 0) {
+      const global = allMarkets.filter(matches);
+      if (global.length > 0) return { filteredUnsorted: global, usedGlobalFallback: true };
+    }
+    return { filteredUnsorted: primary, usedGlobalFallback: false };
+  }, [markets, allMarkets, indiaOnly, hasQuery, category, search]);
 
   const filtered = useMemo(() => {
     const arr = [...filteredUnsorted];
@@ -142,6 +154,13 @@ const MarketsPage = () => {
           </div>
         </AnimateIn>
 
+        {usedGlobalFallback && (
+          <div className="flex items-start gap-2 rounded-lg border border-orange-200 bg-orange-50 px-3 py-2.5 text-xs text-orange-800">
+            <Globe className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+            <span>No India markets for {search.trim() ? <strong>“{search}”</strong> : 'this filter'} right now — showing <strong>global</strong> results instead.</span>
+          </div>
+        )}
+
         {loading && markets.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
             {Array.from({ length: 6 }).map((_, i) => (
@@ -161,7 +180,9 @@ const MarketsPage = () => {
             {filtered.length > 0 ? (
               filtered.map((m) => <MarketCard key={m.id} market={m} />)
             ) : (
-              <p className="text-center text-sm text-muted-foreground py-8 col-span-full">No markets found</p>
+              <p className="text-center text-sm text-muted-foreground py-8 col-span-full">
+                No markets found{search.trim() ? ` for “${search}”` : ''}. Try a different term or category.
+              </p>
             )}
           </StaggerChildren>
         )}

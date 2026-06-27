@@ -33,6 +33,7 @@ const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const DisclaimerPage = lazy(() => import("./pages/DisclaimerPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const EmbedPage = lazy(() => import("./pages/EmbedPage"));
+const DataPage = lazy(() => import("./pages/DataPage"));
 
 const queryClient = new QueryClient();
 
@@ -89,6 +90,7 @@ const AnimatedRoutes = () => {
             <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/digest" element={<DigestPage />} />
+            <Route path="/data" element={<DataPage />} />
             <Route path="/cricket" element={<CategoryHubPage slug="cricket" />} />
             <Route path="/elections" element={<CategoryHubPage slug="elections" />} />
             <Route path="/economy" element={<CategoryHubPage slug="economy" />} />

@@ -103,6 +103,7 @@ async function buildHead(url: string) {
     "/": "India Prediction Markets — Live Odds for Cricket, Elections & Economy",
     "/about": "About India Predictions – Methodology & Data Sources",
     "/blog": "Blog – India Prediction Market Analysis & Education",
+    "/data": "India Prediction Markets — Open Data & Free JSON API",
     "/terms": "Terms of Service – India Predictions",
     "/privacy": "Privacy Policy – India Predictions",
     "/disclaimer": "Risk Disclaimer – India Predictions",
@@ -135,6 +136,25 @@ async function buildHead(url: string) {
       creator: { "@type": "Organization", name: "India Predictions" },
       dateModified: digest.generatedAt, isAccessibleForFree: true,
       variableMeasured: digest.items.map((i) => ({ "@type": "PropertyValue", name: i.title, value: `${i.probability}%` })),
+    }));
+  } else if (path === "/data") {
+    const description =
+      "Free, public JSON feed of live India prediction-market odds (cricket, elections, RBI, crypto, Bollywood), aggregated from Polymarket and updated continuously. Cite or embed with attribution.";
+    elements.add({ type: "meta", props: { name: "description", content: description } });
+    elements.add(ldScript({
+      "@context": "https://schema.org", "@type": "Dataset",
+      name: "India Prediction Markets — live odds",
+      description,
+      url: `${SITE}/data`,
+      creator: { "@type": "Organization", name: "India Predictions", url: SITE },
+      license: `${SITE}/data`,
+      isAccessibleForFree: true,
+      keywords: ["India prediction markets", "election odds", "cricket odds", "RBI", "Nifty", "Bollywood"],
+      distribution: [{
+        "@type": "DataDownload",
+        encodingFormat: "application/json",
+        contentUrl: `${SITE}/api/markets`,
+      }],
     }));
   } else if (["/cricket", "/elections", "/economy", "/bollywood"].includes(path)) {
     const { getCategoryHub } = await import("./data/category-hubs");

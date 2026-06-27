@@ -10,6 +10,7 @@ import TradeTicket from '@/components/TradeTicket';
 import AnimateIn from '@/components/AnimateIn';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import SocialShare from '@/components/SocialShare';
+import EmbedCode from '@/components/EmbedCode';
 import MarketCard from '@/components/MarketCard';
 import {
   ExternalLink, Clock, Users, BarChart3, Info, TrendingUp, TrendingDown,
@@ -519,6 +520,13 @@ const MarketDetailPage = () => {
                     title={`${market.title} – Yes ${yesPct}% | India Predictions`}
                     text={`What do you think? "${market.title}" is at ${yesPct}% YES on India Predictions.`}
                   />
+                </div>
+              </AnimateIn>
+
+              {/* Embed widget — lets publishers drop a live odds card on their site (backlinks) */}
+              <AnimateIn delay={0.35}>
+                <div className="bg-card rounded-xl border border-border p-4">
+                  <EmbedCode marketId={market.id} title={market.title} />
                 </div>
               </AnimateIn>
             </div>

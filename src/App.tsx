@@ -32,6 +32,7 @@ const TermsPage = lazy(() => import("./pages/TermsPage"));
 const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
 const DisclaimerPage = lazy(() => import("./pages/DisclaimerPage"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const EmbedPage = lazy(() => import("./pages/EmbedPage"));
 
 const queryClient = new QueryClient();
 
@@ -103,6 +104,36 @@ const AnimatedRoutes = () => {
   );
 };
 
+/**
+ * Renders the full app chrome (sidebar/footer) for normal routes, but a bare,
+ * chrome-less surface for /embed/* so those pages can be iframed cleanly on
+ * other sites (the embeddable-widget backlink play).
+ */
+const Chrome = () => {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/embed/')) {
+    return (
+      <Suspense fallback={<div className="p-4 text-xs text-muted-foreground">Loading…</div>}>
+        <Routes>
+          <Route path="/embed/:id" element={<EmbedPage />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+  return (
+    <div className="min-h-screen bg-background relative">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold">
+        Skip to content
+      </a>
+      <BottomNav />
+      <main id="main-content" className="lg:ml-64">
+        <AnimatedRoutes />
+        <Footer />
+      </main>
+    </div>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -112,16 +143,7 @@ const App = () => (
         <GeoProvider>
         <LivePricesProvider>
           <RouteTracker />
-          <div className="min-h-screen bg-background relative">
-            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold">
-              Skip to content
-            </a>
-            <BottomNav />
-            <main id="main-content" className="lg:ml-64">
-              <AnimatedRoutes />
-              <Footer />
-            </main>
-          </div>
+          <Chrome />
         </LivePricesProvider>
         </GeoProvider>
       </BrowserRouter>

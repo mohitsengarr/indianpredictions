@@ -1,7 +1,7 @@
 {
-  "weekOf": "2026-06-27",
-  "generatedAt": "2026-06-27T01:22:10.347Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-06-28",
+  "generatedAt": "2026-06-28T01:27:48.331Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
       "title": "Shedge replaces injured Reddy in India's T20I squad",
@@ -31,13 +31,22 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "Welcome To The Jungle Day 1 Live Update: Akshay Kumar's Comedy Entertainer Heads For 15+ Crore Net Opening Day",
-      "slug": "welcome-to-the-jungle-day-1-live-update-akshay-kumars-comedy-entertainer-heads-f",
+      "title": "India Box Office Collection Update",
+      "slug": "india-box-office-collection-update",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will Welcome To The Jungle surpass 20 crore on its opening day?",
-      "probability": 34,
-      "updatedAt": "2026-06-27T01:22:08.338Z"
+      "angle": "Will 'Pushpa: The Rule - Part 2' surpass ₹2,000 Crore in box office collections?",
+      "probability": 76,
+      "updatedAt": "2026-06-28T01:27:46.637Z"
+    },
+    {
+      "title": "Welcome To The Jungle Box Office: Day 2 starts better than Day 1",
+      "slug": "welcome-to-the-jungle-box-office-day-2-starts-better-than-day-1",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will 'Welcome To The Jungle' be among the top grossing films of 2026?",
+      "probability": 24,
+      "updatedAt": "2026-06-28T01:27:46.637Z"
     },
     {
       "title": "$70 Oil Could Put India Back on Track for 7% Economic Growth",
@@ -46,34 +55,25 @@
       "categoryLabel": "Energy",
       "angle": "Will oil prices stabilize around $70 for the next quarter?",
       "probability": 29,
-      "updatedAt": "2026-06-27T01:22:08.338Z"
-    },
-    {
-      "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
-      "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
-      "category": "energy",
-      "categoryLabel": "Energy",
-      "angle": "Will India's gas and oil prices stabilize within the next year?",
-      "probability": 75,
-      "updatedAt": "2026-06-27T01:22:08.338Z"
+      "updatedAt": "2026-06-28T01:27:46.637Z"
     },
     {
       "title": "One of India’s largest gold exporters paid its managing director just $180 a month, investigators say in accounting probe",
       "slug": "one-of-indias-largest-gold-exporters-paid-its-managing-director-just-180-a-month",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will Rajesh Exports face legal repercussions from this investigation?",
+      "angle": "Is the accounting scandal likely to lead to greater regulatory scrutiny in India?",
       "probability": 26,
-      "updatedAt": "2026-06-27T01:22:08.338Z"
+      "updatedAt": "2026-06-28T01:27:46.637Z"
     },
     {
-      "title": "India's SEBI Advocates Regulatory Oversight of Crypto Trading",
-      "slug": "indias-sebi-advocates-regulatory-oversight-of-crypto-trading",
-      "category": "regulation",
-      "categoryLabel": "Regulation",
-      "angle": "Will India's regulatory framework for cryptocurrencies be implemented by the end of 2024?",
-      "probability": 62,
-      "updatedAt": "2026-06-27T01:22:08.338Z"
+      "title": "Crude Oil Prices Decline amid Increased Supply from Hormuz Strait",
+      "slug": "crude-oil-prices-decline-amid-increased-supply-from-hormuz-strait",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will crude oil prices stabilize at or above $73 in the next month?",
+      "probability": 28,
+      "updatedAt": "2026-06-28T01:27:46.637Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-27T01:15:58.769Z"
+      "publishedDate": "2026-06-28T01:23:00.848Z"
     },
     {
-      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
+      "title": "Cricket News Today, Latest Cricket Updates, Cricket Live Score, Upcoming Matches | Times of India",
       "category": "sports",
-      "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-27T01:15:58.769Z"
+      "source": "https://timesofindia.indiatimes.com/sports/cricket",
+      "publishedDate": "2026-06-28T01:23:00.848Z"
     },
     {
-      "title": "IPL 2026: IPL Latest News & Updates, Points Table, Upcoming Match Schedule, Live Scores and Results",
+      "title": "Cricket News: Latest Cricket Match News Updates, Live Score Today",
       "category": "sports",
-      "source": "https://timesofindia.indiatimes.com/sports/cricket/ipl",
-      "publishedDate": "2026-06-27T01:15:58.769Z"
+      "source": "https://www.indiatoday.in/sports/cricket",
+      "publishedDate": "2026-06-28T01:23:00.848Z"
     },
     {
-      "title": "Equity Market Watch, Live Nifty & Sensex Charts & News - NSE India",
+      "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
       "category": "markets",
-      "source": "https://www.nseindia.com/market-data/live-equity-market",
-      "publishedDate": "2026-06-27T01:15:53.962Z"
+      "source": "https://www.thehindu.com/business/markets/",
+      "publishedDate": "2026-06-28T01:22:56.114Z"
     },
     {
-      "title": "Stock Market: Stock Market Today | Stock Market Live News Update - Moneycontrol.com",
+      "title": "Business News Today: Latest Stock Market Updates, Sensex, Nifty, BSE/NSE Live, IPO, Mutual Funds, Finance & Economy News",
       "category": "markets",
-      "source": "https://www.moneycontrol.com/stocksmarketsindia/",
-      "publishedDate": "2026-06-27T01:15:53.962Z"
+      "source": "https://www.financialexpress.com/",
+      "publishedDate": "2026-06-28T01:22:56.114Z"
     }
   ]
 }

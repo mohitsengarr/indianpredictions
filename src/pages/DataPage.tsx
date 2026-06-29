@@ -135,7 +135,7 @@ const DataPage = () => {
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-3">
-            Pass your key as <code className="font-mono">?key=…</code> or the <code className="font-mono">x-api-key</code> header.
+            Pass your key as <code className="font-mono">?key=…</code> (recommended) or the <code className="font-mono">x-api-key</code> header.
           </p>
         </section>
 

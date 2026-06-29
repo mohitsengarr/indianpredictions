@@ -93,7 +93,13 @@ export default async function handler(req: Request) {
       headers: {
         'content-type': 'application/json; charset=utf-8',
         'access-control-allow-origin': '*',
-        'cache-control': 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
+        // Vary on the key header so a header-keyed (Pro) request isn't served a
+        // cached Free response; Pro responses are private (per-customer), Free
+        // stays shared-cached. The reliable method is ?key= (distinct URL).
+        vary: 'x-api-key',
+        'cache-control': tier === 'pro'
+          ? 'private, max-age=60'
+          : 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
       },
     });
   } catch {

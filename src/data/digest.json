@@ -1,6 +1,6 @@
 {
-  "weekOf": "2026-06-28",
-  "generatedAt": "2026-06-28T01:27:48.331Z",
+  "weekOf": "2026-06-29",
+  "generatedAt": "2026-06-29T01:29:11.926Z",
   "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
@@ -31,49 +31,49 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "India Box Office Collection Update",
-      "slug": "india-box-office-collection-update",
+      "title": "Fast & Furious Star Tyrese Gibson's Life-Changing Visit to India",
+      "slug": "fast-furious-star-tyrese-gibsons-life-changing-visit-to-india",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will 'Pushpa: The Rule - Part 2' surpass ₹2,000 Crore in box office collections?",
-      "probability": 76,
-      "updatedAt": "2026-06-28T01:27:46.637Z"
+      "angle": "Will Tyrese Gibson's visit lead to more collaborations between Bollywood and Hollywood?",
+      "probability": 51,
+      "updatedAt": "2026-06-29T01:29:09.732Z"
     },
     {
-      "title": "Welcome To The Jungle Box Office: Day 2 starts better than Day 1",
-      "slug": "welcome-to-the-jungle-box-office-day-2-starts-better-than-day-1",
+      "title": "Firoz A. Nadiadwallah Pledges to Donate to Armed Forces Widows",
+      "slug": "firoz-a-nadiadwallah-pledges-to-donate-to-armed-forces-widows",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will 'Welcome To The Jungle' be among the top grossing films of 2026?",
-      "probability": 24,
-      "updatedAt": "2026-06-28T01:27:46.637Z"
+      "angle": "Will the donations improve the film's box office performance?",
+      "probability": 75,
+      "updatedAt": "2026-06-29T01:29:09.732Z"
     },
     {
       "title": "$70 Oil Could Put India Back on Track for 7% Economic Growth",
       "slug": "70-oil-could-put-india-back-on-track-for-7-economic-growth",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil prices stabilize around $70 for the next quarter?",
+      "angle": "Will $70 oil prices lead to sustained economic growth in India?",
       "probability": 29,
-      "updatedAt": "2026-06-28T01:27:46.637Z"
+      "updatedAt": "2026-06-29T01:29:09.732Z"
     },
     {
       "title": "One of India’s largest gold exporters paid its managing director just $180 a month, investigators say in accounting probe",
       "slug": "one-of-indias-largest-gold-exporters-paid-its-managing-director-just-180-a-month",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Is the accounting scandal likely to lead to greater regulatory scrutiny in India?",
+      "angle": "Will regulatory changes come into effect for gold export firms in India in the next 6 months?",
       "probability": 26,
-      "updatedAt": "2026-06-28T01:27:46.637Z"
+      "updatedAt": "2026-06-29T01:29:09.732Z"
     },
     {
-      "title": "Crude Oil Prices Decline amid Increased Supply from Hormuz Strait",
-      "slug": "crude-oil-prices-decline-amid-increased-supply-from-hormuz-strait",
+      "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
+      "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will crude oil prices stabilize at or above $73 in the next month?",
-      "probability": 28,
-      "updatedAt": "2026-06-28T01:27:46.637Z"
+      "angle": "Will India's oil prices decrease in the next 60 days?",
+      "probability": 75,
+      "updatedAt": "2026-06-29T01:29:09.732Z"
     }
   ],
   "topNews": [
@@ -81,31 +81,31 @@
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-28T01:23:00.848Z"
+      "publishedDate": "2026-06-29T01:23:22.072Z"
     },
     {
-      "title": "Cricket News Today, Latest Cricket Updates, Cricket Live Score, Upcoming Matches | Times of India",
+      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
       "category": "sports",
-      "source": "https://timesofindia.indiatimes.com/sports/cricket",
-      "publishedDate": "2026-06-28T01:23:00.848Z"
+      "source": "https://sports.ndtv.com/ipl-2026/news",
+      "publishedDate": "2026-06-29T01:23:22.072Z"
     },
     {
-      "title": "Cricket News: Latest Cricket Match News Updates, Live Score Today",
+      "title": "IPL 2026 News – Latest Cricket Updates, Match Reports & Breaking Stories | Cricbuzz | Cricbuzz.com",
       "category": "sports",
-      "source": "https://www.indiatoday.in/sports/cricket",
-      "publishedDate": "2026-06-28T01:23:00.848Z"
+      "source": "https://www.cricbuzz.com/cricket-news",
+      "publishedDate": "2026-06-29T01:23:22.072Z"
+    },
+    {
+      "title": "IPL 2026: IPL Latest News & Updates, Points Table, Upcoming Match Schedule, Live Scores and Results",
+      "category": "sports",
+      "source": "https://timesofindia.indiatimes.com/sports/cricket/ipl",
+      "publishedDate": "2026-06-29T01:23:22.072Z"
     },
     {
       "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
       "category": "markets",
       "source": "https://www.thehindu.com/business/markets/",
-      "publishedDate": "2026-06-28T01:22:56.114Z"
-    },
-    {
-      "title": "Business News Today: Latest Stock Market Updates, Sensex, Nifty, BSE/NSE Live, IPO, Mutual Funds, Finance & Economy News",
-      "category": "markets",
-      "source": "https://www.financialexpress.com/",
-      "publishedDate": "2026-06-28T01:22:56.114Z"
+      "publishedDate": "2026-06-29T01:23:16.869Z"
     }
   ]
 }

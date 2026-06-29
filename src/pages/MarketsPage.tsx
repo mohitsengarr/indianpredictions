@@ -3,6 +3,8 @@ import MarketCard from '@/components/MarketCard';
 import CategoryTabs from '@/components/CategoryTabs';
 import AnimateIn from '@/components/AnimateIn';
 import StaggerChildren from '@/components/StaggerChildren';
+import RecommendedBrokers from '@/components/RecommendedBrokers';
+import AdSlot from '@/components/AdSlot';
 import { APP_CONFIG } from '@/lib/mock-data';
 import { MarketCategory, Market } from '@/lib/types';
 import { Search, SlidersHorizontal, RefreshCw, AlertCircle, Globe, MapPin } from 'lucide-react';
@@ -196,6 +198,10 @@ const MarketsPage = () => {
             · {filtered.length} markets
           </p>
         )}
+
+        {/* Monetization (both inert until configured): disclosed broker affiliates + an ad slot */}
+        <RecommendedBrokers />
+        <AdSlot slot="markets-footer" className="my-2 min-h-[90px]" />
       </div>
     </div>
   );

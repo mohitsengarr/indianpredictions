@@ -1,11 +1,13 @@
 /**
  * Vercel Edge Function — /api/markets
  *
- * Public, CORS-enabled JSON feed of live India prediction markets, for
- * journalists and developers to cite/embed. Free to use with attribution.
- * Query params:
- *   ?scope=all   include global markets (default: India-relevant only)
- *   ?limit=N     cap results (default 100, max 500)
+ * Public JSON feed of live India prediction markets. Freemium:
+ *   - Free (no key):  up to 100 markets, attribution required, non-commercial.
+ *   - Pro  (?key= or x-api-key header): up to 500, commercial use per plan.
+ * Keys live in public.ip_api_keys and are validated via the ip_validate_api_key
+ * RPC (SECURITY DEFINER, so the anon key can't read the table directly).
+ *
+ * Query params: ?scope=all (global) · ?limit=N · ?key=<apiKey>
  */
 export const config = { runtime: 'edge' };
 
@@ -23,15 +25,33 @@ interface MarketData {
   closesAt?: string;
 }
 
+async function resolveTier(key: string): Promise<'free' | 'pro'> {
+  if (!key) return 'free';
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/rpc/ip_validate_api_key`, {
+      method: 'POST',
+      headers: { apikey: ANON, Authorization: `Bearer ${ANON}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ p_key: key }),
+    });
+    const rows = (await r.json()) as Array<{ tier?: string }>;
+    return rows?.[0]?.tier === 'pro' ? 'pro' : 'free';
+  } catch {
+    return 'free';
+  }
+}
+
 export default async function handler(req: Request) {
   const url = new URL(req.url);
+  const key = url.searchParams.get('key') || req.headers.get('x-api-key') || '';
+  const tier = await resolveTier(key);
   const scope = url.searchParams.get('scope') === 'all' ? 'global' : 'india';
-  const limit = Math.min(Math.max(parseInt(url.searchParams.get('limit') || '100', 10) || 100, 1), 500);
+  const maxLimit = tier === 'pro' ? 500 : 100;
+  const limit = Math.min(Math.max(parseInt(url.searchParams.get('limit') || '100', 10) || 100, 1), maxLimit);
 
   try {
     const indiaFilter = scope === 'india' ? '&is_india=eq.true' : '';
     const r = await fetch(
-      `${SUPABASE_URL}/rest/v1/polymarket_cache?select=data${indiaFilter}&order=volume.desc&limit=300`,
+      `${SUPABASE_URL}/rest/v1/polymarket_cache?select=data${indiaFilter}&order=volume.desc&limit=500`,
       { headers: { apikey: ANON, Authorization: `Bearer ${ANON}` } },
     );
     const rows = (await r.json()) as Array<{ data?: MarketData }>;
@@ -56,7 +76,11 @@ export default async function handler(req: Request) {
     const body = {
       source: 'India Predictions',
       homepage: SITE,
-      license: 'Free to use with attribution to indiapredictions.com',
+      tier,
+      maxLimit,
+      license: tier === 'pro'
+        ? 'Commercial use permitted under your Pro plan.'
+        : 'Free for non-commercial use with attribution to indiapredictions.com. For higher limits and commercial use, get a Pro key — see /data.',
       dataSource: 'Aggregated from Polymarket; scored for India relevance.',
       generatedAt: new Date().toISOString(),
       scope,

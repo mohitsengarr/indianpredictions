@@ -99,8 +99,44 @@ const DataPage = () => {
               Open the live feed <ArrowRight className="w-3 h-3" />
             </a>
             <span className="text-muted-foreground">·</span>
-            <span className="text-muted-foreground"><code className="font-mono">?scope=all</code> for global markets · <code className="font-mono">?limit=N</code> (max 500)</span>
+            <span className="text-muted-foreground"><code className="font-mono">?scope=all</code> for global markets · <code className="font-mono">?limit=N</code> (free max 100, Pro max 500)</span>
           </div>
+        </section>
+
+        {/* Plans */}
+        <section>
+          <h2 className="font-display font-bold text-lg mb-3">Plans</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="bg-card border border-border rounded-xl p-4">
+              <p className="font-bold">Free</p>
+              <p className="text-2xl font-extrabold mt-1">₹0</p>
+              <ul className="text-sm text-muted-foreground mt-3 space-y-1.5">
+                <li>✓ Up to 100 live markets / call</li>
+                <li>✓ India &amp; global scope</li>
+                <li>✓ Updated continuously</li>
+                <li className="text-muted-foreground/80">Attribution required · non-commercial</li>
+              </ul>
+            </div>
+            <div className="bg-card border border-primary/40 ring-1 ring-primary/15 rounded-xl p-4">
+              <p className="font-bold text-primary">Pro</p>
+              <p className="text-sm text-muted-foreground mt-1">Contact for pricing</p>
+              <ul className="text-sm text-muted-foreground mt-3 space-y-1.5">
+                <li>✓ Up to 500 markets / call</li>
+                <li>✓ Commercial-use license</li>
+                <li>✓ Higher rate limits</li>
+                <li className="text-muted-foreground/80">History &amp; webhooks (coming soon)</li>
+              </ul>
+              <a
+                href="mailto:contact@indiapredictions.com?subject=India%20Predictions%20%E2%80%94%20Pro%20API%20access"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline mt-3"
+              >
+                Request a Pro key →
+              </a>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground mt-3">
+            Pass your key as <code className="font-mono">?key=…</code> or the <code className="font-mono">x-api-key</code> header.
+          </p>
         </section>
 
         {/* Sample */}

@@ -1,6 +1,6 @@
 {
-  "weekOf": "2026-06-29",
-  "generatedAt": "2026-06-29T01:29:11.926Z",
+  "weekOf": "2026-06-30",
+  "generatedAt": "2026-06-30T01:23:09.444Z",
   "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
@@ -31,81 +31,81 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "Fast & Furious Star Tyrese Gibson's Life-Changing Visit to India",
-      "slug": "fast-furious-star-tyrese-gibsons-life-changing-visit-to-india",
+      "title": "Fast & Furious Star Tyrese Gibson Calls India Visit 'Life-Changing'",
+      "slug": "fast-furious-star-tyrese-gibson-calls-india-visit-life-changing",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will Tyrese Gibson's visit lead to more collaborations between Bollywood and Hollywood?",
-      "probability": 51,
-      "updatedAt": "2026-06-29T01:29:09.732Z"
+      "angle": "Will Tyrese Gibson's visit lead to more Hollywood collaborations in India?",
+      "probability": 22,
+      "updatedAt": "2026-06-30T01:23:07.822Z"
     },
     {
-      "title": "Firoz A. Nadiadwallah Pledges to Donate to Armed Forces Widows",
-      "slug": "firoz-a-nadiadwallah-pledges-to-donate-to-armed-forces-widows",
+      "title": "EXCLUSIVE: YRF issues show-sharing mandate for Alpha – shows from 9:30 am onwards",
+      "slug": "exclusive-yrf-issues-show-sharing-mandate-for-alpha-shows-from-930-am-onwards",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will the donations improve the film's box office performance?",
-      "probability": 75,
-      "updatedAt": "2026-06-29T01:29:09.732Z"
+      "angle": "Will the box office performance of Alpha exceed that of Welcome To The Jungle?",
+      "probability": 79,
+      "updatedAt": "2026-06-30T01:23:07.822Z"
     },
     {
       "title": "$70 Oil Could Put India Back on Track for 7% Economic Growth",
       "slug": "70-oil-could-put-india-back-on-track-for-7-economic-growth",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will $70 oil prices lead to sustained economic growth in India?",
+      "angle": "Will India achieve 7% economic growth with oil prices stabilized at $70?",
       "probability": 29,
-      "updatedAt": "2026-06-29T01:29:09.732Z"
+      "updatedAt": "2026-06-30T01:23:07.822Z"
     },
     {
-      "title": "One of India’s largest gold exporters paid its managing director just $180 a month, investigators say in accounting probe",
-      "slug": "one-of-indias-largest-gold-exporters-paid-its-managing-director-just-180-a-month",
+      "title": "Oil prices mixed as fresh U.S.-Iran clashes reignite Middle East supply fears",
+      "slug": "oil-prices-mixed-as-fresh-us-iran-clashes-reignite-middle-east-supply-fears",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will regulatory changes come into effect for gold export firms in India in the next 6 months?",
-      "probability": 26,
-      "updatedAt": "2026-06-29T01:29:09.732Z"
+      "angle": "Will oil prices stabilize in the next month amid U.S.-Iran tensions?",
+      "probability": 69,
+      "updatedAt": "2026-06-30T01:23:07.822Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India's oil prices decrease in the next 60 days?",
+      "angle": "Will India's oil prices stabilize in the next six months?",
       "probability": 75,
-      "updatedAt": "2026-06-29T01:29:09.732Z"
+      "updatedAt": "2026-06-30T01:23:07.822Z"
     }
   ],
   "topNews": [
     {
-      "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
+      "title": "Cricket News |IPL 2026 Cricket Updates| Cricinfo",
       "category": "sports",
-      "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-06-29T01:23:22.072Z"
+      "source": "https://www.cricinfo.com/cricket-news",
+      "publishedDate": "2026-06-30T01:18:03.862Z"
     },
     {
       "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
       "category": "sports",
       "source": "https://sports.ndtv.com/ipl-2026/news",
-      "publishedDate": "2026-06-29T01:23:22.072Z"
+      "publishedDate": "2026-06-30T01:18:03.862Z"
     },
     {
-      "title": "IPL 2026 News – Latest Cricket Updates, Match Reports & Breaking Stories | Cricbuzz | Cricbuzz.com",
+      "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
-      "source": "https://www.cricbuzz.com/cricket-news",
-      "publishedDate": "2026-06-29T01:23:22.072Z"
+      "source": "https://www.iplt20.com/news",
+      "publishedDate": "2026-06-30T01:18:03.861Z"
     },
     {
-      "title": "IPL 2026: IPL Latest News & Updates, Points Table, Upcoming Match Schedule, Live Scores and Results",
-      "category": "sports",
-      "source": "https://timesofindia.indiatimes.com/sports/cricket/ipl",
-      "publishedDate": "2026-06-29T01:23:22.072Z"
+      "title": "Press Releases - Reserve Bank of India",
+      "category": "economy",
+      "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62863",
+      "publishedDate": "2026-06-30T01:18:00.599Z"
     },
     {
-      "title": "Stock Market Today: Sensex, Nifty, BSE, NSE Latest Updates - The Hindu",
+      "title": "Stock Market: Stock Market Today | Stock Market Live News Update - Moneycontrol.com",
       "category": "markets",
-      "source": "https://www.thehindu.com/business/markets/",
-      "publishedDate": "2026-06-29T01:23:16.869Z"
+      "source": "https://www.moneycontrol.com/stocksmarketsindia/",
+      "publishedDate": "2026-06-30T01:17:58.817Z"
     }
   ]
 }

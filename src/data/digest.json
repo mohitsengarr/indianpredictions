@@ -1,7 +1,7 @@
 {
-  "weekOf": "2026-07-01",
-  "generatedAt": "2026-07-01T01:29:53.520Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-07-02",
+  "generatedAt": "2026-07-02T01:23:19.361Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
     {
       "title": "Shedge replaces injured Reddy in India's T20I squad",
@@ -31,81 +31,81 @@
       "updatedAt": "2026-06-24T01:19:29.871Z"
     },
     {
-      "title": "Tyrese Gibson's Life-Changing Visit to India",
-      "slug": "tyrese-gibsons-life-changing-visit-to-india",
+      "title": "Welcome To The Jungle Tops 100 Crore Worldwide After A Decent Monday Hold; Sixth Consecutive Akshay Kumar Film To Do So",
+      "slug": "welcome-to-the-jungle-tops-100-crore-worldwide-after-a-decent-monday-hold-sixth",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will Tyrese Gibson's Indian visit lead to more Hollywood collaborations in the future?",
-      "probability": 36,
-      "updatedAt": "2026-07-01T01:29:51.605Z"
+      "angle": "Yes, will it surpass 200 crore worldwide in its run?",
+      "probability": 46,
+      "updatedAt": "2026-07-02T01:23:17.816Z"
     },
     {
-      "title": "Welcome To The Jungle Tops 100 Crore Worldwide After A Decent Monday Hold",
-      "slug": "welcome-to-the-jungle-tops-100-crore-worldwide-after-a-decent-monday-hold",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will 'Welcome To The Jungle' exceed 200 crore gross in its lifetime?",
-      "probability": 58,
-      "updatedAt": "2026-07-01T01:29:51.605Z"
-    },
-    {
-      "title": "EXCLUSIVE: YRF issues show-sharing for Alpha – shows from 9:30 am onwards",
-      "slug": "exclusive-yrf-issues-show-sharing-for-alpha-shows-from-930-am-onwards",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will the new show-sharing mandate lead to increased box office collections for Alpha?",
-      "probability": 76,
-      "updatedAt": "2026-07-01T01:29:51.605Z"
-    },
-    {
-      "title": "Asia’s Crude Imports Remain Well Below Pre-War Levels",
-      "slug": "asias-crude-imports-remain-well-below-pre-war-levels",
+      "title": "Ukraine’s Drone Campaign Forces Russia to Buy Gasoline From India",
+      "slug": "ukraines-drone-campaign-forces-russia-to-buy-gasoline-from-india",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will Asian crude imports recover to pre-war levels by next year?",
-      "probability": 35,
-      "updatedAt": "2026-07-01T01:29:51.605Z"
+      "angle": "Will India become a key supplier of gasoline to Russia in the coming months?",
+      "probability": 73,
+      "updatedAt": "2026-07-02T01:23:17.816Z"
     },
     {
       "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
       "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil prices decrease in the next 6 months?",
+      "angle": "Will India's oil prices stabilize in the next six months?",
       "probability": 75,
-      "updatedAt": "2026-07-01T01:29:51.605Z"
+      "updatedAt": "2026-07-02T01:23:17.816Z"
+    },
+    {
+      "title": "Oil prices mixed as fresh U.S.-Iran clashes reignite Middle East supply fears",
+      "slug": "oil-prices-mixed-as-fresh-us-iran-clashes-reignite-middle-east-supply-fears",
+      "category": "energy",
+      "categoryLabel": "Energy",
+      "angle": "Will oil prices stabilize in the next month?",
+      "probability": 69,
+      "updatedAt": "2026-07-02T01:23:17.816Z"
+    },
+    {
+      "title": "India's SEBI Proposes Multi-Regulator Oversight for Crypto Trade",
+      "slug": "indias-sebi-proposes-multi-regulator-oversight-for-crypto-trade",
+      "category": "regulation",
+      "categoryLabel": "Regulation",
+      "angle": "Will India's crypto regulation lead to an increase in crypto investments by 2025?",
+      "probability": 25,
+      "updatedAt": "2026-07-02T01:23:17.816Z"
     }
   ],
   "topNews": [
     {
+      "title": "Wealth management startup crest secures 3 1 mn pre seed funding, ETStartup",
+      "category": "technology",
+      "source": "https://startup.economictimes.indiatimes.com/news/funding-deals/wealth-management-startup-crest-secures-3-1-mn-pre-seed-funding/131785538",
+      "publishedDate": "2026-07-02T01:18:08.495Z"
+    },
+    {
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-07-01T01:23:07.772Z"
+      "publishedDate": "2026-07-02T01:18:04.603Z"
+    },
+    {
+      "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
+      "category": "markets",
+      "source": "https://economictimes.indiatimes.com/markets",
+      "publishedDate": "2026-07-02T01:17:58.793Z"
     },
     {
       "title": "Stock Market: Stock Market Today | Stock Market Live News Update - Moneycontrol.com",
       "category": "markets",
       "source": "https://www.moneycontrol.com/stocksmarketsindia/",
-      "publishedDate": "2026-07-01T01:23:02.493Z"
+      "publishedDate": "2026-07-02T01:17:58.793Z"
     },
     {
-      "title": "Sensex Today: Nifty Targets 24,000 Mark Amid Auto Sales, Q1 Updates; Live Stock Market News",
+      "title": "NSE - National Stock Exchange of India Ltd: Live Share/Stock Market News &amp; Updates, Quotes- Nseindia.com",
       "category": "markets",
-      "source": "https://one.news18.com/english/article/market/nifty-aims-for-24000-amidst-auto-sales-q1-updates-bulls-face-critical-support-at-23800-cne-6619935949",
-      "publishedDate": "2026-07-01T00:49:18.000Z"
-    },
-    {
-      "title": "ENG vs IND 1st T20I preview: England bowlers will challenge struggling Indian batting unit - The Hindu",
-      "category": "sports",
-      "source": "https://www.thehindu.com/sport/cricket/eng-vs-ind-1st-t20i-preview-england-bowlers-will-challenge-struggling-indian-batting-unit/article71167655.ece",
-      "publishedDate": "2026-06-30T22:00:23.000Z"
-    },
-    {
-      "title": "Free navigation in Hormuz essential: PM Modi to Iran President Masoud Pezeshkian | India News - The Times of India",
-      "category": "geopolitics",
-      "source": "https://timesofindia.indiatimes.com/india/free-navigation-in-hormuz-essential-pm-modi-to-iran-president-masoud-pezeshkian/articleshow/132101358.cms",
-      "publishedDate": "2026-06-30T20:51:00.000Z"
+      "source": "https://www.nseindia.com/",
+      "publishedDate": "2026-07-02T01:17:58.793Z"
     }
   ]
 }

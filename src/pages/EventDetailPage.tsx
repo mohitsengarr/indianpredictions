@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -11,6 +12,7 @@ import {
   ReferenceLine,
 } from 'recharts';
 import { useTrendingEvents } from '@/hooks/useTrendingEvents';
+import { TrendingEvent } from '@/data/trending-events';
 import { useIndiaMarkets } from '@/hooks/useMarkets';
 import { getRelatedMarkets } from '@/lib/recommendations';
 import { getEventHistory } from '@/data/event-history-data';
@@ -89,7 +91,30 @@ const EventDetailPage = () => {
   const navigate = useNavigate();
   const { events: TRENDING_EVENTS, loading } = useTrendingEvents();
   const { markets: allMarkets } = useIndiaMarkets();
-  const event = TRENDING_EVENTS.find((e) => e.slug === slug);
+  const primaryEvent = TRENDING_EVENTS.find((e) => e.slug === slug);
+
+  // Archive fallback: older /events/<slug> links (shared or indexed) drop out of
+  // the fresh events set but stay in /data/scraped-events.json (up to 150). The
+  // hook only loads the fresh set, so resolve from the archive here — otherwise
+  // stable URLs 404, defeating the archive.
+  const [archiveEvent, setArchiveEvent] = useState<TrendingEvent | null>(null);
+  const [archiveChecked, setArchiveChecked] = useState(false);
+  useEffect(() => {
+    if (primaryEvent || loading || !slug) return;
+    let cancelled = false;
+    setArchiveChecked(false);
+    fetch(`/data/scraped-events.json?v=${Math.floor(Date.now() / (5 * 60 * 1000))}`, { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : []))
+      .then((list: TrendingEvent[]) => {
+        if (cancelled) return;
+        setArchiveEvent(Array.isArray(list) ? (list.find((e) => e.slug === slug) ?? null) : null);
+        setArchiveChecked(true);
+      })
+      .catch(() => { if (!cancelled) setArchiveChecked(true); });
+    return () => { cancelled = true; };
+  }, [primaryEvent, loading, slug]);
+
+  const event = primaryEvent ?? archiveEvent ?? undefined;
 
   useSEO({
     title: event ? event.title : loading ? 'Loading Event…' : 'Event Not Found',
@@ -105,9 +130,9 @@ const EventDetailPage = () => {
     } : undefined,
   });
 
-  // While events are still loading, show a spinner instead of flashing a 404
-  // for direct visits — only declare "Not Found" once loading has finished.
-  if (loading && !event) {
+  // Show a spinner while the fresh set is loading OR the archive fallback is
+  // still resolving — only declare "Not Found" once both are done.
+  if (!event && (loading || !archiveChecked)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-muted-foreground">

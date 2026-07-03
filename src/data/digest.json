@@ -1,8 +1,17 @@
 {
-  "weekOf": "2026-07-02",
-  "generatedAt": "2026-07-02T01:23:19.361Z",
-  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “Shedge replaces injured Reddy in India's T20I squad”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
+  "weekOf": "2026-07-03",
+  "generatedAt": "2026-07-03T04:24:31.153Z",
+  "summary": "As of this week, India Predictions is tracking 8 of the most-watched India prediction-market questions across Cricket & Sports, Bollywood, Energy, Regulation. The single most active is “'Disbelief' in India camp after a failure to adapt to 'fantastic' Ireland”, where the market implies roughly a 47% chance. Probabilities are crowd-sourced estimates aggregated from prediction markets, updated continuously — not financial advice.",
   "items": [
+    {
+      "title": "'Disbelief' in India camp after a failure to adapt to 'fantastic' Ireland",
+      "slug": "disbelief-in-india-camp-after-a-failure-to-adapt-to-fantastic-ireland",
+      "category": "sports",
+      "categoryLabel": "Cricket & Sports",
+      "angle": "Will India improve their performance in upcoming matches after this incident?",
+      "probability": 47,
+      "updatedAt": "2026-07-03T04:24:17.941Z"
+    },
     {
       "title": "Shedge replaces injured Reddy in India's T20I squad",
       "slug": "shedge-replaces-injured-reddy-in-indias-t20i-squad",
@@ -13,99 +22,90 @@
       "updatedAt": "2026-06-25T01:24:19.492Z"
     },
     {
-      "title": "Actor Pankaj Tripathi's Brother Injured in Axe Attack",
-      "slug": "actor-pankaj-tripathis-brother-injured-in-axe-attack",
+      "title": "Top Indian Movies Box Office Collection",
+      "slug": "top-indian-movies-box-office-collection",
       "category": "entertainment",
       "categoryLabel": "Bollywood",
-      "angle": "Will the media attention on this incident increase discussions about safety for public figures?",
+      "angle": "Will 'Pushpa: The Rule - Part 2' surpass ₹1,500Cr in gross revenue?",
+      "probability": 72,
+      "updatedAt": "2026-07-03T04:24:29.690Z"
+    },
+    {
+      "title": "Bollywood Sees 40% Fall In 2024 Box-office Collection",
+      "slug": "bollywood-sees-40-fall-in-2024-box-office-collection",
+      "category": "entertainment",
+      "categoryLabel": "Bollywood",
+      "angle": "Will Bollywood's box-office collection rebound in 2025?",
       "probability": 52,
-      "updatedAt": "2026-06-24T19:56:22.727Z"
+      "updatedAt": "2026-07-03T04:24:29.690Z"
     },
     {
-      "title": "Pawan Singh's Brother Attacked Over Property Dispute",
-      "slug": "pawan-singhs-brother-attacked-over-property-dispute",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Will Pawan Singh's brother recover fully?",
-      "probability": 68,
-      "updatedAt": "2026-06-24T01:19:29.871Z"
-    },
-    {
-      "title": "Welcome To The Jungle Tops 100 Crore Worldwide After A Decent Monday Hold; Sixth Consecutive Akshay Kumar Film To Do So",
-      "slug": "welcome-to-the-jungle-tops-100-crore-worldwide-after-a-decent-monday-hold-sixth",
-      "category": "entertainment",
-      "categoryLabel": "Bollywood",
-      "angle": "Yes, will it surpass 200 crore worldwide in its run?",
-      "probability": 46,
-      "updatedAt": "2026-07-02T01:23:17.816Z"
-    },
-    {
-      "title": "Ukraine’s Drone Campaign Forces Russia to Buy Gasoline From India",
-      "slug": "ukraines-drone-campaign-forces-russia-to-buy-gasoline-from-india",
+      "title": "India Fast-Tracks State Company Stake Sales to Cover Oil Shock Costs",
+      "slug": "india-fast-tracks-state-company-stake-sales-to-cover-oil-shock-costs",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India become a key supplier of gasoline to Russia in the coming months?",
-      "probability": 73,
-      "updatedAt": "2026-07-02T01:23:17.816Z"
+      "angle": "Will India's stake sales significantly stabilize its financial situation amid rising oil prices?",
+      "probability": 55,
+      "updatedAt": "2026-07-03T04:24:29.690Z"
     },
     {
-      "title": "Hardeep Puri Assures: Don't Worry About Gas Or Oil Prices",
-      "slug": "hardeep-puri-assures-dont-worry-about-gas-or-oil-prices",
+      "title": "Amazon, Walmart’s Flipkart to shake up India’s delivery-in-minutes sector",
+      "slug": "amazon-walmarts-flipkart-to-shake-up-indias-delivery-in-minutes-sector",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will India's oil prices stabilize in the next six months?",
-      "probability": 75,
-      "updatedAt": "2026-07-02T01:23:17.816Z"
+      "angle": "Will Amazon and Walmart's Flipkart successfully capture a significant share of the delivery-in-minutes market in India? Yes.",
+      "probability": 76,
+      "updatedAt": "2026-07-03T04:24:29.690Z"
     },
     {
-      "title": "Oil prices mixed as fresh U.S.-Iran clashes reignite Middle East supply fears",
-      "slug": "oil-prices-mixed-as-fresh-us-iran-clashes-reignite-middle-east-supply-fears",
+      "title": "Crude Oil Price Update: Market Fluctuations Amid US-Iran Talks",
+      "slug": "crude-oil-price-update-market-fluctuations-amid-us-iran-talks",
       "category": "energy",
       "categoryLabel": "Energy",
-      "angle": "Will oil prices stabilize in the next month?",
-      "probability": 69,
-      "updatedAt": "2026-07-02T01:23:17.816Z"
+      "angle": "Will the crude oil prices stabilize by the end of July 2026?",
+      "probability": 21,
+      "updatedAt": "2026-07-03T04:24:29.690Z"
     },
     {
-      "title": "India's SEBI Proposes Multi-Regulator Oversight for Crypto Trade",
-      "slug": "indias-sebi-proposes-multi-regulator-oversight-for-crypto-trade",
+      "title": "India's SEBI Proposes Oversight of Cryptocurrency Trade",
+      "slug": "indias-sebi-proposes-oversight-of-cryptocurrency-trade",
       "category": "regulation",
       "categoryLabel": "Regulation",
-      "angle": "Will India's crypto regulation lead to an increase in crypto investments by 2025?",
-      "probability": 25,
-      "updatedAt": "2026-07-02T01:23:17.816Z"
+      "angle": "Will India's government adopt SEBI's recommendations on cryptocurrency regulation?",
+      "probability": 43,
+      "updatedAt": "2026-07-03T04:24:29.690Z"
     }
   ],
   "topNews": [
     {
-      "title": "Wealth management startup crest secures 3 1 mn pre seed funding, ETStartup",
-      "category": "technology",
-      "source": "https://startup.economictimes.indiatimes.com/news/funding-deals/wealth-management-startup-crest-secures-3-1-mn-pre-seed-funding/131785538",
-      "publishedDate": "2026-07-02T01:18:08.495Z"
-    },
-    {
       "title": "IPL 2026 News | Latest Updates & Match Reports | IPLT20",
       "category": "sports",
       "source": "https://www.iplt20.com/news",
-      "publishedDate": "2026-07-02T01:18:04.603Z"
+      "publishedDate": "2026-07-03T04:06:43.839Z"
     },
     {
-      "title": "Share Market Live, Share Market Today: Latest Share Market News, Share Market Live Updates on The Economic Times",
-      "category": "markets",
-      "source": "https://economictimes.indiatimes.com/markets",
-      "publishedDate": "2026-07-02T01:17:58.793Z"
+      "title": "IPL 2026 Latest News, Live Updates - NDTV Sports",
+      "category": "sports",
+      "source": "https://sports.ndtv.com/ipl-2026/news",
+      "publishedDate": "2026-07-03T04:06:43.839Z"
     },
     {
       "title": "Stock Market: Stock Market Today | Stock Market Live News Update - Moneycontrol.com",
       "category": "markets",
       "source": "https://www.moneycontrol.com/stocksmarketsindia/",
-      "publishedDate": "2026-07-02T01:17:58.793Z"
+      "publishedDate": "2026-07-03T04:06:39.036Z"
     },
     {
-      "title": "NSE - National Stock Exchange of India Ltd: Live Share/Stock Market News &amp; Updates, Quotes- Nseindia.com",
+      "title": "Rupee up 18 paise at 95.21; Sensex rises 480 points, Nifty tops 24,300 | Business News - The Indian Express",
       "category": "markets",
-      "source": "https://www.nseindia.com/",
-      "publishedDate": "2026-07-02T01:17:58.793Z"
+      "source": "https://indianexpress.com/article/business/market/rupee-up-sensex-rises-nifty-tops-markets-us-dollar-10769157/",
+      "publishedDate": "2026-07-03T03:53:35.000Z"
+    },
+    {
+      "title": "Mamata Claims a Sweep, Slams Exit Polls as Rigged — But Is the Narrowing Margin in Safe Seats the One Signal She Cannot ",
+      "category": "politics",
+      "source": "https://www.indiaherald.com/Politics/Read/994895416/Mamata-Banerjee-Exit-Polls-West-Bengal-Bypoll-TMC-BJP",
+      "publishedDate": "2026-07-03T03:13:49.000Z"
     }
   ]
 }
